@@ -1,24 +1,78 @@
 {
-  "name": "seajobs-experiment",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "13.1.5",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "18.11.18",
-    "@types/react": "18.0.27",
-    "@types/react-dom": "18.0.10",
-    "eslint": "8.32.0",
-    "eslint-config-next": "13.1.5",
-    "typescript": "4.9.4"
-  }
+	"name": "seajobs-experiment",
+	"version": "0.1.0",
+	"private": true,
+	"engines": {
+		"node": ">=14.0.0",
+		"yarn": ">=1.22.0",
+		"npm": "please-use-yarn"
+	},
+	"resolutions": {
+		"webpack": "^5"
+	},
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"prettier": "prettier --write .",
+		"prepare": "husky install",
+		"storybook": "start-storybook -p 6006",
+		"build-storybook": "build-storybook"
+	},
+	"dependencies": {
+		"@aws-amplify/ui-react": "^4.3.5",
+		"@emotion/react": "^11.10.5",
+		"@emotion/styled": "^11.10.5",
+		"@fortawesome/fontawesome-svg-core": "^6.2.1",
+		"@fortawesome/free-solid-svg-icons": "^6.2.1",
+		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@headlessui/react": "^1.7.7",
+		"@mui/material": "^5.11.8",
+		"@mui/styled-engine-sc": "^5.11.0",
+		"@svgr/webpack": "^6.5.1",
+		"aws-amplify": "^5.0.11",
+		"jotai": "^2.0.1",
+		"material-ui": "^0.20.2",
+		"next": "13.1.5",
+		"next-images": "^1.8.4",
+		"next-themes": "^0.2.1",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-hook-form": "^7.42.1",
+		"styled-components": "^5.3.6",
+		"yup": "^0.32.11"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.20.12",
+		"@commitlint/cli": "^17.4.2",
+		"@commitlint/config-conventional": "^17.4.2",
+		"@heroicons/react": "^2.0.14",
+		"@storybook/addon-actions": "^6.5.15",
+		"@storybook/addon-essentials": "^6.5.15",
+		"@storybook/addon-interactions": "^6.5.15",
+		"@storybook/addon-links": "^6.5.15",
+		"@storybook/addon-postcss": "^2.0.0",
+		"@storybook/builder-webpack5": "^6.5.15",
+		"@storybook/manager-webpack5": "^6.5.15",
+		"@storybook/react": "^6.5.15",
+		"@storybook/testing-library": "^0.0.13",
+		"@tailwindcss/forms": "^0.5.3",
+		"@types/node": "18.11.18",
+		"@types/react": "18.0.27",
+		"@types/react-dom": "18.0.10",
+		"autoprefixer": "^10.4.13",
+		"babel-loader": "^8.3.0",
+		"eslint": "8.32.0",
+		"eslint-config-next": "13.1.5",
+		"eslint-plugin-storybook": "^0.6.10",
+		"husky": "^8.0.3",
+		"postcss": "^8.4.21",
+		"prettier": "^2.8.3",
+		"storybook-addon-next-router": "^4.0.2",
+		"storybook-css-modules-preset": "^1.1.1",
+		"tailwindcss": "^3.2.4",
+		"typescript": "4.9.4",
+		"util": "^0.12.5"
+	}
 }
