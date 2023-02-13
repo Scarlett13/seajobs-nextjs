@@ -89,8 +89,19 @@ const LoginForm: NextPageWithLayout = () => {
         <FormExtra />
         <FormAction handleSubmit={handleSubmit} text="Login" />
       </form>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => {
+          handleClose;
+        }}
+      >
+        <Alert
+          onClose={() => {
+            handleClose;
+          }}
+          severity="error"
+        >
           {signInError}
         </Alert>
       </Snackbar>

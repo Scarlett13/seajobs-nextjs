@@ -11,7 +11,6 @@ const base: IInputTemplate = {
   isRequired: false,
   placeholder: "string",
   customClass: "any",
-  inputProps: "any",
 };
 
 export const mockInputTemplateProps = {

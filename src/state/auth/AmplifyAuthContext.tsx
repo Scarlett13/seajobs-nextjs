@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 
 interface UserContextType {
   user: CognitoUser | null;
-  setUser: Dispatch<SetStateAction<CognitoUser>>;
+  setUser: Dispatch<SetStateAction<CognitoUser | null>>;
 }
 
 const UserContext = createContext<UserContextType>({} as UserContextType);

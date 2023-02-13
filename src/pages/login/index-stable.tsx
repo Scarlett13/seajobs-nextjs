@@ -88,7 +88,7 @@ export default function Login() {
     })();
   }, [isAuthorized, router]);
 
-  if (isAuthorized) return <PageLoader />;
+  // if (isAuthorized) return <PageLoader />;
 
   return (
     <>
@@ -106,7 +106,7 @@ export default function Login() {
   );
 }
 
-Login.getLayout = (page) => {
+Login.getLayout = (page: any) => {
   return (
     <>
       <PrimaryLayout>{page}</PrimaryLayout>

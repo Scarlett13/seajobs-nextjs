@@ -12,20 +12,15 @@ import { NextPageWithLayout } from "../page";
 import FormExtra from "../../components/inputs/extras/FormExtra";
 import FormAction from "../../components/inputs/actions/FormAction";
 import { Auth } from "aws-amplify";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import PasswordTemplate from "../../components/inputs/password/PasswordTemplate";
 import { useAuth } from "../../state/auth/AuthContext";
 import { useAtom } from "jotai";
 import { authorizationAtom } from "../../state/auth/AuthAtom";
 import PageLoader from "next/dist/client/page-loader";
 
-interface StoredObject {
-  email?: string | any;
-  password?: string;
-}
-
 const fields = loginFields;
-let fieldsState: StoredObject = {} as StoredObject;
+let fieldsState: any = {};
 fields.forEach((field: FormFields) => (fieldsState[field.id] = ""));
 
 const LoginForm: NextPageWithLayout = () => {
@@ -123,8 +118,9 @@ const Login: NextPageWithLayout = () => {
           paragraph="Belum mempunyai akun? "
           linkName="Daftar"
           linkUrl="/signup"
-          children={<LoginForm />}
-        />
+        >
+          <LoginForm />
+        </FormHeaderLayout>
       </section>
     </>
   );

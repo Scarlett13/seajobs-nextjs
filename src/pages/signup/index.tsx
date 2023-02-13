@@ -8,7 +8,7 @@ import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
 import PasswordTemplate from "../../components/inputs/password/PasswordTemplate";
 
 const fields = signupFields;
-let fieldsState = {};
+let fieldsState: any = {};
 
 fields.forEach((field) => (fieldsState[field.id] = ""));
 
@@ -84,8 +84,9 @@ const Signup: NextPageWithLayout = () => {
           paragraph="Sudah mempunyai akun? "
           linkName="Masuk"
           linkUrl="/login"
-          children={<SignupForm />}
-        />
+        >
+          <SignupForm />
+        </FormHeaderLayout>
       </section>
     </>
   );
