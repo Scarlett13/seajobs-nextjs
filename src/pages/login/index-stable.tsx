@@ -8,13 +8,11 @@ import {
   FormFields,
   loginFields,
 } from "../../constants/authformconstants/AuthFormConstants";
-import { authorizationAtom } from "../../state/auth/AuthAtom";
 import { NextPageWithLayout } from "../page";
 import Input from "../../components/inputs/reguler/InputTemplate";
 import FormExtra from "../../components/inputs/extras/FormExtra";
 import FormAction from "../../components/inputs/actions/FormAction";
 import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
-import { useAuth } from "../../state/auth/AuthContext";
 
 const fields = loginFields;
 let fieldsState: any = {};
@@ -27,12 +25,11 @@ const LoginForm: NextPageWithLayout = () => {
     console.log(loginState);
     setLoginState({ ...loginState, [e.target.id]: e.target.value });
   };
-  const { user, login, logOut } = useAuth();
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     console.log("onsubmit");
     e.preventDefault();
-    login(loginState.email, loginState.password);
+    // login(loginState.email, loginState.password);
   };
 
   return (
@@ -78,15 +75,15 @@ const LoginForm: NextPageWithLayout = () => {
 
 export default function Login() {
   const router = useRouter();
-  const [isAuthorized] = useAtom(authorizationAtom);
+  // const [isAuthorized] = useAtom(authorizationAtom);
 
-  useEffect(() => {
-    (async () => {
-      if (isAuthorized) {
-        return router.push("/dashboard");
-      }
-    })();
-  }, [isAuthorized, router]);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (isAuthorized) {
+  //       return router.push("/dashboard");
+  //     }
+  //   })();
+  // }, [isAuthorized, router]);
 
   // if (isAuthorized) return <PageLoader />;
 

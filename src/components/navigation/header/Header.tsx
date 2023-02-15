@@ -4,14 +4,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Auth } from "aws-amplify";
 import { CognitoUser } from "@aws-amplify/auth";
 
-interface HeaderProps {
+export interface IHeader {
   user?: CognitoUser | null;
 }
 
 export const Header = ({
   user,
 }: // onCreateAccount,
-HeaderProps) => {
+IHeader) => {
   console.log("headrprops: ", user);
   const navigations = [
     {
