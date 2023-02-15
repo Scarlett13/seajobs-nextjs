@@ -1,7 +1,3 @@
-import Head from "next/head";
-import Footer from "../../navigation/footer/Footer";
-import Header from "../../navigation/header/Header";
-import MainCtaButton from "../../buttons/mainctabutton/MainCtaButton";
 import Link from "next/link";
 
 export interface IFormHeaderLayout {
@@ -28,7 +24,9 @@ const FormHeaderLayout: React.FC<IFormHeaderLayout> = ({
           src="https://ik.imagekit.io/pibjyepn7p9/Lilac_Navy_Simple_Line_Business_Logo_CGktk8RHK.png?ik-sdk-version=javascript-1.4.3&updatedAt=1649962071315"
         />
       </div> */}
-      <div className="lg:-mt-96 -mt-72  w-3/4 md:w-2/4 lg:w-1/4">
+      {/* ganti kalau mau centered item ketengah */}
+      {/* <div className="lg:-mt-96 -mt-72  w-3/4 md:w-2/4 lg:w-1/4"></div> */}
+      <div className="  w-3/4 md:w-2/4 lg:w-1/4">
         <h2 className="text-center text-3xl font-extrabold text-white">
           {heading}
         </h2>

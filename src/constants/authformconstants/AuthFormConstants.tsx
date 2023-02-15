@@ -19,6 +19,7 @@ const loginFields = [
     autoComplete: "email",
     isRequired: true,
     placeholder: "Email address",
+    titelKey: "title_email",
   },
   {
     labelText: "Password",
@@ -29,6 +30,7 @@ const loginFields = [
     autoComplete: "current_password",
     isRequired: true,
     placeholder: "Password",
+    titelKey: "title_password",
   },
 ];
 
@@ -42,6 +44,7 @@ const signupFields = [
     autoComplete: "fullname",
     isRequired: true,
     placeholder: "Nama lengkap",
+    titelKey: "title_name",
   },
   {
     labelText: "Email address",
@@ -52,6 +55,7 @@ const signupFields = [
     autoComplete: "email",
     isRequired: true,
     placeholder: "Email address",
+    titelKey: "title_email",
   },
   {
     labelText: "Password",
@@ -62,6 +66,7 @@ const signupFields = [
     autoComplete: "current_password",
     isRequired: true,
     placeholder: "Password",
+    titelKey: "title_password",
   },
   {
     labelText: "Confirm Password",
@@ -72,6 +77,7 @@ const signupFields = [
     autoComplete: "confirm_password",
     isRequired: true,
     placeholder: "Confirm Password",
+    titelKey: "title_confirm",
   },
 ];
 

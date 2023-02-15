@@ -1,10 +1,18 @@
 import Link from "next/link";
 import Head from "next/head";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Auth } from "aws-amplify";
+import { CognitoUser } from "@aws-amplify/auth";
 
-export interface IHeader extends React.ComponentPropsWithoutRef<"header"> {}
+interface HeaderProps {
+  user?: CognitoUser | null;
+}
 
-const Header: React.FC<IHeader> = ({ className, ...headerProps }) => {
+export const Header = ({
+  user,
+}: // onCreateAccount,
+HeaderProps) => {
+  console.log("headrprops: ", user);
   const navigations = [
     {
       path: "./",
@@ -23,7 +31,9 @@ const Header: React.FC<IHeader> = ({ className, ...headerProps }) => {
       label: "Contact",
     },
   ];
+
   const [navbar, setNavbar] = useState(false);
+
   return (
     <div>
       <Head>
@@ -96,40 +106,66 @@ const Header: React.FC<IHeader> = ({ className, ...headerProps }) => {
                     </Link>
                   </li>
                 ))}
-                <li
-                  key="login"
-                  className="visible md:invisible text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  <Link
-                    href="/login"
-                    className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                {user ? (
+                  <li
+                    key="login"
+                    className="visible md:invisible text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
-                    Masuk
-                  </Link>
-                </li>
+                    <p
+                      // onClick={onLogout}
+                      className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      Keluar
+                    </p>
+                  </li>
+                ) : (
+                  <li
+                    key="login"
+                    className="visible md:invisible text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    <Link
+                      href="/login"
+                      className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      Masuk
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
-          <div
-            className={`invisible md:visible items-end justify-end gap-2 md:gap-8 place-it`}
-          >
-            <Link
-              href="/login"
-              className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
+
+          {user ? (
+            <div
+              className={`invisible md:visible items-end justify-end gap-2 md:gap-8 place-it`}
             >
-              Masuk
-            </Link>
-            <Link
-              href="/signup"
-              className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
+              <p
+                // onClick={onLogout}
+                className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
+              >
+                Keluar
+              </p>
+            </div>
+          ) : (
+            <div
+              className={`invisible md:visible items-end justify-end gap-2 md:gap-8 place-it`}
             >
-              Daftar
-            </Link>
-          </div>
+              <Link
+                href="/login"
+                className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
+              >
+                Masuk
+              </Link>
+              <Link
+                href="/signup"
+                className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
+              >
+                Daftar
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
     </div>
   );
 };
-
-export default Header;
