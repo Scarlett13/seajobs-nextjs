@@ -12,12 +12,8 @@ import { NextPageWithLayout } from "../page";
 import FormExtra from "../../components/inputs/extras/FormExtra";
 import FormAction from "../../components/inputs/actions/FormAction";
 import { Auth } from "aws-amplify";
-import router, { useRouter } from "next/router";
+import router from "next/router";
 import PasswordTemplate from "../../components/inputs/password/PasswordTemplate";
-import { useAuth } from "../../state/auth/AuthContext";
-import { useAtom } from "jotai";
-import { authorizationAtom } from "../../state/auth/AuthAtom";
-import PageLoader from "next/dist/client/page-loader";
 
 const fields = loginFields;
 let fieldsState: any = {};
