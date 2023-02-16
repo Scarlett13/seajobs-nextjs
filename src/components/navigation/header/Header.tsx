@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Head from "next/head";
-import React, { useEffect, useRef, useState } from "react";
-import { Auth } from "aws-amplify";
+import React, { useState } from "react";
 import { CognitoUser } from "@aws-amplify/auth";
 import { logout } from "@utils/AuthUtils";
 

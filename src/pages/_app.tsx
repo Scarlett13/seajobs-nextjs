@@ -1,16 +1,13 @@
 import type { AppProps } from "next/app";
 import "./globals.css";
-import { Amplify, Hub, Logger } from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import awsExports from "../aws-exports";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { useEffect, useState } from "react";
 import React from "react";
 // import { AuthProvider } from "../state/auth/AuthContext";
 import { NextPage } from "next";
-import AuthContext, { useUser } from "../contexts/AmplifyAuthContext";
-import { CognitoUser } from "@aws-amplify/auth";
-import PrimaryLayout from "../components/layouts/primary/PrimaryLayout";
+import AuthContext from "../contexts/AmplifyAuthContext";
 config.autoAddCss = false;
 
 Amplify.configure({ ...awsExports, ssr: true });

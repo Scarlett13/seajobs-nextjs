@@ -26,7 +26,7 @@ const FormHeaderLayout: React.FC<IFormHeaderLayout> = ({
       </div> */}
       {/* ganti kalau mau centered item ketengah */}
       {/* <div className="lg:-mt-96 -mt-72  w-3/4 md:w-2/4 lg:w-1/4"></div> */}
-      <div className="  w-3/4 md:w-2/4 lg:w-1/4">
+      <div className="bg-form-bg shadow-md rounded px-8 pt-6 mb-4 pb-10  w-3/4 md:w-2/4 lg:w-1/4">
         <h2 className="text-center text-3xl font-extrabold text-white">
           {heading}
         </h2>

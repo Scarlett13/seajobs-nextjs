@@ -14,6 +14,9 @@ module.exports = {
         "footer-bg": "#05070E",
         "hero-bg": "#09090A",
         "main-cta-button-bg": "#FFB24B",
+        "form-bg": "#212121",
+        "form-section-blue": "#0077FF",
+        "form-section-required-red": "#EB1636",
       },
       backgroundImage: {
         "hero1-bg": "url('/image.png')",
