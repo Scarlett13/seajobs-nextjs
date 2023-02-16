@@ -61,6 +61,13 @@ export default function AuthContext(
     const listener = (data: { payload: { event: any } }) => {
       logger.info("the Auth module is configured");
       console.log("auth event auth ctx: ", data.payload.event);
+      if (data.payload.event === "signOut") {
+        setAuthenticated(false);
+        setUser(null);
+        console.log(
+          "setelah signout, auth: " + authenticated + ", user: " + user
+        );
+      }
     };
 
     Hub.listen("auth", listener);

@@ -47,3 +47,7 @@ export async function signup(
     return { success: false, data: error } as returnData;
   }
 }
+
+export async function logout() {
+  await Auth.signOut();
+}

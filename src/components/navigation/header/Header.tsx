@@ -3,6 +3,7 @@ import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import { Auth } from "aws-amplify";
 import { CognitoUser } from "@aws-amplify/auth";
+import { logout } from "@utils/AuthUtils";
 
 export interface IHeader {
   user?: CognitoUser | null;
@@ -112,7 +113,7 @@ IHeader) => {
                     className="visible md:invisible text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
                     <p
-                      // onClick={onLogout}
+                      onClick={logout}
                       className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >
                       Keluar
@@ -140,7 +141,7 @@ IHeader) => {
               className={`invisible md:visible items-end justify-end gap-2 md:gap-8 place-it`}
             >
               <p
-                // onClick={onLogout}
+                onClick={logout}
                 className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
               >
                 Keluar
