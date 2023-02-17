@@ -2,7 +2,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import BidangKeahlianInput, {
   IBidangKeahlianInput,
 } from "./BidangKeahlianInput";
-import { mockBidangKeahlianInputProps } from "./BidangKeahlianInput.mocks";
+// import { mockBidangKeahlianInputProps } from "./BidangKeahlianInput.mocks";
 
 export default {
   title: "templates/BidangKeahlianInput",
@@ -20,5 +20,5 @@ export const Base = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 
 Base.args = {
-  ...mockBidangKeahlianInputProps.base,
+  // ...mockBidangKeahlianInputProps.base,
 } as IBidangKeahlianInput;

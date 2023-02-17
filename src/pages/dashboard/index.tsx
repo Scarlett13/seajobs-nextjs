@@ -9,7 +9,9 @@ import {
   FormFields,
   IBidangKeahlian,
   identitasDiriFields,
+  infoKontakFields,
 } from "../../constants/profileformconstants/ProfileFormConstants";
+import InfoKontak from "../../components/sections/profileformsection/infokontak/InfoKontak";
 
 export default function Dashboard() {
   //identitas diri hook state
@@ -19,6 +21,12 @@ export default function Dashboard() {
     (field: FormFields) => (identitasDiriFieldsState[field.id] = "")
   );
 
+  //info kontak hook state
+  const infoKontakFieldsComp = infoKontakFields;
+  let infoKontakFieldsState: any = {};
+  infoKontakFieldsComp.forEach(
+    (field: FormFields) => (infoKontakFieldsState[field.id] = "")
+  );
   const push = usePush();
   // const { user, redirectTo, authenticated } = useAuth();
   const { user, authenticated, setUser, setAuthenticated } = useUser();
@@ -28,6 +36,7 @@ export default function Dashboard() {
   );
 
   const [identitasDiri, setIdentitasDiri] = useState(identitasDiriFieldsState);
+  const [infoKontak, setInfoKontak] = useState(infoKontakFieldsState);
 
   // const [loginState, setLoginState] = useState(fieldsState);
 
@@ -66,12 +75,10 @@ export default function Dashboard() {
         setIdentitasDiri={setIdentitasDiri}
         identitasDiriFields={identitasDiriFieldsComp}
       />
-      <IdentitasDiri
-        selectedKeahlian={selectedKeahlian}
-        setSelectedKeahlian={setSelectedKeahlian}
-        identitasDiri={identitasDiri}
-        setIdentitasDiri={setIdentitasDiri}
-        identitasDiriFields={identitasDiriFieldsComp}
+      <InfoKontak
+        infoKontak={infoKontak}
+        setInfoKontak={setInfoKontak}
+        infoKontakFields={infoKontakFieldsComp}
       />
     </>
   );

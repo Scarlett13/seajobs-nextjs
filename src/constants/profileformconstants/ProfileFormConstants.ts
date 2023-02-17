@@ -53,29 +53,40 @@ const identitasDiriFields = [
   },
 ]
 
-const loginFields = [
+const infoKontakFields = [
   {
-    labelText: "Email address",
+    labelText: "Alamat email",
     labelFor: "email",
     id: "email",
     name: "email",
-    type: "text",
+    type: "email",
     autoComplete: "email",
     isRequired: true,
-    placeholder: "Email address",
+    placeholder: "Alamat email",
     titelKey: "title_email",
   },
   {
-    labelText: "Password",
-    labelFor: "password",
-    id: "password",
-    name: "password",
-    type: "password",
-    autoComplete: "current_password",
+    labelText: "Nomor handphone",
+    labelFor: "phone_number",
+    id: "phone_number",
+    name: "phone_number",
+    type: "tel",
+    autoComplete: "phone_number",
     isRequired: true,
-    placeholder: "Password",
-    titelKey: "title_password",
+    placeholder: "0811******",
+    titelKey: "title_phone_num",
+  },
+	{
+    labelText: "Link portofolio",
+    labelFor: "portfolio_link",
+    id: "portfolio_link",
+    name: "portfolio_link",
+    type: "text",
+    autoComplete: "link_portfolio",
+    isRequired: true,
+    placeholder: "https://linkedin.com/example-profile, https://behance.net/...",
+    titelKey: "title_portfolio_url",
   },
 ];
 
-export { identitasDiriFields };
+export { identitasDiriFields, infoKontakFields };
