@@ -1,82 +1,93 @@
-{
-	"bidang_keahlian": [
-		{
-			"categoryname": "General",
-			"subcategoryname": "Ahli Hukum",
-			"description": "Ahli hukum",
-			"iscollapsible": true
-		},
-		{
-			"categoryname": "General",
-			"subcategoryname": "Ahli Keuangan dan Ekonomi",
-			"description": "Ahli keuangan dan ekonomi",
-			"iscollapsible": true
-		},
-		{
-			"categoryname": "General",
-			"subcategoryname": "Ahli Kerja Sama",
-			"description": "Ahli kerja sama",
-			"iscollapsible": true
-		},
-		{
-			"categoryname": "General",
-			"subcategoryname": "Ahli Risiko",
-			"description": "Ahli risiko",
-			"iscollapsible": true
-		},
-		{
-			"categoryname": "General",
-			"subcategoryname": "Ahli Sosial dan LARAP",
-			"description": "Ahli sosial dan LARAP",
-			"iscollapsible": true
-		},
-		{
-			"categoryname": "General",
-			"subcategoryname": "Ahli Pengadaan",
-			"description": "Ahli pengadaan",
-			"iscollapsible": true
-		},
-		{
-			"categoryname": "Arsitektur",
-			"subcategoryname": "-",
-			"description": "-",
-			"iscollapsible": false
-		},
-		{
-			"categoryname": "Sipil",
-			"subcategoryname": "-",
-			"description": "-",
-			"iscollapsible": false
-		},
-		{
-			"categoryname": "Mekanikal",
-			"subcategoryname": "-",
-			"description": "-",
-			"iscollapsible": false
-		},
-		{
-			"categoryname": "Elektrikal",
-			"subcategoryname": "-",
-			"description": "-",
-			"iscollapsible": false
-		},
-		{
-			"categoryname": "Tata Lingkungan",
-			"subcategoryname": "-",
-			"description": "-",
-			"iscollapsible": false
-		},
-		{
-			"categoryname": "Manajemen Pelaksana",
-			"subcategoryname": "-",
-			"description": "-",
-			"iscollapsible": false
-		},
-		{
-			"categoryname": "Pendukung",
-			"subcategoryname": "-",
-			"description": "-",
-			"iscollapsible": false
-		}
-	]
-}
+[
+	{
+		"id": 1,
+		"categoryname": "General",
+		"subcategoryname": "Ahli Hukum",
+		"description": "Ahli hukum",
+		"iscollapsible": true
+	},
+	{
+		"id": 2,
+		"categoryname": "General",
+		"subcategoryname": "Ahli Keuangan dan Ekonomi",
+		"description": "Ahli keuangan dan ekonomi",
+		"iscollapsible": true
+	},
+	{
+		"id": 3,
+		"categoryname": "General",
+		"subcategoryname": "Ahli Kerja Sama",
+		"description": "Ahli kerja sama",
+		"iscollapsible": true
+	},
+	{
+		"id": 4,
+		"categoryname": "General",
+		"subcategoryname": "Ahli Risiko",
+		"description": "Ahli risiko",
+		"iscollapsible": true
+	},
+	{
+		"id": 5,
+		"categoryname": "General",
+		"subcategoryname": "Ahli Sosial dan LARAP",
+		"description": "Ahli sosial dan LARAP",
+		"iscollapsible": true
+	},
+	{
+		"id": 6,
+		"categoryname": "General",
+		"subcategoryname": "Ahli Pengadaan",
+		"description": "Ahli pengadaan",
+		"iscollapsible": true
+	},
+	{
+		"id": 7,
+		"categoryname": "Arsitektur",
+		"subcategoryname": "-",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
+		"id": 8,
+		"categoryname": "Sipil",
+		"subcategoryname": "-",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
+		"id": 9,
+		"categoryname": "Mekanikal",
+		"subcategoryname": "-",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
+		"id": 10,
+		"categoryname": "Elektrikal",
+		"subcategoryname": "-",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
+		"id": 11,
+		"categoryname": "Tata Lingkungan",
+		"subcategoryname": "-",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
+		"id": 12,
+		"categoryname": "Manajemen Pelaksana",
+		"subcategoryname": "-",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
+		"id": 13,
+		"categoryname": "Pendukung",
+		"subcategoryname": "-",
+		"description": "-",
+		"iscollapsible": false
+	}
+]

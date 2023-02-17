@@ -13,8 +13,8 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
 }) => {
   return (
     <section>
-      <main className="bg-form-bg shadow-md px-8 pt-6 mb-4 pb-10 flex flex-col justify-center">
-        <div>
+      <main className="bg-form-bg shadow-md px-8 pt-6 mb-4 pb-4 flex flex-col justify-center">
+        <div className="mb-4">
           <label className="text-form-section-blue font-medium uppercase">
             {title}
           </label>

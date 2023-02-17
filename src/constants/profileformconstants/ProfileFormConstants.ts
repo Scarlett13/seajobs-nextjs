@@ -9,16 +9,49 @@ export type FormFields = {
   placeholder: string;
 };
 
-export type BidangKeahlianType = {
+export interface IBidangKeahlian {
+	id: number;
 	categoryname: string;
 	subcategoryname: string;
 	descripton: string;
 	iscollapsible: boolean;
 }
 
-export interface IBidangKeahlian {
-	bidangkeahlian: [BidangKeahlianType]
-}
+const identitasDiriFields = [
+	{
+    labelText: "Nama lengkap",
+    labelFor: "fullname",
+    id: "fullname",
+    name: "fullname",
+    type: "text",
+    autoComplete: "fullname",
+    isRequired: true,
+    placeholder: "Nama lengkap",
+    titelKey: "title_name",
+  },
+	{
+    labelText: "Bidang keahlian",
+    labelFor: "bidang_keahlian",
+    id: "bidang_keahlian",
+    name: "bidang_keahlian",
+    type: "bidang_keahlian",
+    autoComplete: "bidang_keahlian",
+    isRequired: true,
+    placeholder: "Silahkan pilih bidang keahlian terlebih dahulu",
+    titelKey: "title_keahlian",
+  },
+	{
+    labelText: "Alamat domisili",
+    labelFor: "address",
+    id: "address",
+    name: "address",
+    type: "text",
+    autoComplete: "address",
+    isRequired: true,
+    placeholder: "Alamat domisili",
+    titelKey: "title_address",
+  },
+]
 
 const loginFields = [
   {
@@ -45,4 +78,4 @@ const loginFields = [
   },
 ];
 
-export { loginFields };
+export { identitasDiriFields };
