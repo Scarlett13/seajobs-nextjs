@@ -1,8 +1,16 @@
+import { Footer as FlowbiteFooter } from "flowbite-react";
+import {
+  BsDribbble,
+  BsFacebook,
+  BsGithub,
+  BsInstagram,
+  BsTwitter,
+} from "react-icons/bs";
 export interface IFooter extends React.ComponentPropsWithoutRef<"footer"> {}
 
 const Footer: React.FC<IFooter> = ({ className, ...footerProps }) => {
   return (
-    <footer className="w-full text-center lg:text-left bg-footer-bg text-white">
+    <footer className="right-0 left-0 bottom-0 text-center lg:text-left bg-footer-bg text-white">
       <div className="flex justify-center items-center lg:justify-between p-6 border-b border-gray-300">
         <div className="mr-12 hidden lg:block">
           <span>© {new Date().getFullYear()} Copyright:</span>

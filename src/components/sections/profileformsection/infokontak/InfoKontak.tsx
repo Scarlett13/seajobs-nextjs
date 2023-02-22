@@ -21,7 +21,11 @@ const InfoKontak: React.FC<IInfoKontak> = ({
   };
 
   return (
-    <ProfileSectionLayout isRequired={true} title="info kontak">
+    <ProfileSectionLayout
+      isRequired={true}
+      title="info kontak"
+      id="info_kontak"
+    >
       {infoKontakFields.map((field) => (
         <section key={field.titelKey}>
           <p className="-mb-4 font-light text-gray-400">{field.labelText}</p>

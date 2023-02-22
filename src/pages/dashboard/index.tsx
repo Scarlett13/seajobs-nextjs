@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useUser } from "../../contexts/AmplifyAuthContext";
 import usePush from "@utils/UsePush";
-import ProfileSectionLayout from "../../components/layouts/profilesectionlayout/ProfileSectionLayout";
-import Input from "../../components/inputs/reguler/InputTemplate";
-import IdentitasDiri from "../../components/sections/profileformsection/identitasdiri/IdentitasDiri";
 import {
   FormFields,
   IBidangKeahlian,
   identitasDiriFields,
   infoKontakFields,
 } from "../../constants/profileformconstants/ProfileFormConstants";
-import InfoKontak from "../../components/sections/profileformsection/infokontak/InfoKontak";
+import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
+import { Auth } from "aws-amplify";
 
 export default function Dashboard() {
   //identitas diri hook state
@@ -31,13 +29,6 @@ export default function Dashboard() {
   // const { user, redirectTo, authenticated } = useAuth();
   const { user, authenticated, setUser, setAuthenticated } = useUser();
 
-  const [selectedKeahlian, setSelectedKeahlian] = useState<IBidangKeahlian[]>(
-    []
-  );
-
-  const [identitasDiri, setIdentitasDiri] = useState(identitasDiriFieldsState);
-  const [infoKontak, setInfoKontak] = useState(infoKontakFieldsState);
-
   // const [loginState, setLoginState] = useState(fieldsState);
 
   useEffect(() => {
@@ -49,39 +40,25 @@ export default function Dashboard() {
   }, [user, authenticated]);
 
   return (
-    // <PrimaryLayout user={user}>
-    //   <main classNameName="bg-gray-200 h-screen flex flex-col items-center justify-center">
-    //     <p classNameName="text-xl mb-4">
-    //       {/* Welcome, your email is {user.attributes.email} */}
-    //     </p>
+    <PrimaryLayout user={user}>
+      <main className="bg-gray-200 h-screen flex flex-col items-center justify-center">
+        <p className="text-xl mb-4">
+          {/* Welcome, your email is {user.attributes.email} */}
+        </p>
 
-    //     <button
-    //       classNameName="mt-2 text-lg text-white font-semibold bg-green-500 py-3 px-6 rounded-md"
-    //       onClick={async () => {
-    //         await Auth.signOut();
-    //         setUser(null);
-    //         setAuthenticated(false);
-    //       }}
-    //     >
-    //       Log out
-    //     </button>
-    //   </main>
-    // </PrimaryLayout>
-    <>
-      <IdentitasDiri
-        selectedKeahlian={selectedKeahlian}
-        setSelectedKeahlian={setSelectedKeahlian}
-        identitasDiri={identitasDiri}
-        setIdentitasDiri={setIdentitasDiri}
-        identitasDiriFields={identitasDiriFieldsComp}
-      />
-      <InfoKontak
-        infoKontak={infoKontak}
-        setInfoKontak={setInfoKontak}
-        infoKontakFields={infoKontakFieldsComp}
-      />
-    </>
+        <button
+          className="mt-2 text-lg text-white font-semibold bg-green-500 py-3 px-6 rounded-md"
+          onClick={async () => {
+            await Auth.signOut();
+            setUser(null);
+            setAuthenticated(false);
+          }}
+        >
+          Log out
+        </button>
+      </main>
+    </PrimaryLayout>
   );
 }
 
-Dashboard.authenticate = false;
+Dashboard.authenticate = true;

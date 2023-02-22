@@ -3,7 +3,7 @@ import {
   IBidangKeahlian,
   identitasDiriFields,
 } from "../../../../constants/profileformconstants/ProfileFormConstants";
-import Input from "../../../../components/inputs/reguler/InputTemplate";
+import Input from "../../../inputs/reguler/InputTemplate";
 import ProfileSectionLayout from "../../../layouts/profilesectionlayout/ProfileSectionLayout";
 // import styles from "./IdentitasDiri.module.css";
 
@@ -34,7 +34,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
   };
 
   return (
-    <ProfileSectionLayout isRequired={true} title="data diri">
+    <ProfileSectionLayout isRequired={true} title="data diri" id="id_diri">
       {identitasDiriFields.map((field) =>
         field.type === "bidang_keahlian" ? (
           <section key={field.titelKey} className={"mb-4"}>
@@ -62,9 +62,11 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
                 {dataKeahlian.map((keahlian) => (
                   <Listbox.Option
                     className={`my-1.5 ${
-                      keahlian.iscollapsible
-                        ? "text-blue-400"
-                        : "text-yellow-300"
+                      selectedKeahlian.find(
+                        (e: { id: number }) => e.id === keahlian.id
+                      )
+                        ? "text-form-section-blue"
+                        : "text-white"
                     }`}
                     key={
                       keahlian.iscollapsible
@@ -78,7 +80,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
                     ) ? (
                       <a className="mr-2 text-bold text-form-section-blue">x</a>
                     ) : (
-                      <a className="mr-2 text-bold text-form-section-blue">+</a>
+                      <a className="mr-2 text-bold text-white">+</a>
                     )}
                     {keahlian.iscollapsible
                       ? keahlian.subcategoryname

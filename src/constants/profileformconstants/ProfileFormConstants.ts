@@ -7,6 +7,7 @@ export type FormFields = {
   autoComplete: string;
   isRequired: boolean;
   placeholder: string;
+	maxChar?: number;
 };
 
 export interface IBidangKeahlian {
@@ -89,4 +90,19 @@ const infoKontakFields = [
   },
 ];
 
-export { identitasDiriFields, infoKontakFields };
+const deskripsiDiriFields = [
+  {
+    labelText: "Deskripsi diri",
+    labelFor: "deskripsi_diri",
+    id: "deskripsi_diri",
+    name: "deskripsi_diri",
+    type: "textarea",
+    autoComplete: "",
+    isRequired: true,
+    placeholder: "Tuliskan deskripsi singkat diri kamu dalam 150 karakter",
+    titelKey: "title_deskripsi_diri",
+		maxChar: 150
+  }
+];
+
+export { identitasDiriFields, infoKontakFields, deskripsiDiriFields };
