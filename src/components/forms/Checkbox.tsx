@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import get from "lodash.get";
 import * as React from "react";
 import { RegisterOptions, useFormContext } from "react-hook-form";
@@ -75,7 +74,7 @@ export default function Checkbox({
             aria-describedby={name}
           />
           <p
-            className={clsx((readOnly || disabled) && "cursor-not-allowed")}
+            className={clsxm((readOnly || disabled) && "cursor-not-allowed")}
             // as="label"
             // htmlFor={`${name}_${value}`}
             // variant={

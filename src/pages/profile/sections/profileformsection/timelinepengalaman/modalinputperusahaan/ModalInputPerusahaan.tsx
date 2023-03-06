@@ -61,6 +61,7 @@ export default function ExampleModal({
         companyname: listPengalamanFieldsState.nama_perusahaan,
         companyaddress: listPengalamanFieldsState.lokasi_perusahaan,
         companylogo: null,
+        projects: [],
       };
 
       setListPengalaman((oldArray) => [...oldArray, newPerusahaan]);
