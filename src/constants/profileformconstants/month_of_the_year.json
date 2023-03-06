@@ -1,50 +1,50 @@
 [
 	{
-		"monthnumber": "01",
-		"monthname": "January"
+		"value": "01",
+		"label": "January"
 	},
 	{
-		"monthnumber": "02",
-		"monthname": "February"
+		"value": "02",
+		"label": "February"
 	},
 	{
-		"monthnumber": "03",
-		"monthname": "March"
+		"value": "03",
+		"label": "March"
 	},
 	{
-		"monthnumber": "04",
-		"monthname": "April"
+		"value": "04",
+		"label": "April"
 	},
 	{
-		"monthnumber": "05",
-		"monthname": "May"
+		"value": "05",
+		"label": "May"
 	},
 	{
-		"monthnumber": "06",
-		"monthname": "June"
+		"value": "06",
+		"label": "June"
 	},
 	{
-		"monthnumber": "07",
-		"monthname": "July"
+		"value": "07",
+		"label": "July"
 	},
 	{
-		"monthnumber": "08",
-		"monthname": "August"
+		"value": "08",
+		"label": "August"
 	},
 	{
-		"monthnumber": "09",
-		"monthname": "September"
+		"value": "09",
+		"label": "September"
 	},
 	{
-		"monthnumber": "10",
-		"monthname": "October"
+		"value": "10",
+		"label": "October"
 	},
 	{
-		"monthnumber": "11",
-		"monthname": "November"
+		"value": "11",
+		"label": "November"
 	},
 	{
-		"monthnumber": "12",
-		"monthname": "December"
+		"value": "12",
+		"label": "December"
 	}
 ]

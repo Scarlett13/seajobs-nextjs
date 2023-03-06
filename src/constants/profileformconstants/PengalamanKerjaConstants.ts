@@ -1,8 +1,9 @@
 export type EmploymentType = "Please select" | "Full-time" | "Part-time" | "Self-employed" | "Freelance" | "Contract" | "Internship" | "Apprenticeship" | "Seasonal"
 
+
 export interface IMonthOfTheYear {
-	monthnumber: string;
-	monthname: string;
+	value: string;
+	label: string;
 }
 
 export interface IPengalamanKerja {
@@ -11,21 +12,22 @@ export interface IPengalamanKerja {
 	companyname:          string;
 	companyaddress:       string;
 	companylogo:          string | null;
-	projects:             Project[];
+	projects:            IProject[];
 }
 
-export interface Project {
-	projectid:					 string;
-	projectname:         string;
-	projectdescription:  string;
-	employmenttype:      EmploymentType;
-	locationtype:        string;
-	projectstartmonth:   IMonthOfTheYear;
-	projectstartyear:    string;
-	isprojectfinished:   boolean;
-	projectendmonth:     IMonthOfTheYear | null;
-	projectendyear:      string | null;
-	projectrolename:     string;
-	projectroleindustry: string;
-	isstillworking:      boolean;
+export interface IProject {
+	projectid:					 	string;
+	projectname:         	string;
+	projectdescription:  	string;
+	employmenttype:      	EmploymentType;
+	projectlocation:     	string;
+	projectstartmonth:   	string;
+	projectstartyear:    	string;
+	isprojectfinished:   	boolean;
+	projectendmonth:     	string | null;
+	projectendyear:      	string | null;
+	//optional, di disable dulu
+	projectrolename?:     string;
+	projectroleindustry?: string;
+	isstillworking?:      	boolean;
 }

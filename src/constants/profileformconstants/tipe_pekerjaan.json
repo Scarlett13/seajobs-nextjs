@@ -1,0 +1,34 @@
+[
+	{
+		"value": "full_time",
+		"label": "Full-time"
+	},
+	{
+		"value": "part_time",
+		"label": "Part-time"
+	},
+	{
+		"value": "self_employed",
+		"label": "Self-employed"
+	},
+	{
+		"value": "freelance",
+		"label": "Freelance"
+	},
+	{
+		"value": "contract",
+		"label": "Contract"
+	},
+	{
+		"value": "internship",
+		"label": "Internship"
+	},
+	{
+		"value": "apprenticeship",
+		"label": "Apprenticeship"
+	},
+	{
+		"value": "seasonal",
+		"label": "Seasonal"
+	}
+]

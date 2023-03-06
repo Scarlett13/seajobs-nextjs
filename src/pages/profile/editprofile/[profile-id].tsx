@@ -1,11 +1,12 @@
+import { Button, Label, Modal, TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import ProfileMainLayout from "../../../components/layouts/profilemainlayout/ProfileMainLayout";
+import ProfileMainLayout from "../layouts/profilemainlayout/ProfileMainLayout";
 
 import Sidebar from "../../../components/navigation/sidebar/Sidebar";
-import DeskripsiDiri from "../../../components/sections/profileformsection/deskripsidiri/DeskripsiDiri";
-import IdentitasDiri from "../../../components/sections/profileformsection/identitasdiri/IdentitasDiri";
-import InfoKontak from "../../../components/sections/profileformsection/infokontak/InfoKontak";
-import TimelinePengalaman from "../../../components/sections/profileformsection/timelinepengalaman/TimelinePengalaman";
+import DeskripsiDiri from "../sections/profileformsection/deskripsidiri/DeskripsiDiri";
+import IdentitasDiri from "../sections/profileformsection/identitasdiri/IdentitasDiri";
+import InfoKontak from "../sections/profileformsection/infokontak/InfoKontak";
+import TimelinePengalaman from "../sections/profileformsection/timelinepengalaman/TimelinePengalaman";
 import { IPengalamanKerja } from "../../../constants/profileformconstants/PengalamanKerjaConstants";
 import {
   FormFields,
@@ -13,6 +14,8 @@ import {
   identitasDiriFields,
   infoKontakFields,
   deskripsiDiriFields,
+  tambahPerusahaanFields,
+  tambahProyekFields,
 } from "../../../constants/profileformconstants/ProfileFormConstants";
 import { useUser } from "../../../contexts/AmplifyAuthContext";
 
@@ -38,7 +41,9 @@ export default function EditProfile() {
     (field: FormFields) => (identitasDiriFieldsState[field.id] = "")
   );
 
-  const [identitasDiri, setIdentitasDiri] = useState(identitasDiriFieldsState);
+  const [identitasDiriState, setIdentitasDiriState] = useState(
+    identitasDiriFieldsState
+  );
 
   const [selectedKeahlian, setSelectedKeahlian] = useState<IBidangKeahlian[]>(
     []
@@ -52,7 +57,7 @@ export default function EditProfile() {
     (field: FormFields) => (infoKontakFieldsState[field.id] = "")
   );
 
-  const [infoKontak, setInfoKontak] = useState(infoKontakFieldsState);
+  const [infoKontakState, setInfoKontakState] = useState(infoKontakFieldsState);
   //end section info kontak
 
   //begin section hook deskripsi diri
@@ -62,16 +67,44 @@ export default function EditProfile() {
     (field: FormFields) => (deskripsiDiriFieldsState[field.id] = "")
   );
 
-  const [deskripsiDiri, setDeskripsiDiri] = useState(deskripsiDiriFieldsState);
+  const [deskripsiDiriState, setDeskripsiDiriState] = useState(
+    deskripsiDiriFieldsState
+  );
   //end section hook deskripsi diri
 
-  const listPengalaman: IPengalamanKerja[] = require("../../../constants/profileformconstants/pengalaman_kerja.json");
+  //begin section hook pengalaman kerja
+  // const listPengalamanDummy: IPengalamanKerja[] = require("../../../constants/profileformconstants/pengalaman_kerja.json");
+
+  const [listPengalaman, setListPengalaman] = useState<IPengalamanKerja[]>([]);
+
+  const tambahPerusahaanFieldsComp = tambahPerusahaanFields;
+  let tambahPerusahaanFieldsState: any = {};
+  tambahPerusahaanFieldsComp.forEach(
+    (field: FormFields) => (tambahPerusahaanFieldsState[field.id] = "")
+  );
+
+  const [listPerusahaanState, setListPerusahaanState] = useState(
+    tambahPerusahaanFieldsState
+  );
+
+  const tambahProyekFieldsComp = tambahProyekFields;
+  let tambahProyekFieldsState: any = {};
+  tambahProyekFieldsComp.forEach(
+    (field: FormFields) => (tambahProyekFieldsState[field.id] = "")
+  );
+
+  const [listProyekState, setListProyekState] = useState(
+    tambahProyekFieldsState
+  );
+
+  //end section hook pengalaman kerja
 
   // console.log(listPengalaman);
 
-  //handle untuk onpress sidebar, scrollspy
-  const onPress = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    console.log("pressed");
+  //begin handle untuk onpress sidebar, scrollspy
+  const onScrollSpyPressed = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     e.preventDefault();
     const target = window.document.getElementById(
       e.currentTarget.href.split("#")[1]
@@ -87,38 +120,48 @@ export default function EditProfile() {
       });
     }
   };
+  //end handle untuk onpress sidebar, scrollspy
 
   return (
     <ProfileMainLayout user={user}>
-      <div className="flex bg-black">
-        <main className="order-2 mx-4 mt-4 mb-24 flex-[1_0_16rem]">
+      <div className="flex justify-between bg-black ">
+        <main className="order-4 mx-4 mt-4 mb-24 flex-[1_0_16rem]">
           <div className="p-4">
             <IdentitasDiri
               selectedKeahlian={selectedKeahlian}
               setSelectedKeahlian={setSelectedKeahlian}
-              identitasDiri={identitasDiri}
-              setIdentitasDiri={setIdentitasDiri}
+              identitasDiri={identitasDiriState}
+              setIdentitasDiri={setIdentitasDiriState}
               identitasDiriFields={identitasDiriFieldsComp}
             />
             <InfoKontak
-              infoKontak={infoKontak}
-              setInfoKontak={setInfoKontak}
+              infoKontak={infoKontakState}
+              setInfoKontak={setInfoKontakState}
               infoKontakFields={infoKontakFieldsComp}
             />
             <DeskripsiDiri
-              deskripsiDiri={deskripsiDiri}
-              setDeskripsiDiri={setDeskripsiDiri}
+              deskripsiDiri={deskripsiDiriState}
+              setDeskripsiDiri={setDeskripsiDiriState}
               deskripsiDiriFields={deskripsiDiriFieldsComp}
             />
-            <TimelinePengalaman listPengalaman={listPengalaman} />
+            <TimelinePengalaman
+              listPengalaman={listPengalaman}
+              setListPengalaman={setListPengalaman}
+              tambahPerusahaanFields={tambahPerusahaanFieldsComp}
+              listPengalamanFieldsState={listPerusahaanState}
+              setListPengalamanFieldsState={setListPerusahaanState}
+              tambahProyekFields={tambahProyekFieldsComp}
+              listProyekFieldsState={listProyekState}
+              setListProyekFieldsState={setListProyekState}
+            />
           </div>
         </main>
-        <div className="order-1 bg-black">
+        <div className="order-2 bg-black lg:ml-96">
           <Sidebar>
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 <Sidebar.Item
-                  onClick={(e: any) => onPress(e)}
+                  onClick={(e: any) => onScrollSpyPressed(e)}
                   href={"#id_diri"}
                   icon={null}
                   data-to-scrollspy-id="id_diri"
@@ -128,7 +171,7 @@ export default function EditProfile() {
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
                 <Sidebar.Item
-                  onClick={(e: any) => onPress(e)}
+                  onClick={(e: any) => onScrollSpyPressed(e)}
                   href={"#info_kontak"}
                   icon={null}
                   data-to-scrollspy-id="info_kontak"
@@ -138,7 +181,7 @@ export default function EditProfile() {
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
                 <Sidebar.Item
-                  onClick={(e: any) => onPress(e)}
+                  onClick={(e: any) => onScrollSpyPressed(e)}
                   href={"#deskripsi_diri"}
                   icon={null}
                   data-to-scrollspy-id="deskripsi_diri"
@@ -148,7 +191,7 @@ export default function EditProfile() {
               </Sidebar.ItemGroup>
               <Sidebar.ItemGroup>
                 <Sidebar.Item
-                  onClick={(e: any) => onPress(e)}
+                  onClick={(e: any) => onScrollSpyPressed(e)}
                   href={"#pengalaman_kerja_dan_proyek"}
                   icon={null}
                   data-to-scrollspy-id="pengalaman_kerja_dan_proyek"

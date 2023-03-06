@@ -1,7 +1,7 @@
 import { Listbox } from "@headlessui/react";
 // import { useState } from "react";
 import { IBidangKeahlian } from "../../../constants/profileformconstants/ProfileFormConstants";
-import { IIdentitasDiri } from "../../sections/profileformsection/identitasdiri/IdentitasDiri";
+import { IIdentitasDiri } from "../../../pages/profile/sections/profileformsection/identitasdiri/IdentitasDiri";
 // import styles from "./BidangKeahlianInput.module.css";
 
 export interface IBidangKeahlianInput {
