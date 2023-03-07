@@ -1,4 +1,4 @@
-import { IBidangKeahlian } from '../../../../../constants/profileformconstants/ProfileFormConstants';
+import { IBidangKeahlian } from '../../../../constants/profileformconstants/ProfileFormConstants';
 import { IDeskripsiDiri } from './DeskripsiDiri';
 
 // const base: IDeskripsiDiri = {

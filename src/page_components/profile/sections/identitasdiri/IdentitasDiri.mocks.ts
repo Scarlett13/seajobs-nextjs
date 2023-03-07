@@ -1,4 +1,4 @@
-import { IBidangKeahlian } from '../../../../../constants/profileformconstants/ProfileFormConstants';
+import { IBidangKeahlian } from '../../../../constants/profileformconstants/ProfileFormConstants';
 import { IIdentitasDiri } from './IdentitasDiri';
 
 // const base: IIdentitasDiri = {
