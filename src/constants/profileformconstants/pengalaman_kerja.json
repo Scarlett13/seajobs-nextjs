@@ -1,0 +1,74 @@
+[
+	{
+		"companyid": "comp-1-adh",
+		"companysanitisedname": "pt_adhikari",
+		"companyname": "PT Adhikari",
+		"companyaddress": "Jakarta, Indonesia",
+		"companylogo": "-",
+		"projects": [
+			{
+				"projectid": "pr-1-1",
+				"projectname": "Front-end seajobs",
+				"projectdescription": "frontend for seajobs in web app using reactjs",
+				"employmenttype": "Full-time",
+				"locationtype": "Remote",
+				"projectstartmonth": {
+					"monthnumber": "01",
+					"monthname": "January"
+				},
+				"projectstartyear": "2023",
+				"isprojectfinished": false,
+				"projectendmonth": null,
+				"projectendyear": null,
+				"projectrolename": "Junior developer",
+				"projectroleindustry": "Software development",
+				"isstillworking": true
+			},
+			{
+				"projectid": "pr-1-2",
+				"projectname": "Back-end seajobs",
+				"projectdescription": "backend for seajobs in web app using aws",
+				"employmenttype": "Full-time",
+				"locationtype": "Remote",
+				"projectstartmonth": {
+					"monthnumber": "02",
+					"monthname": "July"
+				},
+				"projectstartyear": "2019",
+				"isprojectfinished": false,
+				"projectendmonth": null,
+				"projectendyear": null,
+				"projectrolename": "Junior developer",
+				"projectroleindustry": "Software development",
+				"isstillworking": true
+			}
+		]
+	},
+	{
+		"companyid": "comp-2-adh",
+		"companysanitisedname": "pt_adhikari_2",
+		"companyname": "PT Adhikari 2",
+		"companyaddress": "Jakarta, Indonesia",
+		"companylogo": "-",
+		"projects": [
+			{
+				"projectid": "pr-2-1",
+				"projectname": "Front-end seajobs",
+				"projectdescription": "frontend for seajobs in web app using reactjs",
+				"employmenttype": "Full-time",
+				"locationtype": "Remote",
+				"projectstartmonth": {
+					"monthnumber": "01",
+					"monthname": "January"
+				},
+				"projectstartyear": "2023",
+				"isprojectfinished": false,
+				"projectendmonth": null,
+				"projectendyear": null,
+				"projectrolename": "Junior developer",
+				"projectroleindustry": "Software development",
+				"isstillworking": true
+			}
+		]
+	}
+]

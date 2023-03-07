@@ -1,5 +1,8 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/flowbite-react/**/*.js",
+  ],
   // Ensure these match with .storybook/preview.js
   theme: {
     screens: {
@@ -9,6 +12,7 @@ module.exports = {
       lg: "1200px",
       xl: "1536px",
     },
+
     extend: {
       colors: {
         "footer-bg": "#05070E",
@@ -17,6 +21,7 @@ module.exports = {
         "form-bg": "#212121",
         "form-section-blue": "#0077FF",
         "form-section-required-red": "#EB1636",
+        "timeline-line-color": "#9E9E9E",
       },
       backgroundImage: {
         "hero1-bg": "url('/image.png')",
@@ -27,5 +32,6 @@ module.exports = {
     require("@tailwindcss/forms")({
       strategy: "class",
     }),
+    require("flowbite/plugin"),
   ],
 };

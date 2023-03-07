@@ -6,7 +6,8 @@
     "eslint:recommended"
   ],
   "globals": {
-    "React": "readonly"
+    "React": "readonly",
+		"JSX": "readonly"
   },
   // New
   "overrides": [
@@ -19,6 +20,6 @@
     }
   ],
   "rules": {
-    "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_" }]
+    "no-unused-vars": [0, { "args": "after-used", "argsIgnorePattern": "^_" }]
   }
 }

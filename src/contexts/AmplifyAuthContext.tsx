@@ -33,27 +33,27 @@ export default function AuthContext(
   const [loading, setLoading] = useState<boolean>(false);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   checkUser();
-  // }, []);
+  useEffect(() => {
+    checkUser();
+  }, []);
 
-  // async function checkUser() {
-  //   try {
-  //     console.log("user1: ", user);
-  //     console.log("auth1: ", authenticated);
-  //     const amplifyUser = await Auth.currentAuthenticatedUser();
-  //     console.log(amplifyUser);
-  //     setUser(amplifyUser);
-  //     setAuthenticated(true);
-  //     console.log("user2: ", user);
-  //     console.log("auth2: ", authenticated);
-  //   } catch (error) {
-  //     // No current signed in user.
-  //     console.error("error getuser: ", error);
-  //     setUser(null);
-  //     setAuthenticated(false);
-  //   }
-  // }
+  async function checkUser() {
+    try {
+      console.log("user1: ", user);
+      console.log("auth1: ", authenticated);
+      const amplifyUser = await Auth.currentAuthenticatedUser();
+      console.log(amplifyUser);
+      setUser(amplifyUser);
+      setAuthenticated(true);
+      console.log("user2: ", user);
+      console.log("auth2: ", authenticated);
+    } catch (error) {
+      // No current signed in user.
+      console.error("error getuser: ", error);
+      setUser(null);
+      setAuthenticated(false);
+    }
+  }
 
   useEffect(() => {
     const logger = new Logger("My-Logger");

@@ -33,15 +33,11 @@ IHeader) => {
   ];
 
   const [navbar, setNavbar] = useState(false);
+  console.log("user header: " + user);
 
   return (
     <div>
-      <Head>
-        <title>Seajobs</title>
-        <meta name="description" content="seajobs.co, find your work here" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <nav className="w-full bg-hero-bg shadow">
+      <nav className="top-0 left-0 right-0 bg-hero-bg shadow">
         <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
           <div>
             <div className="flex items-center justify-between py-3 md:py-5 md:block">

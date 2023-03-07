@@ -46,6 +46,8 @@ export default function Login() {
     e.preventDefault();
     const returnDataLogin = await login(loginState.email, loginState.password);
     if (returnDataLogin.success) {
+      console.log("login user: " + user);
+      console.log("login resultlogin: " + returnDataLogin);
       setUser(returnDataLogin.data);
       setAuthenticated(true);
       setSignInError("");
