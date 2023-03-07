@@ -1,9 +1,9 @@
 import { Listbox } from "@headlessui/react";
 import React, { useState } from "react";
-import { deskripsiDiriFields } from "../../../../../constants/profileformconstants/ProfileFormConstants";
-import Input from "../../../../../components/inputs/reguler/InputTemplate";
-import TextArea from "../../../../../components/inputs/textarea/TextArea";
-import ProfileSectionLayout from "../../../layouts/profilesectionlayout/ProfileSectionLayout";
+import { deskripsiDiriFields } from "../../../../constants/profileformconstants/ProfileFormConstants";
+import Input from "../../../../components/inputs/reguler/InputTemplate";
+import TextArea from "../../../../components/inputs/textarea/TextArea";
+import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
 // import styles from "./DeskripsiDiri.module.css";
 
 export interface IDeskripsiDiri {

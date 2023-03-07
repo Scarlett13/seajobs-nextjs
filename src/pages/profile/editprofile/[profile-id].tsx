@@ -14,10 +14,10 @@ import {
 } from "../../../constants/profileformconstants/ProfileFormConstants";
 import { useUser } from "../../../contexts/AmplifyAuthContext";
 import ProfileMainLayout from "../../../page_components/profile/layouts/profilemainlayout/ProfileMainLayout";
-import DeskripsiDiri from "../../../page_components/profile/sections/profileformsection/deskripsidiri/DeskripsiDiri";
-import IdentitasDiri from "../../../page_components/profile/sections/profileformsection/identitasdiri/IdentitasDiri";
-import InfoKontak from "../../../page_components/profile/sections/profileformsection/infokontak/InfoKontak";
-import TimelinePengalaman from "../../../page_components/profile/sections/profileformsection/timelinepengalaman/TimelinePengalaman";
+import DeskripsiDiri from "../../../page_components/profile/sections/deskripsidiri/DeskripsiDiri";
+import IdentitasDiri from "../../../page_components/profile/sections/identitasdiri/IdentitasDiri";
+import InfoKontak from "../../../page_components/profile/sections/infokontak/InfoKontak";
+import TimelinePengalaman from "../../../page_components/profile/sections/timelinepengalaman/TimelinePengalaman";
 
 export default function EditProfile() {
   // const parentScrollContainerRef = useRef<HTMLDivElement | null>(null);

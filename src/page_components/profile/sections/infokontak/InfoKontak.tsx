@@ -1,7 +1,7 @@
 import { Listbox } from "@headlessui/react";
-import { infoKontakFields } from "../../../../../constants/profileformconstants/ProfileFormConstants";
-import Input from "../../../../../components/inputs/reguler/InputTemplate";
-import ProfileSectionLayout from "../../../layouts/profilesectionlayout/ProfileSectionLayout";
+import { infoKontakFields } from "../../../../constants/profileformconstants/ProfileFormConstants";
+import Input from "../../../../components/inputs/reguler/InputTemplate";
+import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
 // import styles from "./InfoKontak.module.css";
 
 export interface IInfoKontak {

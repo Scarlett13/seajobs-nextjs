@@ -2,17 +2,17 @@ import { DateTime } from "luxon";
 import * as React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { sanitize } from "string-sanitizer";
-import Button from "../../../../../../components/buttons/custombuttons/Button";
-import Input from "../../../../../../components/forms/Input";
-import MonthYearPicker from "../../../../../../components/forms/MonthYearPicker";
-import SearchableSelectInput from "../../../../../../components/forms/SearchableSelectInput";
-import TextArea from "../../../../../../components/forms/TextArea";
-import Modal from "../../../../../../components/modal/Modal";
+import Button from "../../../../../components/buttons/custombuttons/Button";
+import Input from "../../../../../components/forms/Input";
+import MonthYearPicker from "../../../../../components/forms/MonthYearPicker";
+import SearchableSelectInput from "../../../../../components/forms/SearchableSelectInput";
+import TextArea from "../../../../../components/forms/TextArea";
+import Modal from "../../../../../components/modal/Modal";
 import {
   IPengalamanKerja,
   IProject,
-} from "../../../../../../constants/profileformconstants/PengalamanKerjaConstants";
-import { tambahProyekFields as referFileds } from "../../../../../../constants/profileformconstants/ProfileFormConstants";
+} from "../../../../../constants/profileformconstants/PengalamanKerjaConstants";
+import { tambahProyekFields as referFileds } from "../../../../../constants/profileformconstants/ProfileFormConstants";
 
 type ModalReturnType = {
   openModal: () => void;
@@ -41,7 +41,7 @@ export default function ExampleModal({
   pengalamanid: string;
   listPengalaman: IPengalamanKerja[];
 }) {
-  const tipe_pekerjaan = require("../../../../../../constants/profileformconstants/tipe_pekerjaan.json");
+  const tipe_pekerjaan = require("../../../../../constants/profileformconstants/tipe_pekerjaan.json");
 
   const [open, setOpen] = React.useState(false);
   const modalReturn: ModalReturnType = {

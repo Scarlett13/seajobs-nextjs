@@ -1,9 +1,9 @@
 import * as React from "react";
-import Button from "../../../../../../components/buttons/custombuttons/Button";
-import InputTemplate from "../../../../../../components/inputs/reguler/InputTemplate";
-import Modal from "../../../../../../components/modal/Modal";
-import { IPengalamanKerja } from "../../../../../../constants/profileformconstants/PengalamanKerjaConstants";
-import { tambahPerusahaanFields as referFileds } from "../../../../../../constants/profileformconstants/ProfileFormConstants";
+import Button from "../../../../../components/buttons/custombuttons/Button";
+import InputTemplate from "../../../../../components/inputs/reguler/InputTemplate";
+import Modal from "../../../../../components/modal/Modal";
+import { IPengalamanKerja } from "../../../../../constants/profileformconstants/PengalamanKerjaConstants";
+import { tambahPerusahaanFields as referFileds } from "../../../../../constants/profileformconstants/ProfileFormConstants";
 import { sanitize } from "string-sanitizer";
 
 type ModalReturnType = {

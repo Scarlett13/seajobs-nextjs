@@ -2,9 +2,9 @@ import { Listbox } from "@headlessui/react";
 import {
   IBidangKeahlian,
   identitasDiriFields,
-} from "../../../../../constants/profileformconstants/ProfileFormConstants";
-import Input from "../../../../../components/inputs/reguler/InputTemplate";
-import ProfileSectionLayout from "../../../layouts/profilesectionlayout/ProfileSectionLayout";
+} from "../../../../constants/profileformconstants/ProfileFormConstants";
+import Input from "../../../../components/inputs/reguler/InputTemplate";
+import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
 // import styles from "./IdentitasDiri.module.css";
 
 export interface IIdentitasDiri {
@@ -25,7 +25,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
   const fixedInputClass =
     "bg-black appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg focus:z-10 sm:text-sm text-left";
 
-  const dataKeahlian: IBidangKeahlian[] = require("../../../../../constants/profileformconstants/bidang_keahlian.json");
+  const dataKeahlian: IBidangKeahlian[] = require("../../../../constants/profileformconstants/bidang_keahlian.json");
 
   const handleIdentitasDiriChange = (e: {
     target: { id: any; value: any };

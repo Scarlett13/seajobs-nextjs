@@ -1,14 +1,14 @@
 import { Listbox } from "@headlessui/react";
 import { Button, Timeline } from "flowbite-react";
-import { IPengalamanKerja } from "../../../../../constants/profileformconstants/PengalamanKerjaConstants";
+import { IPengalamanKerja } from "../../../../constants/profileformconstants/PengalamanKerjaConstants";
 import {
   tambahPerusahaanFields,
   tambahProyekFields,
-} from "../../../../../constants/profileformconstants/ProfileFormConstants";
+} from "../../../../constants/profileformconstants/ProfileFormConstants";
 // import { timelinePengalamanFields } from "../../../../constants/profileformconstants/ProfileFormConstants";
-import Input from "../../../../../components/inputs/reguler/InputTemplate";
-import TimelineInput from "../../../inputs/timeline/TimelineInput";
-import ProfileSectionLayout from "../../../layouts/profilesectionlayout/ProfileSectionLayout";
+import Input from "../../../../components/inputs/reguler/InputTemplate";
+import TimelineInput from "../../inputs/timeline/TimelineInput";
+import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
 // import styles from "./TimelinePengalaman.module.css";
 
 export interface ITimelinePengalaman {

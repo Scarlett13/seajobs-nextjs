@@ -5,7 +5,7 @@ import {
   tambahPerusahaanFields,
   tambahProyekFields,
 } from "../../../../constants/profileformconstants/ProfileFormConstants";
-import ModalInputPerusahaan from "../../sections/profileformsection/timelinepengalaman/modalinputperusahaan/ModalInputPerusahaan";
+import ModalInputPerusahaan from "../../sections/timelinepengalaman/modalinputperusahaan/ModalInputPerusahaan";
 
 export interface IProfileSectionLayout {
   children?: any;

@@ -1,10 +1,9 @@
 import { Button, Timeline } from "flowbite-react";
 import { DateTime } from "luxon";
 import { useLayoutEffect, useState } from "react";
-
 import { IPengalamanKerja } from "../../../../constants/profileformconstants/PengalamanKerjaConstants";
 import { tambahProyekFields } from "../../../../constants/profileformconstants/ProfileFormConstants";
-import ModalInputProyek from "../../sections/profileformsection/timelinepengalaman/modalinputperusahaan/ModalInputProyek";
+import ModalInputProyek from "../../sections/timelinepengalaman/modalinputperusahaan/ModalInputProyek";
 
 const currentDate = DateTime.now().toFormat("yyyy-MM");
 
