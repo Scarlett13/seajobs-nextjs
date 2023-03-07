@@ -1,12 +1,7 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import ProfileMainLayout from "../layouts/profilemainlayout/ProfileMainLayout";
 
 import Sidebar from "../../../components/navigation/sidebar/Sidebar";
-import DeskripsiDiri from "../sections/profileformsection/deskripsidiri/DeskripsiDiri";
-import IdentitasDiri from "../sections/profileformsection/identitasdiri/IdentitasDiri";
-import InfoKontak from "../sections/profileformsection/infokontak/InfoKontak";
-import TimelinePengalaman from "../sections/profileformsection/timelinepengalaman/TimelinePengalaman";
 import { IPengalamanKerja } from "../../../constants/profileformconstants/PengalamanKerjaConstants";
 import {
   FormFields,
@@ -18,6 +13,11 @@ import {
   tambahProyekFields,
 } from "../../../constants/profileformconstants/ProfileFormConstants";
 import { useUser } from "../../../contexts/AmplifyAuthContext";
+import ProfileMainLayout from "../../../page_components/profile/layouts/profilemainlayout/ProfileMainLayout";
+import DeskripsiDiri from "../../../page_components/profile/sections/profileformsection/deskripsidiri/DeskripsiDiri";
+import IdentitasDiri from "../../../page_components/profile/sections/profileformsection/identitasdiri/IdentitasDiri";
+import InfoKontak from "../../../page_components/profile/sections/profileformsection/infokontak/InfoKontak";
+import TimelinePengalaman from "../../../page_components/profile/sections/profileformsection/timelinepengalaman/TimelinePengalaman";
 
 export default function EditProfile() {
   // const parentScrollContainerRef = useRef<HTMLDivElement | null>(null);
