@@ -143,6 +143,28 @@ const tambahProyekFields = [
     titelKey: "nama_proyek"
   },
 	{
+    labelText: "Nama klien",
+    labelFor: "nama_klien",
+    id: "nama_klien",
+    name: "nama_klien",
+    type: "text",
+    autoComplete: "client_name",
+    isRequired: true,
+    placeholder: "cth: PT Client Jembatan Sejahtera",
+    titelKey: "nama_klien"
+  },
+	{
+    labelText: "Posisi kerja",
+    labelFor: "posisi_kerja",
+    id: "posisi_kerja",
+    name: "posisi_kerja",
+    type: "text",
+    autoComplete: "posisition",
+    isRequired: true,
+    placeholder: "cth: Supervisor",
+    titelKey: "posisi_kerja"
+  },
+	{
     labelText: "Deskripsi proyek",
     labelFor: "deskripsi_proyek",
     id: "deskripsi_proyek",

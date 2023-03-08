@@ -3,6 +3,8 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { CognitoUser } from "@aws-amplify/auth";
 import { logout } from "@utils/AuthUtils";
+import Image from "next/image";
+import logo_full from "@assets/logo/svg/logo_2.svg";
 
 export interface IHeader {
   user?: CognitoUser | null;
@@ -42,7 +44,13 @@ IHeader) => {
           <div>
             <div className="flex items-center justify-between py-3 md:py-5 md:block">
               <Link href="/">
-                <h2 className="text-2xl text-white font-medium">Seajobs</h2>
+                {/* <h2 className="text-2xl text-white font-medium">Seajobs</h2> */}
+                <Image
+                  src={logo_full}
+                  alt="logo seajobs"
+                  height={64}
+                  width={86}
+                />
               </Link>
               <div className="md:hidden">
                 <button

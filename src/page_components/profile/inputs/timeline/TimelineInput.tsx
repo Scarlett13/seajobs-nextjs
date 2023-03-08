@@ -18,6 +18,7 @@ export interface ITimelineInput {
 interface IDiffTime {
   perusahaanid: string;
   diff: any;
+  isPengalaman: boolean;
 }
 
 const fixedTimelineLocationClassName =
@@ -59,16 +60,17 @@ const TimelineInput: React.FC<ITimelineInput> = ({
         let totalyears = 0;
 
         arrayCalculateDiff.forEach((diff) => {
-          totalmonths += diff.months;
+          totalmonths += diff.months + 1;
           totalyears += diff.years;
         });
-        while (totalmonths > 12) {
+        while (totalmonths >= 12) {
           totalmonths -= 12;
           totalyears += 1;
         }
         const newArrayDiff = {
           perusahaanid: pengalaman.companyid,
           diff: { months: totalmonths, years: totalyears },
+          isPengalaman: totalmonths > 0 || totalyears > 0,
         };
 
         console.log("newarray: ", newArrayDiff);
@@ -142,15 +144,15 @@ const TimelineInput: React.FC<ITimelineInput> = ({
               <p className="text-white text-md capitalize ml-6 pb-4">
                 {`${
                   arrayDiff.length > 0 && arrayDiff[index]
-                    ? arrayDiff[index]?.diff.years !== undefined &&
-                      arrayDiff[index]?.diff.years < 1
-                      ? arrayDiff[index]?.diff.months + " bulan"
-                      : arrayDiff[index]?.diff.years +
-                        " tahun " +
-                        (arrayDiff[index]?.diff.months !== undefined &&
-                        arrayDiff[index]?.diff.months < 1
-                          ? ""
-                          : arrayDiff[index]?.diff.months + " bulan")
+                    ? arrayDiff[index].isPengalaman
+                      ? arrayDiff[index].diff.years < 1
+                        ? arrayDiff[index].diff.months + " bulan"
+                        : arrayDiff[index].diff.years +
+                          " tahun " +
+                          (arrayDiff[index].diff.months < 1
+                            ? ""
+                            : arrayDiff[index]?.diff.months + " bulan")
+                      : "Belum ada pengalaman"
                     : "Belum ada pengalaman"
                 }`}
               </p>

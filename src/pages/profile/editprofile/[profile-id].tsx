@@ -17,6 +17,7 @@ import ProfileMainLayout from "../../../page_components/profile/layouts/profilem
 import DeskripsiDiri from "../../../page_components/profile/sections/deskripsidiri/DeskripsiDiri";
 import IdentitasDiri from "../../../page_components/profile/sections/identitasdiri/IdentitasDiri";
 import InfoKontak from "../../../page_components/profile/sections/infokontak/InfoKontak";
+import RiwayatPendidikan from "../../../page_components/profile/sections/pendidikan/RiwayatPendidikan";
 import TimelinePengalaman from "../../../page_components/profile/sections/timelinepengalaman/TimelinePengalaman";
 
 export default function EditProfile() {
@@ -154,6 +155,7 @@ export default function EditProfile() {
               listProyekFieldsState={listProyekState}
               setListProyekFieldsState={setListProyekState}
             />
+            <RiwayatPendidikan sampleTextProp="test" />
           </div>
         </main>
         <div className="order-2 bg-black lg:ml-96">
@@ -197,6 +199,16 @@ export default function EditProfile() {
                   data-to-scrollspy-id="pengalaman_kerja_dan_proyek"
                 >
                   Pengalaman kerja dan proyek
+                </Sidebar.Item>
+              </Sidebar.ItemGroup>
+              <Sidebar.ItemGroup>
+                <Sidebar.Item
+                  onClick={(e: any) => onScrollSpyPressed(e)}
+                  href={"#pendidikan_sertifikasi"}
+                  icon={null}
+                  data-to-scrollspy-id="pendidikan_sertifikasi"
+                >
+                  Pendidikan dan sertifikasi
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
             </Sidebar.Items>

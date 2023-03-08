@@ -63,6 +63,8 @@ export default function ExampleModal({
         projectname: data.nama_proyek,
         projectdescription: data.deskripsi_proyek,
         employmenttype: data.jenis_pekerjaan,
+        projectclientname: data.nama_klien,
+        projectrolename: data.posisi_kerja,
         projectlocation: data.lokasi_proyek,
         projectstartmonth: DateTime.fromISO(
           new Date(data.proyek_dimulai).toISOString()
@@ -119,16 +121,38 @@ export default function ExampleModal({
     (value: React.SetStateAction<boolean>): void;
     (arg0: boolean): void;
   }) => {
-    listProyekFieldsState.nama_perusahaan = "";
+    listProyekFieldsState.nama_proyek = "";
     listProyekFieldsState.lokasi_perusahaan = "";
     setOpen(false);
   };
 
   const methods = useForm({
     mode: "onTouched",
+    defaultValues: {
+      nama_proyek: "",
+      nama_klien: "",
+      posisi_kerja: "",
+      deskripsi_proyek: "",
+      lokasi_proyek: "",
+      jenis_pekerjaan: "",
+      proyek_dimulai: "",
+      proyek_selesai: "",
+    },
   });
 
-  const { handleSubmit, resetField } = methods;
+  const {
+    handleSubmit,
+    resetField,
+    reset,
+    formState,
+    formState: { isSubmitSuccessful },
+  } = methods;
+
+  React.useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+    }
+  }, [formState, reset]);
   //#endregion  //*======== Form ===========
 
   //#region  //*=========== Form Submit ===========
@@ -183,7 +207,7 @@ export default function ExampleModal({
                             ? { required: "Nama proyek perlu di isi" }
                             : undefined
                         }
-                        placeholder="cth: Proyek Jembatan Gemah Ripah Bandung"
+                        placeholder={field.placeholder}
                         helperText={undefined}
                       />
                     </section>
@@ -272,18 +296,10 @@ export default function ExampleModal({
           <div className="flex justify-end gap-2">
             <Button
               variant="outline"
-              onClick={() => {
-                onClose(setOpen);
-              }}
-            >
-              Label close
-            </Button>
-            <Button
-              variant="outline"
               type="submit"
               onClick={handleSubmit(onSubmit)}
             >
-              Label2
+              Tambah Proyek
             </Button>
           </div>
         </Modal.Section>

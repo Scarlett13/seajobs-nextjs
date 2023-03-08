@@ -26,8 +26,9 @@ export interface IProject {
 	isprojectfinished:   	boolean;
 	projectendmonth:     	string | null;
 	projectendyear:      	string | null;
+	projectclientname:    string;
+	projectrolename:      string;
 	//optional, di disable dulu
-	projectrolename?:     string;
 	projectroleindustry?: string;
 	isstillworking?:      	boolean;
 }
