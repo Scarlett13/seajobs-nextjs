@@ -315,11 +315,6 @@ export default function ExampleModal({
                             ? { required: "Nama proyek perlu di isi" }
                             : undefined
                         }
-                        value={
-                          defaultValue
-                            ? defaultValue[field.titelKey]
-                            : "masuk sini pak eko"
-                        }
                         placeholder={field.placeholder}
                         helperText={undefined}
                       />
