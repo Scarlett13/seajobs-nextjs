@@ -13,6 +13,7 @@ import {
   IProject,
 } from "../../../../../constants/profileformconstants/PengalamanKerjaConstants";
 import { tambahProyekFields as referFileds } from "../../../../../constants/profileformconstants/ProfileFormConstants";
+import v4 from "uuid-browser/v4";
 
 type ModalReturnType = {
   openModal: () => void;
@@ -31,6 +32,8 @@ export default function ExampleModal({
   setListPengalaman,
   pengalamanid,
   listPengalaman,
+  defaultValue,
+  indexEdit,
 }: {
   children: (props: ModalReturnType) => JSX.Element;
   title: string;
@@ -40,8 +43,12 @@ export default function ExampleModal({
   setListPengalaman: React.Dispatch<React.SetStateAction<IPengalamanKerja[]>>;
   pengalamanid: string;
   listPengalaman: IPengalamanKerja[];
+  defaultValue?: any;
+  indexEdit?: string;
 }) {
   const tipe_pekerjaan = require("../../../../../constants/profileformconstants/tipe_pekerjaan.json");
+
+  const e: string = v4();
 
   const [open, setOpen] = React.useState(false);
   const modalReturn: ModalReturnType = {
@@ -49,13 +56,78 @@ export default function ExampleModal({
     title: title,
   };
 
+  //#region  //*=========== Form ===========
+  const methods = useForm({
+    mode: "onTouched",
+    defaultValues: {
+      nama_proyek: "",
+      nama_klien: "",
+      posisi_kerja: "",
+      deskripsi_proyek: "",
+      lokasi_proyek: "",
+      jenis_pekerjaan: "",
+      proyek_dimulai: "",
+      proyek_selesai: "",
+    },
+  });
+
+  const {
+    handleSubmit,
+    resetField,
+    reset,
+    formState,
+    formState: { isSubmitSuccessful },
+    setValue,
+  } = methods;
+
+  React.useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      if (!defaultValue && !indexEdit) {
+        reset();
+      }
+    }
+  }, [defaultValue, formState, indexEdit, reset]);
+
+  React.useLayoutEffect(() => {
+    if (defaultValue) {
+      console.log("defaultvalue: ", defaultValue);
+      const defaultStartProject = new Date();
+      var defaultEndProject: any = "";
+      if (defaultValue.projectstartmonth && defaultValue.projectstartyear) {
+        defaultStartProject.setFullYear(defaultValue.projectstartyear);
+        defaultStartProject.setMonth(defaultValue.projectstartmonth);
+        defaultStartProject.setMonth(defaultStartProject.getMonth() - 1);
+      }
+      if (defaultValue.projectendtmonth && defaultValue.projectendyear) {
+        defaultEndProject = new Date();
+        defaultEndProject.setFullYear(defaultValue.projectendyear);
+        defaultEndProject.setMonth(defaultValue.projectendtmonth);
+        defaultEndProject.setMonth(defaultEndProject.getMonth() - 1);
+      }
+      setValue("nama_proyek", defaultValue.projectname);
+      setValue("nama_klien", defaultValue.projectclientname);
+      setValue("posisi_kerja", defaultValue.projectrolename);
+      setValue("deskripsi_proyek", defaultValue.projectdescription);
+      setValue("lokasi_proyek", defaultValue.projectlocation);
+      setValue("jenis_pekerjaan", defaultValue.employmenttype);
+      setValue("proyek_dimulai", defaultStartProject.toISOString());
+      // setValue("proyek_selesai", "01/2023");
+    }
+  }, [defaultValue, indexEdit, setValue]);
+
+  //#endregion  //*======== Form ===========
+
+  //#region  //*=========== Form Submit ===========
+
   const submitListPengalaman = (data: any) => {
     if (setListPengalaman && listProyekFieldsState) {
       const index = listPengalaman.findIndex(
         (pp) => pp.companyid === pengalamanid
       );
+
       const newPengalaman: IProject = {
-        projectid: `${sanitize
+        projectid: indexEdit ? indexEdit : e,
+        projectsanitisedname: `${sanitize
           .addUnderscore(listPengalaman[index].companyid)
           .toLowerCase()}_${sanitize
           .addUnderscore(data.nama_proyek)
@@ -83,13 +155,27 @@ export default function ExampleModal({
               new Date(data.proyek_selesai).toISOString()
             ).toFormat("yyyy")
           : null,
+        isstillworking: data.proyekselesai ? false : true,
       };
 
       const tempdata = listPengalaman;
       const tempproyek = tempdata[index].projects
         ? tempdata[index].projects
         : [];
-      tempproyek ? tempproyek.push(newPengalaman) : newPengalaman;
+      if (tempproyek) {
+        if (defaultValue && indexEdit) {
+          console.log("masuk edit");
+          tempproyek.map((item) =>
+            item.projectid === indexEdit
+              ? Object.assign(item, newPengalaman)
+              : item
+          );
+        } else {
+          console.log("masuk add");
+          tempproyek.push(newPengalaman);
+        }
+      }
+
       tempdata[index].projects = tempproyek;
 
       listPengalaman.map((pengalaman) => {
@@ -102,6 +188,10 @@ export default function ExampleModal({
         new Date(data.proyek_dimulai).toISOString()
       ).toFormat("MM/yyyy");
       console.log("testdate: ", testdateluxon);
+
+      console.log("def dan index: ", defaultValue && indexEdit);
+      console.log("def: ", defaultValue);
+      console.log(" index: ", indexEdit);
 
       setListPengalaman((pengalamans) => {
         const newWeekdays = pengalamans.map((item, index) => {
@@ -117,45 +207,58 @@ export default function ExampleModal({
     }
   };
 
+  //#endregion  //*======== Form Submit ===========
+
+  //#region  //*=========== Delete Item ===========
+
+  const deleteProject = (data: any) => {
+    if (setListPengalaman && listProyekFieldsState) {
+      const index = listPengalaman.findIndex(
+        (pp) => pp.companyid === pengalamanid
+      );
+
+      const tempdata = listPengalaman;
+      const tempproyek = tempdata[index].projects
+        ? tempdata[index].projects
+        : [];
+      if (tempproyek) {
+        const indextobedeleted = tempproyek.findIndex(
+          (pp) => pp.projectid === indexEdit
+        );
+        if (indextobedeleted !== -1) {
+          tempproyek.splice(indextobedeleted, 1);
+        }
+      }
+
+      tempdata[index].projects = tempproyek;
+
+      listPengalaman.map((pengalaman) => {
+        if (pengalaman.companyid === pengalamanid) {
+          pengalaman.projects = tempproyek;
+        }
+      });
+
+      setListPengalaman((pengalamans) => {
+        const newWeekdays = pengalamans.map((item, index) => {
+          if (item.companyid === pengalamanid) {
+            return { ...item, projects: tempproyek };
+          }
+          return { ...item };
+        });
+        return newWeekdays;
+      });
+    }
+  };
+
+  //#endregion  //*======== Delete Item ===========
+
   const onClose = (setOpen: {
     (value: React.SetStateAction<boolean>): void;
     (arg0: boolean): void;
   }) => {
-    listProyekFieldsState.nama_proyek = "";
-    listProyekFieldsState.lokasi_perusahaan = "";
     setOpen(false);
   };
 
-  const methods = useForm({
-    mode: "onTouched",
-    defaultValues: {
-      nama_proyek: "",
-      nama_klien: "",
-      posisi_kerja: "",
-      deskripsi_proyek: "",
-      lokasi_proyek: "",
-      jenis_pekerjaan: "",
-      proyek_dimulai: "",
-      proyek_selesai: "",
-    },
-  });
-
-  const {
-    handleSubmit,
-    resetField,
-    reset,
-    formState,
-    formState: { isSubmitSuccessful },
-  } = methods;
-
-  React.useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset();
-    }
-  }, [formState, reset]);
-  //#endregion  //*======== Form ===========
-
-  //#region  //*=========== Form Submit ===========
   const onSubmit = (data: any) => {
     // logger({ data }, 'rhf.tsx line 33');
 
@@ -163,7 +266,7 @@ export default function ExampleModal({
 
     // !STARTERCONF Remove console log, use logger instead
     // eslint-disable-next-line no-console
-    if (data.proyek_selesai < data.proyek_dimulai) {
+    if (data.proyek_selesai && data.proyek_selesai < data.proyek_dimulai) {
       console.log("lebih gede");
       resetField("proyek_selesai");
       return;
@@ -174,8 +277,13 @@ export default function ExampleModal({
     return;
   };
 
+  const onDelete = (data: any) => {
+    deleteProject(data);
+    setOpen(false);
+    return;
+  };
+
   const [proyekDimulai, setProyekDimulai] = React.useState();
-  // console.log(proyekDimulai);
 
   return (
     <>
@@ -206,6 +314,11 @@ export default function ExampleModal({
                           field.isRequired === true
                             ? { required: "Nama proyek perlu di isi" }
                             : undefined
+                        }
+                        value={
+                          defaultValue
+                            ? defaultValue[field.titelKey]
+                            : "masuk sini pak eko"
                         }
                         placeholder={field.placeholder}
                         helperText={undefined}
@@ -295,11 +408,19 @@ export default function ExampleModal({
         <Modal.Section>
           <div className="flex justify-end gap-2">
             <Button
+              variant="danger"
+              type="submit"
+              onClick={handleSubmit(onDelete)}
+              className={defaultValue && indexEdit ? "" : "hidden"}
+            >
+              Hapus proyek
+            </Button>
+            <Button
               variant="outline"
               type="submit"
               onClick={handleSubmit(onSubmit)}
             >
-              Tambah Proyek
+              {defaultValue && indexEdit ? "Edit Proyek" : "Tambah Proyek"}
             </Button>
           </div>
         </Modal.Section>

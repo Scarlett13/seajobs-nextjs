@@ -1,6 +1,6 @@
 import { Button, Timeline } from "flowbite-react";
 import { DateTime } from "luxon";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { IPengalamanKerja } from "../../../../constants/profileformconstants/PengalamanKerjaConstants";
 import { tambahProyekFields } from "../../../../constants/profileformconstants/ProfileFormConstants";
 import ModalInputProyek from "../../sections/timelinepengalaman/modalinputperusahaan/ModalInputProyek";
@@ -24,6 +24,9 @@ interface IDiffTime {
 const fixedTimelineLocationClassName =
   "mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500";
 
+const fixedTimelineClientClassName =
+  "mb-1 mt-1 text-md font-normal leading-none text-gray-400 dark:text-gray-500";
+
 const TimelineInput: React.FC<ITimelineInput> = ({
   listPengalaman,
   listProyekFieldsState,
@@ -37,21 +40,31 @@ const TimelineInput: React.FC<ITimelineInput> = ({
 
   const [arrayDiff, setArrayDiff] = useState<IDiffTime[]>([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let tempArrayDiff: IDiffTime[] = [];
 
     listPengalaman.forEach((pengalaman) => {
       var arrayCalculateDiff: any[] = [];
       if (pengalaman.projects) {
         pengalaman.projects.forEach((project) => {
-          const diffToBePushed = DateTime.fromISO(
-            `${project.projectendyear}-${project.projectendmonth}`
-          ).diff(
-            DateTime.fromISO(
-              `${project.projectstartyear}-${project.projectstartmonth}`
-            ),
-            ["years", "months"]
-          );
+          var diffToBePushed;
+          if (project.projectendmonth && project.projectendyear) {
+            diffToBePushed = DateTime.fromISO(
+              `${project.projectendyear}-${project.projectendmonth}`
+            ).diff(
+              DateTime.fromISO(
+                `${project.projectstartyear}-${project.projectstartmonth}`
+              ),
+              ["years", "months"]
+            );
+          } else {
+            diffToBePushed = DateTime.fromISO(currentDate).diff(
+              DateTime.fromISO(
+                `${project.projectstartyear}-${project.projectstartmonth}`
+              ),
+              ["years", "months"]
+            );
+          }
 
           arrayCalculateDiff = [...arrayCalculateDiff, diffToBePushed];
         });
@@ -59,7 +72,7 @@ const TimelineInput: React.FC<ITimelineInput> = ({
         let totalmonths = 0;
         let totalyears = 0;
 
-        arrayCalculateDiff.forEach((diff) => {
+        arrayCalculateDiff.forEach((diff, index) => {
           totalmonths += diff.months + 1;
           totalyears += diff.years;
         });
@@ -189,11 +202,17 @@ const TimelineInput: React.FC<ITimelineInput> = ({
 
           <div>
             <Timeline>
-              {pengalaman?.projects?.map((project) => (
+              {pengalaman?.projects?.map((project, index) => (
                 <Timeline.Item key={project.projectid}>
                   <Timeline.Point />
                   <Timeline.Content>
                     <Timeline.Title>{project.projectname}</Timeline.Title>
+                    <p className={fixedTimelineClientClassName}>
+                      {`${project.projectclientname}`}
+                    </p>
+                    <p className={fixedTimelineClientClassName}>
+                      {`${project.projectrolename}`}
+                    </p>
                     <Timeline.Time>{`${project.projectstartmonth} / ${
                       project.projectstartyear
                     } - ${
@@ -209,9 +228,28 @@ const TimelineInput: React.FC<ITimelineInput> = ({
                     <Timeline.Body>
                       {`${project.projectdescription}`}
                     </Timeline.Body>
-                    <Button color="gray" className="px-6">
-                      Edit
-                    </Button>
+                    <ModalInputProyek
+                      title={"Edit proyek"}
+                      pengalamanid={pengalaman.companyid}
+                      listPengalaman={listPengalaman}
+                      listProyekFieldsState={listProyekFieldsState}
+                      setListProyekFieldsState={setListProyekFieldsState}
+                      tambahProyekFields={tambahProyekFields}
+                      setListPengalaman={setListPengalaman}
+                      defaultValue={project}
+                      indexEdit={project.projectid}
+                    >
+                      {({ openModal }) => (
+                        <Button
+                          color="gray"
+                          className="px-2 mr-4"
+                          onClick={openModal}
+                          title={"Edit proyek"}
+                        >
+                          Edit
+                        </Button>
+                      )}
+                    </ModalInputProyek>
                   </Timeline.Content>
                 </Timeline.Item>
               ))}

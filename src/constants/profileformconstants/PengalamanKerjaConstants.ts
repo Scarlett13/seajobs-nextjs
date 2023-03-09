@@ -17,6 +17,7 @@ export interface IPengalamanKerja {
 
 export interface IProject {
 	projectid:					 	string;
+	projectsanitisedname: string;
 	projectname:         	string;
 	projectdescription:  	string;
 	employmenttype:      	EmploymentType;
