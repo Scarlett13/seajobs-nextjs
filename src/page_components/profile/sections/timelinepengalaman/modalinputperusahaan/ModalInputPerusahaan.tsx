@@ -110,14 +110,6 @@ export default function ExampleModal({
         </Modal.Section>
         <Modal.Section>
           <div className="flex justify-end gap-2">
-            {/* <Button
-              variant="outline"
-              onClick={() => {
-                onClose(setOpen);
-              }}
-            >
-              Label close
-            </Button> */}
             <Button
               variant="outline"
               onClick={() => {

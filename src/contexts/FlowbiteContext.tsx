@@ -9,7 +9,7 @@ const FlowbiteContext: FC<PropsWithChildren> = function ({ children }) {
       theme={{
         theme: {
           sidebar: {
-            base: "h-full sticky",
+            base: "h-full top-0",
             inner: "bg-black rounded-none pt-8 sticky",
             itemGroup:
               "space-y-2 sticky border-t border-black first:mt-0 first:border-t-0 first:pt-0 dark:border-black0 bg-form-bg",

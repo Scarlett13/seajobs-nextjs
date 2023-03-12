@@ -7,7 +7,7 @@ import ModalInputProyek from "../../sections/timelinepengalaman/modalinputperusa
 
 const currentDate = DateTime.now().toFormat("yyyy-MM");
 
-export interface ITimelineInput {
+export interface IPengalamanKerjaProyek {
   listPengalaman: IPengalamanKerja[];
   listProyekFieldsState?: any;
   setListProyekFieldsState?: React.Dispatch<React.SetStateAction<any>>;
@@ -27,7 +27,7 @@ const fixedTimelineLocationClassName =
 const fixedTimelineClientClassName =
   "mb-1 mt-1 text-md font-normal leading-none text-gray-400 dark:text-gray-500";
 
-const TimelineInput: React.FC<ITimelineInput> = ({
+const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
   listPengalaman,
   listProyekFieldsState,
   setListProyekFieldsState,
@@ -261,4 +261,4 @@ const TimelineInput: React.FC<ITimelineInput> = ({
   );
 };
 
-export default TimelineInput;
+export default PengalamanKerjaProyek;

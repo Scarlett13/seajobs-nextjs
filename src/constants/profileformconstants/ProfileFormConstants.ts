@@ -222,4 +222,96 @@ const tambahProyekFields = [
   },
 ];
 
-export { identitasDiriFields, infoKontakFields, deskripsiDiriFields, tambahPerusahaanFields, tambahProyekFields };
+const tambahPendidikanSertifikasiFileds = [
+	{
+    labelText: "Tipe pendidikan",
+    labelFor: "tipe_pendidikan",
+    id: "tipe_pendidikan",
+    name: "tipe_pendidikan",
+    type: "tipe_pendidikan",
+    autoComplete: "tipe_pendidikan",
+    isRequired: true,
+    placeholder: "Pilih Lainnya jika tidak ditemukan",
+    titelKey: "tipe_pendidikan"
+  },
+	{
+    labelText: "Nama institusi",
+    labelFor: "nama_institusi",
+    id: "nama_institusi",
+    name: "nama_institusi",
+    type: "text",
+    autoComplete: "nama_institusi",
+    isRequired: true,
+    placeholder: "cth: Universitas Arsitek Indonesia",
+    titelKey: "nama_institusi"
+  },
+	{
+    labelText: "Nama jurusan / kursus",
+    labelFor: "jurusan_keahlian",
+    id: "jurusan_keahlian",
+    name: "jurusan_keahlian",
+    type: "text",
+    autoComplete: "jurusan_keahlian",
+    isRequired: true,
+    placeholder: "cth: Arsitektur / Kursus AutoCAD",
+    titelKey: "jurusan_keahlian"
+  },
+	{
+    labelText: "Deskripsi pendidikan",
+    labelFor: "deskripsi_pendidikan",
+    id: "deskripsi_pendidikan",
+    name: "deskripsi_pendidikan",
+    type: "textarea",
+    autoComplete: "deskripsi_pendidikan",
+    isRequired: true,
+    placeholder: "Masukkan deskripsi pendidikan yang kamu tempuh",
+    titelKey: "deskripsi_pendidikan",
+		maxChar: 150
+  },
+	{
+    labelText: "Alamat institusi",
+    labelFor: "alamat_institusi",
+    id: "alamat_institusi",
+    name: "alamat_institusi",
+    type: "text",
+    autoComplete: "alamat_institusi",
+    isRequired: false,
+    placeholder: "Kosongkan jika online",
+    titelKey: "alamat_institusi"
+  },
+	{
+    labelText: "Alamat URL institusi",
+    labelFor: "url_institusi",
+    id: "url_institusi",
+    name: "url_institusi",
+    type: "url",
+    autoComplete: "url_institusi",
+    isRequired: false,
+    placeholder: "masukkan URL institusi jika ada",
+    titelKey: "url_institusi"
+  },
+	{
+    labelText: "Tanggal masuk",
+    labelFor: "tanggal_masuk",
+    id: "tanggal_masuk",
+    name: "tanggal_masuk",
+    type: "month_year",
+    autoComplete: "tanggal_masuk",
+    isRequired: true,
+    placeholder: "Bulan dan tahun mulai belajar",
+    titelKey: "tanggal_masuk"
+  },
+	{
+    labelText: "Tanggal selesai",
+    labelFor: "tanggal_selesai",
+    id: "tanggal_selesai",
+    name: "tanggal_selesai",
+    type: "month_year",
+    autoComplete: "tanggal_selesai",
+    isRequired: true,
+    placeholder: "Bulan dan tahun selesai belajar",
+    titelKey: "tanggal_selesai"
+  },
+]
+
+export { identitasDiriFields, infoKontakFields, deskripsiDiriFields, tambahPerusahaanFields, tambahProyekFields, tambahPendidikanSertifikasiFileds };

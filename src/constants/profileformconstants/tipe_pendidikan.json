@@ -1,0 +1,46 @@
+[
+	{
+		"value": "sertifikasi_professional",
+		"label": "Sertifikasi Professional"
+	},
+	{
+		"value": "sma_smk",
+		"label": "Sekolah Menengah Atas / Kejuruan (SMA/SMK)"
+	},
+	{
+		"value": "diploma_satu",
+		"label": "Diploma I"
+	},
+	{
+		"value": "diploma_dua",
+		"label": "Diploma II"
+	},
+	{
+		"value": "diploma_tiga",
+		"label": "Diploma III"
+	},
+	{
+		"value": "diploma_4",
+		"label": "Diploma IV"
+	},
+	{
+		"value": "sarjana_terapan",
+		"label": "Sarjana Terapan"
+	},
+	{
+		"value": "sarjana",
+		"label": "Sarjana (S1)"
+	},
+	{
+		"value": "master",
+		"label": "Master (S2)"
+	},
+	{
+		"value": "doctoral",
+		"label": "Doktoral (S3)"
+	},
+	{
+		"value": "lainnya",
+		"label": "Lainnya"
+	}
+]

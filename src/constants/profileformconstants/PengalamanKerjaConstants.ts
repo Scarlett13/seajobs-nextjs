@@ -1,11 +1,3 @@
-export type EmploymentType = "Please select" | "Full-time" | "Part-time" | "Self-employed" | "Freelance" | "Contract" | "Internship" | "Apprenticeship" | "Seasonal"
-
-
-export interface IMonthOfTheYear {
-	value: string;
-	label: string;
-}
-
 export interface IPengalamanKerja {
 	companyid:            string;
 	companysanitisedname: string;
@@ -20,7 +12,7 @@ export interface IProject {
 	projectsanitisedname: string;
 	projectname:         	string;
 	projectdescription:  	string;
-	employmenttype:      	EmploymentType;
+	employmenttype:      	string;
 	projectlocation:     	string;
 	projectstartmonth:   	string;
 	projectstartyear:    	string;

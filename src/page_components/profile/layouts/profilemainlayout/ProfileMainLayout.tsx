@@ -26,9 +26,9 @@ const ProfileMainLayout: React.FC<IProfileMainLayout> = ({
           <Header user={user} />
         </section>
 
-        <section>
-          <main>{children}</main>
-        </section>
+        <main>
+          <section>{children}</section>
+        </main>
       </SidebarProvider>
     </FlowbiteContext>
   );
