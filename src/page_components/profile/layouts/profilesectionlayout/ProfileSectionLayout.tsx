@@ -5,6 +5,7 @@ import {
   tambahPerusahaanFields,
   tambahProyekFields,
 } from "../../../../constants/profileformconstants/ProfileFormConstants";
+import ModalInputPendidikan from "../../sections/pendidikan/modal/ModalInputPendidikan";
 import ModalInputPerusahaan from "../../sections/timelinepengalaman/modalinputperusahaan/ModalInputPerusahaan";
 
 export interface IProfileSectionLayout {
@@ -16,7 +17,7 @@ export interface IProfileSectionLayout {
   listPerusahaanFieldsState?: any;
   setListPerusahaanFieldsState?: React.Dispatch<React.SetStateAction<any>>;
   tambahPerusahaanFields?: typeof tambahPerusahaanFields;
-  setListPengalaman?: React.Dispatch<React.SetStateAction<IPengalamanKerja[]>>;
+  setListPengalaman?: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
@@ -32,8 +33,8 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
 }) => {
   return (
     <section id={id}>
-      <main className="bg-form-bg shadow-md px-8 pt-6 mb-4 pb-4 flex flex-col justify-center lg:w-4/6">
-        <div className="mb-4 justify-center">
+      <div className="bg-form-bg shadow-md px-8 pt-6 mb-4 pb-4 text-left">
+        <div className="mb-4 pb-4">
           <div className="float-left">
             <label className="text-form-section-blue font-medium uppercase">
               {title}
@@ -68,7 +69,13 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
                 )}
               </ModalInputPerusahaan>
             ) : (
-              <ModalInputPerusahaan title={"Tambahkan perusahaan"}>
+              <ModalInputPendidikan
+                title={"Tambahkan pendidikan"}
+                listPendidikanFieldsState={listPengalamanFieldsState}
+                setListPendidikanFieldsState={setListPengalamanFieldsState}
+                tambahPendidikanFields={tambahPerusahaanFields}
+                setListPendidikan={setListPengalaman}
+              >
                 {({ openModal }) => (
                   <button
                     className={`text-form-section-blue text-md -mt-2 font-medium ml-2`}
@@ -77,13 +84,13 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
                     + Tambahkan pendidikan
                   </button>
                 )}
-              </ModalInputPerusahaan>
+              </ModalInputPendidikan>
             )}
           </div>
         </div>
 
         {children}
-      </main>
+      </div>
     </section>
   );
 };
