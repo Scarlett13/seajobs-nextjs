@@ -57,20 +57,19 @@ export default function ExampleModal({
   const methods = useForm({
     mode: "onTouched",
     defaultValues: {
-      nama_proyek: "",
-      nama_klien: "",
-      posisi_kerja: "",
-      deskripsi_proyek: "",
-      lokasi_proyek: "",
-      jenis_pekerjaan: "",
-      proyek_dimulai: "",
-      proyek_selesai: "",
+      tipe_pendidikan: "",
+      nama_institusi: "",
+      jurusan_keahlian: "",
+      deskripsi_pendidikan: "",
+      alamat_institusi: "",
+      url_institusi: "",
+      tanggal_masuk: "",
+      tanggal_selesai: "",
     },
   });
 
   const {
     handleSubmit,
-    resetField,
     reset,
     formState,
     formState: { isSubmitSuccessful },
@@ -87,121 +86,74 @@ export default function ExampleModal({
 
   React.useLayoutEffect(() => {
     if (defaultValue) {
-      console.log("defaultvalue: ", defaultValue);
-      const defaultStartProject = new Date();
-      var defaultEndProject: any = "";
-      if (defaultValue.projectstartmonth && defaultValue.projectstartyear) {
-        defaultStartProject.setFullYear(defaultValue.projectstartyear);
-        defaultStartProject.setMonth(defaultValue.projectstartmonth);
-        defaultStartProject.setMonth(defaultStartProject.getMonth() - 1);
+      const defaultStartDate = new Date();
+      var defaultEndDate: any = "";
+      if (defaultValue.bulanmasuk && defaultValue.tahunmasuk) {
+        defaultStartDate.setFullYear(defaultValue.tahunmasuk);
+        defaultStartDate.setMonth(defaultValue.bulanmasuk);
+        defaultStartDate.setMonth(defaultStartDate.getMonth() - 1);
       }
-      if (defaultValue.projectendtmonth && defaultValue.projectendyear) {
-        defaultEndProject = new Date();
-        defaultEndProject.setFullYear(defaultValue.projectendyear);
-        defaultEndProject.setMonth(defaultValue.projectendtmonth);
-        defaultEndProject.setMonth(defaultEndProject.getMonth() - 1);
+      if (defaultValue.bulanselesai && defaultValue.tahunselesai) {
+        defaultEndDate = new Date();
+        defaultEndDate.setFullYear(defaultValue.tahunselesai);
+        defaultEndDate.setMonth(defaultValue.bulanselesai);
+        defaultEndDate.setMonth(defaultEndDate.getMonth() - 1);
       }
-      setValue("nama_proyek", defaultValue.projectname);
-      setValue("nama_klien", defaultValue.projectclientname);
-      setValue("posisi_kerja", defaultValue.projectrolename);
-      setValue("deskripsi_proyek", defaultValue.projectdescription);
-      setValue("lokasi_proyek", defaultValue.projectlocation);
-      setValue("jenis_pekerjaan", defaultValue.employmenttype);
-      setValue("proyek_dimulai", defaultStartProject.toISOString());
-      // setValue("proyek_selesai", "01/2023");
+      setValue("nama_institusi", defaultValue.namainstitusi);
+      setValue("tipe_pendidikan", defaultValue.tipependidikan);
+      setValue("jurusan_keahlian", defaultValue.namajurusan);
+      setValue("deskripsi_pendidikan", defaultValue.deskripsipendidikan);
+      setValue("alamat_institusi", defaultValue.alamatinstitusi);
+      setValue("url_institusi", defaultValue.urlinstitusi);
+      setValue("tanggal_masuk", defaultStartDate.toISOString());
+      setValue("tanggal_selesai", defaultEndDate.toISOString());
     }
   }, [defaultValue, indexEdit, setValue]);
 
   //#endregion  //*======== Form ===========
 
   //#region  //*=========== Form Submit ===========
-
   const submitListPengalaman = (data: any) => {
-    // if (setListPendidikan && listPendidikanFieldsState) {
-    // const index = listPendidikan.findIndex(
-    //   (pp) => pp.companyid === pengalamanid
-    // );
+    if (setListPendidikan && listPendidikanFieldsState) {
+      const newPendidikanSertifikasi: IPendidikanSertifikasi = {
+        idpendidikan: indexEdit ? indexEdit : e,
+        tipependidikan: data.tipe_pendidikan,
+        namainstitusi: data.nama_institusi,
+        namajurusan: data.jurusan_keahlian,
+        deskripsipendidikan: data.deskripsi_pendidikan,
+        alamatinstitusi: data.alamat_institusi,
+        urlinstitusi: data.url_institusi,
+        bulanmasuk: DateTime.fromISO(
+          new Date(data.tanggal_masuk).toISOString()
+        ).toFormat("MM"),
+        tahunmasuk: DateTime.fromISO(
+          new Date(data.tanggal_masuk).toISOString()
+        ).toFormat("yyyy"),
+        bulanselesai: DateTime.fromISO(
+          new Date(data.tanggal_selesai).toISOString()
+        ).toFormat("MM"),
+        tahunselesai: DateTime.fromISO(
+          new Date(data.tanggal_selesai).toISOString()
+        ).toFormat("yyyy"),
+      };
 
-    // const newPengalaman: IProject = {
-    //   projectid: indexEdit ? indexEdit : e,
-    //   projectsanitisedname: `${sanitize
-    //     .addUnderscore(listPendidikan[index].companyid)
-    //     .toLowerCase()}_${sanitize
-    //     .addUnderscore(data.nama_proyek)
-    //     .toLowerCase()}`,
-    //   projectname: data.nama_proyek,
-    //   projectdescription: data.deskripsi_proyek,
-    //   employmenttype: data.jenis_pekerjaan,
-    //   projectclientname: data.nama_klien,
-    //   projectrolename: data.posisi_kerja,
-    //   projectlocation: data.lokasi_proyek,
-    //   projectstartmonth: DateTime.fromISO(
-    //     new Date(data.proyek_dimulai).toISOString()
-    //   ).toFormat("MM"),
-    //   projectstartyear: DateTime.fromISO(
-    //     new Date(data.proyek_dimulai).toISOString()
-    //   ).toFormat("yyyy"),
-    //   isprojectfinished: false,
-    //   projectendmonth: data.proyek_selesai
-    //     ? DateTime.fromISO(
-    //         new Date(data.proyek_selesai).toISOString()
-    //       ).toFormat("MM")
-    //     : null,
-    //   projectendyear: data.proyek_selesai
-    //     ? DateTime.fromISO(
-    //         new Date(data.proyek_selesai).toISOString()
-    //       ).toFormat("yyyy")
-    //     : null,
-    //   isstillworking: data.proyekselesai ? false : true,
-    // };
+      setListPendidikan((pengalamans) => {
+        const newWeekdays = pengalamans.map((item, index) => {
+          if (item.idpendidikan === indexEdit) {
+            return { ...newPendidikanSertifikasi };
+          } else {
+            return { ...item };
+          }
+        });
+        if (indexEdit && defaultValue) {
+          return newWeekdays;
+        } else {
+          return [...newWeekdays, newPendidikanSertifikasi];
+        }
+      });
 
-    // const tempdata = listPendidikan;
-    // const tempproyek = tempdata[index].projects
-    //   ? tempdata[index].projects
-    //   : [];
-    // if (tempproyek) {
-    //   if (defaultValue && indexEdit) {
-    //     console.log("masuk edit");
-    //     tempproyek.map((item) =>
-    //       item.projectid === indexEdit
-    //         ? Object.assign(item, newPengalaman)
-    //         : item
-    //     );
-    //   } else {
-    //     console.log("masuk add");
-    //     tempproyek.push(newPengalaman);
-    //   }
-    // }
-
-    // tempdata[index].projects = tempproyek;
-
-    // listPendidikan.map((pengalaman) => {
-    //   if (pengalaman.companyid === pengalamanid) {
-    //     pengalaman.projects = tempproyek;
-    //   }
-    // });
-
-    // const testdateluxon = DateTime.fromISO(
-    //   new Date(data.proyek_dimulai).toISOString()
-    // ).toFormat("MM/yyyy");
-    // console.log("testdate: ", testdateluxon);
-
-    // console.log("def dan index: ", defaultValue && indexEdit);
-    // console.log("def: ", defaultValue);
-    // console.log(" index: ", indexEdit);
-
-    // setListPendidikan((pengalamans) => {
-    //   const newWeekdays = pengalamans.map((item, index) => {
-    //     if (item.companyid === pengalamanid) {
-    //       return { ...item, projects: tempproyek };
-    //     }
-    //     return { ...item };
-    //   });
-    //   return newWeekdays;
-    // });
-
-    onClose(setOpen);
-    // }
+      onClose(setOpen);
+    }
   };
 
   //#endregion  //*======== Form Submit ===========
@@ -209,38 +161,23 @@ export default function ExampleModal({
   //#region  //*=========== Delete Item ===========
 
   const deleteProject = (data: any) => {
-    // if (setListPendidikan && listPendidikanFieldsState) {
-    //   const index = listPendidikan.findIndex(
-    //     (pp) => pp.companyid === pengalamanid
-    //   );
-    //   const tempdata = listPendidikan;
-    //   const tempproyek = tempdata[index].projects
-    //     ? tempdata[index].projects
-    //     : [];
-    //   if (tempproyek) {
-    //     const indextobedeleted = tempproyek.findIndex(
-    //       (pp) => pp.projectid === indexEdit
-    //     );
-    //     if (indextobedeleted !== -1) {
-    //       tempproyek.splice(indextobedeleted, 1);
-    //     }
-    //   }
-    //   tempdata[index].projects = tempproyek;
-    //   listPendidikan.map((pengalaman) => {
-    //     if (pengalaman.companyid === pengalamanid) {
-    //       pengalaman.projects = tempproyek;
-    //     }
-    //   });
-    //   setListPendidikan((pengalamans) => {
-    //     const newWeekdays = pengalamans.map((item, index) => {
-    //       if (item.companyid === pengalamanid) {
-    //         return { ...item, projects: tempproyek };
-    //       }
-    //       return { ...item };
-    //     });
-    //     return newWeekdays;
-    //   });
-    // }
+    if (setListPendidikan && listPendidikanFieldsState) {
+      setListPendidikan((pengalamans) => {
+        const indextobedeleted = pengalamans.findIndex(
+          (pp) => pp.idpendidikan === indexEdit
+        );
+
+        if (indextobedeleted !== -1) {
+          pengalamans.splice(indextobedeleted, 1);
+        }
+
+        const newWeekdays = pengalamans.map((item) => {
+          return { ...item };
+        });
+
+        return newWeekdays;
+      });
+    }
   };
 
   //#endregion  //*======== Delete Item ===========
@@ -260,8 +197,6 @@ export default function ExampleModal({
     // !STARTERCONF Remove console log, use logger instead
     // eslint-disable-next-line no-console
     if (data.proyek_selesai && data.proyek_selesai < data.proyek_dimulai) {
-      console.log("lebih gede");
-      resetField("proyek_selesai");
       return;
     }
 
@@ -275,8 +210,6 @@ export default function ExampleModal({
     setOpen(false);
     return;
   };
-
-  console.log();
 
   const [pendidikanDimulai, setPendidikanDimulai] = React.useState();
 
@@ -427,7 +360,7 @@ export default function ExampleModal({
               onClick={handleSubmit(onDelete)}
               className={defaultValue && indexEdit ? "" : "hidden"}
             >
-              Hapus proyek
+              Hapus Pendidikan
             </Button>
             <Button
               variant="outline"

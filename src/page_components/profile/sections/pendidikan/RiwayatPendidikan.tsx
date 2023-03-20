@@ -2,39 +2,47 @@
 
 import { IPendidikanSertifikasi } from "../../../../constants/profileformconstants/PendidikanSertifikasiConstants";
 import { tambahPendidikanSertifikasiFileds } from "../../../../constants/profileformconstants/ProfileFormConstants";
+import PendidikanSertifikasi from "../../inputs/PendidikanSertifikasi";
 import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
 
 export interface IRiwayatPendidikan {
   timelinePengalaman?: any;
-  listPengalaman: IPendidikanSertifikasi[];
-  setListPengalaman: React.Dispatch<
+  listPendidikan: IPendidikanSertifikasi[];
+  setListPendidikan: React.Dispatch<
     React.SetStateAction<IPendidikanSertifikasi[]>
   >;
-  listPengalamanFieldsState: any;
-  setListPengalamanFieldsState: React.Dispatch<React.SetStateAction<any>>;
-  tambahPerusahaanFields: typeof tambahPendidikanSertifikasiFileds;
+  listPendidikanFieldsState: any;
+  setListPendidikanFieldsState: React.Dispatch<React.SetStateAction<any>>;
+  tambahPendidikanFields: typeof tambahPendidikanSertifikasiFileds;
 }
 
 const RiwayatPendidikan: React.FC<IRiwayatPendidikan> = ({
   timelinePengalaman,
-  listPengalaman,
-  setListPengalaman,
-  listPengalamanFieldsState,
-  setListPengalamanFieldsState,
-  tambahPerusahaanFields,
+  listPendidikan,
+  setListPendidikan,
+  listPendidikanFieldsState,
+  setListPendidikanFieldsState,
+  tambahPendidikanFields,
 }) => {
+  console.log("waiit, ", tambahPendidikanFields);
   return (
     <ProfileSectionLayout
       isRequired={false}
       title="Pendidikan dan Sertifikasi"
       id="pendidikan_sertifikasi"
       canBeAdded={true}
-      tambahPerusahaanFields={tambahPerusahaanFields}
-      listPerusahaanFieldsState={listPengalamanFieldsState}
-      setListPerusahaanFieldsState={setListPengalamanFieldsState}
-      setListPengalaman={setListPengalaman}
+      tambahPerusahaanFields={tambahPendidikanFields}
+      listPerusahaanFieldsState={listPendidikanFieldsState}
+      setListPerusahaanFieldsState={setListPendidikanFieldsState}
+      setListPengalaman={setListPendidikan}
     >
-      {/* <div className={""}>{sampleTextProp} - pendidikan</div> */}
+      <PendidikanSertifikasi
+        listPendidikan={listPendidikan}
+        listPendidikanFiledsState={listPendidikanFieldsState}
+        setListPendidikanFieldsState={setListPendidikanFieldsState}
+        tambahPendidikanSertifikasiFileds={tambahPendidikanFields}
+        setListPendidikan={setListPendidikan}
+      />
     </ProfileSectionLayout>
   );
 };
