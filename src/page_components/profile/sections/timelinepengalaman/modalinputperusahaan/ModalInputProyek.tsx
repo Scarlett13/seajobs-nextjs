@@ -187,11 +187,11 @@ export default function ExampleModal({
       const testdateluxon = DateTime.fromISO(
         new Date(data.proyek_dimulai).toISOString()
       ).toFormat("MM/yyyy");
-      console.log("testdate: ", testdateluxon);
+      // console.log("testdate: ", testdateluxon);
 
-      console.log("def dan index: ", defaultValue && indexEdit);
-      console.log("def: ", defaultValue);
-      console.log(" index: ", indexEdit);
+      // console.log("def dan index: ", defaultValue && indexEdit);
+      // console.log("def: ", defaultValue);
+      // console.log(" index: ", indexEdit);
 
       setListPengalaman((pengalamans) => {
         const newWeekdays = pengalamans.map((item, index) => {
@@ -267,7 +267,7 @@ export default function ExampleModal({
     // !STARTERCONF Remove console log, use logger instead
     // eslint-disable-next-line no-console
     if (data.proyek_selesai && data.proyek_selesai < data.proyek_dimulai) {
-      console.log("lebih gede");
+      // console.log("lebih gede");
       resetField("proyek_selesai");
       return;
     }

@@ -5,10 +5,11 @@ import { IPendidikanSertifikasi } from "../../../constants/profileformconstants/
 import { tambahProyekFields as tambahPendidikanSertifikasiFileds } from "../../../constants/profileformconstants/ProfileFormConstants";
 import ModalInputProyek from "../sections/timelinepengalaman/modalinputperusahaan/ModalInputProyek";
 import v4 from "uuid-browser/v4";
+import ModalInputPendidikan from "../sections/pendidikan/modal/ModalInputPendidikan";
 
 const currentDate = DateTime.now().toFormat("yyyy-MM");
 
-export interface IPengalamanKerjaProyek {
+export interface IPendidikanSertifikasiSection {
   listPendidikan: IPendidikanSertifikasi[];
   listPendidikanFiledsState?: any;
   setListPendidikanFieldsState?: React.Dispatch<React.SetStateAction<any>>;
@@ -24,7 +25,7 @@ const fixedTimelineLocationClassName =
 const fixedTimelineClientClassName =
   "mb-1 mt-1 text-md font-normal leading-none text-gray-400 dark:text-gray-500";
 
-const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
+const PendidikanSertifikasi: React.FC<IPendidikanSertifikasiSection> = ({
   listPendidikan: listPengalaman,
   listPendidikanFiledsState: listProyekFieldsState,
   setListPendidikanFieldsState: setListProyekFieldsState,
@@ -39,57 +40,54 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
           <div className="flow-root">
             <div className="float-left">
               <p className="text-white text-xl font-medium capitalize ml-6">
-                {/* {pengalaman.companyname} */}
-                Sekolah 1
+                {pengalaman.namainstitusi}
+              </p>
+              <p className="text-white text-lg font-medium capitalize ml-6">
+                {pengalaman.namajurusan}
               </p>
               <p className="text-white text-md capitalize ml-6">
-                {/* {`${pengalaman.companyaddress}`} */}
-                Address pendidikan
+                {`${
+                  pengalaman.alamatinstitusi
+                    ? pengalaman.alamatinstitusi + " \n"
+                    : ""
+                }`}
+              </p>
+              <p className="text-white text-md ml-6">
+                {`${
+                  pengalaman.urlinstitusi ? pengalaman.urlinstitusi + " \n" : ""
+                } `}
               </p>
               <p className="text-white text-md capitalize ml-6 pb-4">
-                {/* {`${
-                  arrayDiff.length > 0 && arrayDiff[index]
-                    ? arrayDiff[index].isPengalaman
-                      ? arrayDiff[index].diff.years < 1
-                        ? arrayDiff[index].diff.months + " bulan"
-                        : arrayDiff[index].diff.years +
-                          " tahun " +
-                          (arrayDiff[index].diff.months < 1
-                            ? ""
-                            : arrayDiff[index]?.diff.months + " bulan")
-                      : "Belum ada pengalaman"
-                    : "Belum ada pengalaman"
-                }`} */}
-                Tahun masuk - Tahun keluar
+                {`${pengalaman.bulanmasuk} / ${pengalaman.tahunmasuk} - ${pengalaman.bulanselesai} / ${pengalaman.tahunselesai}`}
               </p>
             </div>
             <div className="float-right">
               <p className="text-white text-xl font-medium capitalize ml-6">
                 &nbsp;
               </p>
-              {/* <div className="text-white text-md capitalize ml-6">
-							edit pendidikan
-                <ModalInputProyek
-                  title={"Tambahkan proyek"}
-                  pengalamanid={pengalaman.companyid}
-                  listPengalaman={listPengalaman}
-                  listProyekFieldsState={listProyekFieldsState}
-                  setListProyekFieldsState={setListProyekFieldsState}
-                  tambahProyekFields={tambahProyekFields}
-                  setListPengalaman={setListPengalaman}
+              <div className="text-white text-md capitalize ml-6">
+                <ModalInputPendidikan
+                  title={"Edit Pendidikan"}
+                  listPendidikan={listPengalaman}
+                  listPendidikanFieldsState={listProyekFieldsState}
+                  setListPendidikanFieldsState={setListProyekFieldsState}
+                  tambahPendidikanFields={tambahProyekFields}
+                  setListPendidikan={setListPengalaman}
+                  defaultValue={pengalaman}
+                  indexEdit={pengalaman.idpendidikan}
                 >
                   {({ openModal }) => (
                     <Button
-                      color="info"
+                      color="gray"
                       className="px-2 mr-4"
                       onClick={openModal}
-                      title={"Tambahkan proyek"}
+                      title={"Edit"}
                     >
-                      Tambah proyek
+                      Edit
                     </Button>
                   )}
-                </ModalInputProyek>
-              </div> */}
+                </ModalInputPendidikan>
+              </div>
               <p className="text-white text-md capitalize ml-6 pb-4">&nbsp;</p>
             </div>
           </div>
@@ -99,4 +97,4 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
   );
 };
 
-export default PengalamanKerjaProyek;
+export default PendidikanSertifikasi;

@@ -238,11 +238,11 @@ export default function EditProfile() {
               setListProyekFieldsState={setListProyekState}
             />
             <RiwayatPendidikan
-              listPengalaman={listPendidikan}
-              setListPengalaman={setListPendidikan}
-              tambahPerusahaanFields={tambahPendidikanFieldsComp}
-              listPengalamanFieldsState={listPendidikanState}
-              setListPengalamanFieldsState={setListPendidikanState}
+              listPendidikan={listPendidikan}
+              setListPendidikan={setListPendidikan}
+              tambahPendidikanFields={tambahPendidikanFieldsComp}
+              listPendidikanFieldsState={listPendidikanState}
+              setListPendidikanFieldsState={setListPendidikanState}
             />
           </ScrollSpy>
         </div>
