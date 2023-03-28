@@ -52,15 +52,15 @@ export default function ExampleModal({
         listPengalamanFieldsState.lokasi_perusahaan.length > 1)
     ) {
       const newPerusahaan: IPengalamanKerja = {
-        companyid: sanitize
+        companyId: sanitize
           .addUnderscore(listPengalamanFieldsState.nama_perusahaan)
           .toLowerCase(),
-        companysanitisedname: sanitize
+        sanitisedCompanyName: sanitize
           .addUnderscore(listPengalamanFieldsState.nama_perusahaan)
           .toLowerCase(),
-        companyname: listPengalamanFieldsState.nama_perusahaan,
-        companyaddress: listPengalamanFieldsState.lokasi_perusahaan,
-        companylogo: null,
+        companyName: listPengalamanFieldsState.nama_perusahaan,
+        companyAddress: listPengalamanFieldsState.lokasi_perusahaan,
+        companyLogo: null,
         projects: [],
       };
 

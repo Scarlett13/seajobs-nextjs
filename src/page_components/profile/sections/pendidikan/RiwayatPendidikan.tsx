@@ -14,6 +14,8 @@ export interface IRiwayatPendidikan {
   listPendidikanFieldsState: any;
   setListPendidikanFieldsState: React.Dispatch<React.SetStateAction<any>>;
   tambahPendidikanFields: typeof tambahPendidikanSertifikasiFileds;
+  taId: string;
+  disabled: boolean;
 }
 
 const RiwayatPendidikan: React.FC<IRiwayatPendidikan> = ({
@@ -23,10 +25,13 @@ const RiwayatPendidikan: React.FC<IRiwayatPendidikan> = ({
   listPendidikanFieldsState,
   setListPendidikanFieldsState,
   tambahPendidikanFields,
+  taId,
+  disabled,
 }) => {
   console.log("waiit, ", tambahPendidikanFields);
   return (
     <ProfileSectionLayout
+      disabled={disabled}
       isRequired={false}
       title="Pendidikan dan Sertifikasi"
       id="pendidikan_sertifikasi"
@@ -37,11 +42,13 @@ const RiwayatPendidikan: React.FC<IRiwayatPendidikan> = ({
       setListPengalaman={setListPendidikan}
     >
       <PendidikanSertifikasi
+        disabled={disabled}
         listPendidikan={listPendidikan}
         listPendidikanFiledsState={listPendidikanFieldsState}
         setListPendidikanFieldsState={setListPendidikanFieldsState}
         tambahPendidikanSertifikasiFileds={tambahPendidikanFields}
         setListPendidikan={setListPendidikan}
+        taId={taId}
       />
     </ProfileSectionLayout>
   );

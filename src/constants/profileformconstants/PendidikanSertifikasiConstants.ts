@@ -1,14 +1,15 @@
 export interface IPendidikanSertifikasi{
-	idpendidikan: string;
-	tipependidikan: string;
-	namainstitusi: string;
-	namajurusan: string;
-	deskripsipendidikan: string;
-	alamatinstitusi: string;
-	urlinstitusi: string;
-	bulanmasuk: string;
-	tahunmasuk:string;
-	bulanselesai: string;
-	tahunselesai: string
-
+	pendidikanId: string;
+	pendidikanType: string;
+	institutionName: string;
+	sanitisedInstitutionName: string;
+	courseName: string;
+	pendidikanDescription: string;
+	institutionAddress: string;
+	institutionUrl: string;
+	entryMonth: string;
+	entryYear:string;
+	endMonth: string;
+	endYear: string;
+	taId?: string;
 }

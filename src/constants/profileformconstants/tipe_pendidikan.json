@@ -8,19 +8,19 @@
 		"label": "Sekolah Menengah Atas / Kejuruan (SMA/SMK)"
 	},
 	{
-		"value": "diploma_satu",
+		"value": "diploma_I",
 		"label": "Diploma I"
 	},
 	{
-		"value": "diploma_dua",
+		"value": "diploma_II",
 		"label": "Diploma II"
 	},
 	{
-		"value": "diploma_tiga",
+		"value": "diploma_III",
 		"label": "Diploma III"
 	},
 	{
-		"value": "diploma_4",
+		"value": "diploma_IV",
 		"label": "Diploma IV"
 	},
 	{
@@ -36,7 +36,7 @@
 		"label": "Master (S2)"
 	},
 	{
-		"value": "doctoral",
+		"value": "doktoral",
 		"label": "Doktoral (S3)"
 	},
 	{

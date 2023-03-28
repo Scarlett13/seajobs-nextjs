@@ -3,111 +3,127 @@ import {
   IBidangKeahlian,
   identitasDiriFields,
 } from "../../../../constants/profileformconstants/ProfileFormConstants";
-import Input from "../../../../components/inputs/reguler/InputTemplate";
 import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
+import SearchableSelectInput from "../../../../components/forms/SearchableSelectInput";
+import DatePicker from "../../../../components/forms/DatePicker";
+import Input from "../../../../components/forms/Input";
+import TextArea from "../../../../components/forms/TextArea";
 // import styles from "./IdentitasDiri.module.css";
 
 export interface IIdentitasDiri {
-  selectedKeahlian: IBidangKeahlian[];
-  setSelectedKeahlian: React.Dispatch<React.SetStateAction<IBidangKeahlian[]>>;
-  identitasDiri: any;
-  setIdentitasDiri: React.Dispatch<React.SetStateAction<any>>;
   identitasDiriFields: typeof identitasDiriFields;
+  disabled: boolean;
 }
 
 const IdentitasDiri: React.FC<IIdentitasDiri> = ({
-  selectedKeahlian,
-  setSelectedKeahlian,
-  identitasDiri,
-  setIdentitasDiri,
   identitasDiriFields,
+  disabled,
 }) => {
-  const fixedInputClass =
-    "bg-black appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg focus:z-10 sm:text-sm text-left";
-
-  const dataKeahlian: IBidangKeahlian[] = require("../../../../constants/profileformconstants/bidang_keahlian.json");
-
-  const handleIdentitasDiriChange = (e: {
-    target: { id: any; value: any };
-  }) => {
-    setIdentitasDiri({ ...identitasDiri, [e.target.id]: e.target.value });
-  };
+  const dataKeahlian = require("../../../../constants/profileformconstants/bidang_keahlian.json");
+  const residentStatus = require("../../../../constants/profileformconstants/resident_status.json");
 
   return (
-    <ProfileSectionLayout isRequired={true} title="data diri" id="id_diri">
-      {identitasDiriFields.map((field) =>
-        field.type === "bidang_keahlian" ? (
-          <section key={field.titelKey} className={"mb-4"}>
-            <p className="font-light text-gray-400">{field.labelText}</p>
-            <Listbox
-              value={selectedKeahlian}
-              onChange={setSelectedKeahlian}
-              multiple
-            >
-              {/* <Listbox.Label className={"text-white mb-2"}>
-                Bidang Keahlian:
-              </Listbox.Label> */}
-              <Listbox.Button className={fixedInputClass}>
-                {selectedKeahlian.length > 0
-                  ? selectedKeahlian
-                      .map((keahlian) =>
-                        keahlian.iscollapsible
-                          ? keahlian.subcategoryname
-                          : keahlian.categoryname
-                      )
-                      .join(", ")
-                  : "Silahkan pilih bidang keahlian terlebih dahulu"}
-              </Listbox.Button>
-              <Listbox.Options className={fixedInputClass}>
-                {dataKeahlian.map((keahlian) => (
-                  <Listbox.Option
-                    className={`my-1.5 ${
-                      selectedKeahlian.find(
-                        (e: { id: number }) => e.id === keahlian.id
-                      )
-                        ? "text-form-section-blue"
-                        : "text-white"
-                    }`}
-                    key={
-                      keahlian.iscollapsible
-                        ? keahlian.subcategoryname
-                        : keahlian.categoryname
-                    }
-                    value={keahlian}
-                  >
-                    {selectedKeahlian.find(
-                      (e: { id: number }) => e.id === keahlian.id
-                    ) ? (
-                      <a className="mr-2 text-bold text-form-section-blue">x</a>
-                    ) : (
-                      <a className="mr-2 text-bold text-white">+</a>
-                    )}
-                    {keahlian.iscollapsible
-                      ? keahlian.subcategoryname
-                      : keahlian.categoryname}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </Listbox>
-          </section>
-        ) : (
-          <section key={field.titelKey}>
-            <p className="-mb-4 font-light text-gray-400">{field.labelText}</p>
-            <Input
-              key={field.id}
-              handleChange={handleIdentitasDiriChange}
-              value={identitasDiri[field.id]}
-              labelText={field.labelText}
-              labelFor={field.labelFor}
-              id={field.id}
-              name={field.name}
-              type={field.type}
-              isRequired={field.isRequired}
-              placeholder={field.placeholder}
-            />
-          </section>
-        )
-      )}
+    <ProfileSectionLayout
+      isRequired={true}
+      title="data diri"
+      id="id_diri"
+      disabled={disabled}
+    >
+      {identitasDiriFields.map((field) => {
+        if (field.type === "bidang_keahlian") {
+          return (
+            <section key={field.titelKey} className="mb-4">
+              <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
+              <SearchableSelectInput
+                id={field.id}
+                placeholder="Pilih keahlian"
+                options={dataKeahlian}
+                disabled={disabled}
+                validation={
+                  field.isRequired === true
+                    ? { required: "Select Input must be filled" }
+                    : undefined
+                }
+                label={null}
+                isMulti={true}
+              />
+            </section>
+          );
+        } else if (field.type === "date") {
+          return (
+            <section key={field.titelKey} className={"mb-4"}>
+              <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
+              <DatePicker
+                id={field.id}
+                label={null}
+                disabled={disabled}
+                validation={{
+                  required: "Date must be filled",
+                  valueAsDate: false,
+                }}
+                placeholder="dd/mm/yyyy"
+              />
+            </section>
+          );
+        } else if (field.type === "text_area") {
+          return (
+            <section key={field.titelKey} className={"mb-4"}>
+              <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
+              <TextArea
+                id={field.id}
+                label={null}
+                disabled={disabled}
+                validation={
+                  field.isRequired === true
+                    ? { required: "Select Input must be filled" }
+                    : undefined
+                }
+                placeholder={field.placeholder}
+                maxLength={200}
+              />
+            </section>
+          );
+        } else if (field.type === "resident_status") {
+          return (
+            <section key={field.titelKey} className="mb-4">
+              <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
+              <SearchableSelectInput
+                id={field.id}
+                placeholder={field.placeholder}
+                options={residentStatus}
+                disabled={disabled}
+                validation={
+                  field.isRequired === true
+                    ? { required: "Select Input must be filled" }
+                    : undefined
+                }
+                label={null}
+                isMulti={false}
+              />
+            </section>
+          );
+        } else {
+          return (
+            <section key={field.titelKey} className={"mb-4"}>
+              <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
+              <Input
+                id={field.id}
+                type={field.type}
+                label={null}
+                disabled={disabled}
+                validation={{
+                  required: {
+                    value: field.isRequired,
+                    message: `${field.labelText} harus di isi!`,
+                  },
+                }}
+                placeholder={field.placeholder}
+                helperText={undefined}
+              />
+            </section>
+          );
+        }
+      })}
     </ProfileSectionLayout>
   );
 };

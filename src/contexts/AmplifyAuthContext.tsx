@@ -9,6 +9,8 @@ import {
 } from "react";
 import { CognitoUser } from "@aws-amplify/auth";
 import { Auth, Hub, Logger } from "aws-amplify";
+import usePush from "@utils/UsePush";
+import { useRouter } from "next/router";
 
 interface UserContextType {
   user: CognitoUser | null;
@@ -32,28 +34,42 @@ export default function AuthContext(
   const [user, setUser] = useState<CognitoUser | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
-
-  useEffect(() => {
-    checkUser();
-  }, []);
+  const push = usePush();
+  const router = useRouter();
 
   async function checkUser() {
+    setLoading(true);
+    console.log("masuk ke loading true");
     try {
-      console.log("user1: ", user);
-      console.log("auth1: ", authenticated);
       const amplifyUser = await Auth.currentAuthenticatedUser();
-      console.log(amplifyUser);
       setUser(amplifyUser);
       setAuthenticated(true);
-      console.log("user2: ", user);
-      console.log("auth2: ", authenticated);
+      setLoading(false);
+      console.log("masuk ke loading false 1");
     } catch (error) {
       // No current signed in user.
       console.error("error getuser: ", error);
       setUser(null);
       setAuthenticated(false);
+      setLoading(false);
+      if (
+        router.pathname !== "/login" &&
+        router.pathname !== "/" &&
+        router.pathname !== "/signup"
+      ) {
+        push("/login");
+      }
+
+      console.log("masuk ke loading false 2");
     }
   }
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  useEffect(() => {
+    console.log("loading-ganti: ", loading);
+  }, [loading]);
 
   useEffect(() => {
     const logger = new Logger("My-Logger");
@@ -61,13 +77,7 @@ export default function AuthContext(
     const listener = (data: { payload: { event: any } }) => {
       logger.info("the Auth module is configured");
       console.log("auth event auth ctx: ", data.payload.event);
-      if (data.payload.event === "signOut") {
-        setAuthenticated(false);
-        setUser(null);
-        console.log(
-          "setelah signout, auth: " + authenticated + ", user: " + user
-        );
-      }
+      checkUser();
     };
 
     Hub.listen("auth", listener);

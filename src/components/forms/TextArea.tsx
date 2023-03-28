@@ -55,10 +55,10 @@ export default function TextArea({
           readOnly={readOnly}
           disabled={disabled}
           className={clsx(
-            "block w-full rounded-none shadow-sm resize-none",
+            "block w-full rounded-none shadow-sm resize-none text-white pl-3",
             "border-gray-300 bg-black focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg",
             (readOnly || disabled) &&
-              "cursor-not-allowed border-gray-300 bg-gray-100 focus:border-gray-300 focus:ring-0",
+              "cursor-not-allowed border-form-bg bg-form-bg focus:border-form-bg focus:ring-0",
             error && "border-red-500 focus:border-red-500 focus:ring-red-500"
           )}
           placeholder={placeholder}

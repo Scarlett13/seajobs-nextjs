@@ -4,7 +4,6 @@ import { useUser } from "../../contexts/AmplifyAuthContext";
 import usePush from "@utils/UsePush";
 import {
   FormFields,
-  IBidangKeahlian,
   identitasDiriFields,
   infoKontakFields,
 } from "../../constants/profileformconstants/ProfileFormConstants";
@@ -32,12 +31,10 @@ export default function Dashboard() {
   // const [loginState, setLoginState] = useState(fieldsState);
 
   useEffect(() => {
-    console.log("user effect login: ", user);
-    console.log("auth effect login: ", authenticated);
     if (!authenticated) {
-      // push("/login");
+      push("/login");
     }
-  }, [user, authenticated]);
+  }, [authenticated]);
 
   return (
     <PrimaryLayout user={user}>
@@ -45,6 +42,15 @@ export default function Dashboard() {
         <p className="text-xl mb-4">
           {/* Welcome, your email is {user.attributes.email} */}
         </p>
+
+        <button
+          className="mt-2 text-lg text-white font-semibold bg-green-500 py-3 px-6 rounded-md"
+          onClick={() => {
+            push(`profile/editprofile/${user?.getUsername()}`);
+          }}
+        >
+          Edit profile
+        </button>
 
         <button
           className="mt-2 text-lg text-white font-semibold bg-green-500 py-3 px-6 rounded-md"

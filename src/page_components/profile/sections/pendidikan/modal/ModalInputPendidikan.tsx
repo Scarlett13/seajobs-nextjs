@@ -11,14 +11,21 @@ import Modal from "../../../../../components/modal/Modal";
 import { tambahPendidikanSertifikasiFileds as referFileds } from "../../../../../constants/profileformconstants/ProfileFormConstants";
 import v4 from "uuid-browser/v4";
 import { IPendidikanSertifikasi } from "../../../../../constants/profileformconstants/PendidikanSertifikasiConstants";
+import { API, graphqlOperation } from "aws-amplify";
+import { GraphQLQuery } from "@aws-amplify/api";
+import * as mutations from "../../../../../graphql/mutations";
+import {
+  CreatePendidikanSertifikasiMutation,
+  DeletePendidikanSertifikasiMutation,
+  UpdatePendidikanSertifikasiMutation,
+} from "../../../../../API";
+import { useRouter } from "next/router";
+import { useUser } from "../../../../../contexts/AmplifyAuthContext";
 
 type ModalReturnType = {
   openModal: () => void;
   title: string;
 };
-
-const fixedInputClass =
-  "bg-black rounded-none appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg focus:z-10 sm:text-sm";
 
 export default function ExampleModal({
   children,
@@ -30,6 +37,7 @@ export default function ExampleModal({
   listPendidikan,
   defaultValue,
   indexEdit,
+  taId,
 }: {
   children: (props: ModalReturnType) => JSX.Element;
   title: string;
@@ -42,16 +50,22 @@ export default function ExampleModal({
   listPendidikan?: IPendidikanSertifikasi[];
   defaultValue?: any;
   indexEdit?: string;
+  taId: string;
 }) {
   const tipe_pekerjaan = require("../../../../../constants/profileformconstants/tipe_pendidikan.json");
 
   const e: string = v4();
+  const router = useRouter();
+  const { profile_id } = router.query;
+  const { loading, setLoading } = useUser();
 
   const [open, setOpen] = React.useState(false);
   const modalReturn: ModalReturnType = {
     openModal: () => setOpen(true),
     title: title,
   };
+
+  console.log("wubbdapend22: ", taId);
 
   //#region  //*=========== Form ===========
   const methods = useForm({
@@ -63,8 +77,8 @@ export default function ExampleModal({
       deskripsi_pendidikan: "",
       alamat_institusi: "",
       url_institusi: "",
-      tanggal_masuk: "",
-      tanggal_selesai: "",
+      pendidikan_masuk: "",
+      pendidikan_selesai: "",
     },
   });
 
@@ -84,73 +98,104 @@ export default function ExampleModal({
     }
   }, [defaultValue, formState, indexEdit, reset]);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (defaultValue) {
       const defaultStartDate = new Date();
       var defaultEndDate: any = "";
-      if (defaultValue.bulanmasuk && defaultValue.tahunmasuk) {
-        defaultStartDate.setFullYear(defaultValue.tahunmasuk);
-        defaultStartDate.setMonth(defaultValue.bulanmasuk);
+      if (defaultValue.entryMonth && defaultValue.entryYear) {
+        defaultStartDate.setFullYear(defaultValue.entryYear);
+        defaultStartDate.setMonth(defaultValue.entryMonth);
         defaultStartDate.setMonth(defaultStartDate.getMonth() - 1);
       }
-      if (defaultValue.bulanselesai && defaultValue.tahunselesai) {
+      if (defaultValue.endMonth && defaultValue.endYear) {
         defaultEndDate = new Date();
-        defaultEndDate.setFullYear(defaultValue.tahunselesai);
-        defaultEndDate.setMonth(defaultValue.bulanselesai);
+        defaultEndDate.setFullYear(defaultValue.endYear);
+        defaultEndDate.setMonth(defaultValue.endMonth);
         defaultEndDate.setMonth(defaultEndDate.getMonth() - 1);
       }
-      setValue("nama_institusi", defaultValue.namainstitusi);
-      setValue("tipe_pendidikan", defaultValue.tipependidikan);
-      setValue("jurusan_keahlian", defaultValue.namajurusan);
-      setValue("deskripsi_pendidikan", defaultValue.deskripsipendidikan);
-      setValue("alamat_institusi", defaultValue.alamatinstitusi);
-      setValue("url_institusi", defaultValue.urlinstitusi);
-      setValue("tanggal_masuk", defaultStartDate.toISOString());
-      setValue("tanggal_selesai", defaultEndDate.toISOString());
+      setValue("nama_institusi", defaultValue.institutionName);
+      setValue("tipe_pendidikan", defaultValue.pendidikanType);
+      setValue("jurusan_keahlian", defaultValue.courseName);
+      setValue("deskripsi_pendidikan", defaultValue.pendidikanDescription);
+      setValue("alamat_institusi", defaultValue.institutionAddress);
+      setValue("url_institusi", defaultValue.institutionUrl);
+      setValue("pendidikan_masuk", defaultStartDate.toISOString());
+      setValue("pendidikan_selesai", defaultEndDate.toISOString());
     }
   }, [defaultValue, indexEdit, setValue]);
 
   //#endregion  //*======== Form ===========
 
   //#region  //*=========== Form Submit ===========
-  const submitListPengalaman = (data: any) => {
+  const submitListPengalaman = async (data: any) => {
     if (setListPendidikan && listPendidikanFieldsState) {
-      const newPendidikanSertifikasi: IPendidikanSertifikasi = {
-        idpendidikan: indexEdit ? indexEdit : e,
-        tipependidikan: data.tipe_pendidikan,
-        namainstitusi: data.nama_institusi,
-        namajurusan: data.jurusan_keahlian,
-        deskripsipendidikan: data.deskripsi_pendidikan,
-        alamatinstitusi: data.alamat_institusi,
-        urlinstitusi: data.url_institusi,
-        bulanmasuk: DateTime.fromISO(
-          new Date(data.tanggal_masuk).toISOString()
+      const newPendidikanSertifikasi = {
+        pendidikanId: indexEdit ? indexEdit : e,
+        taId: profile_id as string,
+        sanitisedInstitutionName: `${sanitize
+          .addUnderscore(data.nama_institusi)
+          .toLowerCase()}`,
+        pendidikanType: data.tipe_pendidikan,
+        institutionName: data.nama_institusi,
+        courseName: data.jurusan_keahlian,
+        pendidikanDescription: data.deskripsi_pendidikan,
+        institutionAddress: data.alamat_institusi,
+        institutionUrl: data.url_institusi,
+        entryMonth: DateTime.fromISO(
+          new Date(data.pendidikan_masuk).toISOString()
         ).toFormat("MM"),
-        tahunmasuk: DateTime.fromISO(
-          new Date(data.tanggal_masuk).toISOString()
+        entryYear: DateTime.fromISO(
+          new Date(data.pendidikan_masuk).toISOString()
         ).toFormat("yyyy"),
-        bulanselesai: DateTime.fromISO(
-          new Date(data.tanggal_selesai).toISOString()
+        endMonth: DateTime.fromISO(
+          new Date(data.pendidikan_selesai).toISOString()
         ).toFormat("MM"),
-        tahunselesai: DateTime.fromISO(
-          new Date(data.tanggal_selesai).toISOString()
+        endYear: DateTime.fromISO(
+          new Date(data.pendidikan_selesai).toISOString()
         ).toFormat("yyyy"),
+        createdOn: undefined,
+        updatedOn: undefined,
       };
 
+      console.log("wubbapend: ", newPendidikanSertifikasi);
+
       setListPendidikan((pengalamans) => {
-        const newWeekdays = pengalamans.map((item, index) => {
-          if (item.idpendidikan === indexEdit) {
+        let newWeekdays = pengalamans.map((item, index) => {
+          if (item.pendidikanId === indexEdit) {
             return { ...newPendidikanSertifikasi };
           } else {
             return { ...item };
           }
         });
         if (indexEdit && defaultValue) {
+          newWeekdays.sort((a, b) => (a.entryYear < b.entryYear ? -1 : 1));
           return newWeekdays;
         } else {
-          return [...newWeekdays, newPendidikanSertifikasi];
+          newWeekdays = [...newWeekdays, newPendidikanSertifikasi];
+          newWeekdays.sort((a, b) => (a.entryYear < b.entryYear ? -1 : 1));
+          return newWeekdays;
         }
       });
+
+      let pendidikan;
+
+      if (defaultValue && indexEdit) {
+        pendidikan = await API.graphql<
+          GraphQLQuery<UpdatePendidikanSertifikasiMutation>
+        >({
+          query: mutations.updatePendidikanSertifikasi,
+          variables: { input: newPendidikanSertifikasi },
+        });
+      } else {
+        pendidikan = await API.graphql<
+          GraphQLQuery<CreatePendidikanSertifikasiMutation>
+        >({
+          query: mutations.createPendidikanSertifikasi,
+          variables: { input: newPendidikanSertifikasi },
+        });
+      }
+
+      console.log("wubbapend: ", newPendidikanSertifikasi);
 
       onClose(setOpen);
     }
@@ -160,11 +205,11 @@ export default function ExampleModal({
 
   //#region  //*=========== Delete Item ===========
 
-  const deleteProject = (data: any) => {
-    if (setListPendidikan && listPendidikanFieldsState) {
+  const deleteProject = async (data: any) => {
+    if (defaultValue && indexEdit && setListPendidikan && !loading) {
       setListPendidikan((pengalamans) => {
         const indextobedeleted = pengalamans.findIndex(
-          (pp) => pp.idpendidikan === indexEdit
+          (pp) => pp.pendidikanId === indexEdit
         );
 
         if (indextobedeleted !== -1) {
@@ -177,6 +222,41 @@ export default function ExampleModal({
 
         return newWeekdays;
       });
+
+      try {
+        const deletePendidikan = await API.graphql<
+          GraphQLQuery<DeletePendidikanSertifikasiMutation>
+        >({
+          query: mutations.deletePendidikanSertifikasi,
+          variables: {
+            input: {
+              taId: defaultValue.taId,
+              pendidikanId: defaultValue.pendidikanId,
+              endYear: defaultValue.endYear,
+            },
+          },
+        });
+
+        setListPendidikan((pengalamans) => {
+          const indextobedeleted = pengalamans.findIndex(
+            (pp) => pp.pendidikanId === indexEdit
+          );
+
+          if (indextobedeleted !== -1) {
+            pengalamans.splice(indextobedeleted, 1);
+          }
+
+          const newWeekdays = pengalamans.map((item) => {
+            return { ...item };
+          });
+
+          return newWeekdays;
+        });
+
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
     }
   };
 
@@ -189,7 +269,7 @@ export default function ExampleModal({
     setOpen(false);
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     // logger({ data }, 'rhf.tsx line 33');
 
     // submitListPengalaman(data);
@@ -200,15 +280,15 @@ export default function ExampleModal({
       return;
     }
 
-    submitListPengalaman(data);
-    setOpen(false);
-    return;
+    await submitListPengalaman(data);
+    // setOpen(false);
+    // return;
   };
 
-  const onDelete = (data: any) => {
-    deleteProject(data);
-    setOpen(false);
-    return;
+  const onDelete = async (data: any) => {
+    await deleteProject(data);
+    // setOpen(false);
+    // return;
   };
 
   const [pendidikanDimulai, setPendidikanDimulai] = React.useState();
@@ -295,7 +375,7 @@ export default function ExampleModal({
                         }
                         label={null}
                         customState={
-                          field.id === "pendidikan_dimulai"
+                          field.id === "pendidikan_masuk"
                             ? setPendidikanDimulai
                             : undefined
                         }

@@ -1,0 +1,736 @@
+/***************************************************************************
+ * The contents of this file were generated with Amplify Studio.           *
+ * Please refrain from making any modifications to this file.              *
+ * Any changes to this file will be overwritten when running amplify pull. *
+ **************************************************************************/
+
+/* eslint-disable */
+import * as React from "react";
+import {
+  Badge,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  Icon,
+  ScrollView,
+  Text,
+  TextField,
+  useTheme,
+} from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { TenagaAhli } from "../models";
+import { fetchByPath, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
+export default function TenagaAhliCreateForm(props) {
+  const {
+    clearOnSuccess = true,
+    onSuccess,
+    onError,
+    onSubmit,
+    onValidate,
+    onChange,
+    overrides,
+    ...rest
+  } = props;
+  const initialValues = {
+    taId: "",
+    taFullName: "",
+    taExpertise: "",
+    taAddress: "",
+    taEmail: "",
+    taPhoneNumber: "",
+    taPortfolioLink: [],
+    taSelfDescription: "",
+    createdOn: "",
+    updatedOn: "",
+  };
+  const [taId, setTaId] = React.useState(initialValues.taId);
+  const [taFullName, setTaFullName] = React.useState(initialValues.taFullName);
+  const [taExpertise, setTaExpertise] = React.useState(
+    initialValues.taExpertise
+  );
+  const [taAddress, setTaAddress] = React.useState(initialValues.taAddress);
+  const [taEmail, setTaEmail] = React.useState(initialValues.taEmail);
+  const [taPhoneNumber, setTaPhoneNumber] = React.useState(
+    initialValues.taPhoneNumber
+  );
+  const [taPortfolioLink, setTaPortfolioLink] = React.useState(
+    initialValues.taPortfolioLink
+  );
+  const [taSelfDescription, setTaSelfDescription] = React.useState(
+    initialValues.taSelfDescription
+  );
+  const [createdOn, setCreatedOn] = React.useState(initialValues.createdOn);
+  const [updatedOn, setUpdatedOn] = React.useState(initialValues.updatedOn);
+  const [errors, setErrors] = React.useState({});
+  const resetStateValues = () => {
+    setTaId(initialValues.taId);
+    setTaFullName(initialValues.taFullName);
+    setTaExpertise(initialValues.taExpertise);
+    setTaAddress(initialValues.taAddress);
+    setTaEmail(initialValues.taEmail);
+    setTaPhoneNumber(initialValues.taPhoneNumber);
+    setTaPortfolioLink(initialValues.taPortfolioLink);
+    setCurrentTaPortfolioLinkValue("");
+    setTaSelfDescription(initialValues.taSelfDescription);
+    setCreatedOn(initialValues.createdOn);
+    setUpdatedOn(initialValues.updatedOn);
+    setErrors({});
+  };
+  const [currentTaPortfolioLinkValue, setCurrentTaPortfolioLinkValue] =
+    React.useState("");
+  const taPortfolioLinkRef = React.createRef();
+  const validations = {
+    taId: [{ type: "Required" }],
+    taFullName: [{ type: "Required" }],
+    taExpertise: [{ type: "Required" }],
+    taAddress: [{ type: "Required" }],
+    taEmail: [{ type: "Required" }],
+    taPhoneNumber: [{ type: "Required" }],
+    taPortfolioLink: [{ type: "Required" }],
+    taSelfDescription: [],
+    createdOn: [{ type: "Required" }],
+    updatedOn: [{ type: "Required" }],
+  };
+  const runValidationTasks = async (
+    fieldName,
+    currentValue,
+    getDisplayValue
+  ) => {
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
+    let validationResponse = validateField(value, validations[fieldName]);
+    const customValidator = fetchByPath(onValidate, fieldName);
+    if (customValidator) {
+      validationResponse = await customValidator(value, validationResponse);
+    }
+    setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
+    return validationResponse;
+  };
+  const convertToLocal = (date) => {
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
+      hourCycle: "h23",
+    });
+    const parts = df.formatToParts(date).reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {});
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  };
+  return (
+    <Grid
+      as="form"
+      rowGap="15px"
+      columnGap="15px"
+      padding="20px"
+      onSubmit={async (event) => {
+        event.preventDefault();
+        let modelFields = {
+          taId,
+          taFullName,
+          taExpertise,
+          taAddress,
+          taEmail,
+          taPhoneNumber,
+          taPortfolioLink,
+          taSelfDescription,
+          createdOn,
+          updatedOn,
+        };
+        const validationResponses = await Promise.all(
+          Object.keys(validations).reduce((promises, fieldName) => {
+            if (Array.isArray(modelFields[fieldName])) {
+              promises.push(
+                ...modelFields[fieldName].map((item) =>
+                  runValidationTasks(fieldName, item)
+                )
+              );
+              return promises;
+            }
+            promises.push(
+              runValidationTasks(fieldName, modelFields[fieldName])
+            );
+            return promises;
+          }, [])
+        );
+        if (validationResponses.some((r) => r.hasError)) {
+          return;
+        }
+        if (onSubmit) {
+          modelFields = onSubmit(modelFields);
+        }
+        try {
+          Object.entries(modelFields).forEach(([key, value]) => {
+            if (typeof value === "string" && value.trim() === "") {
+              modelFields[key] = undefined;
+            }
+          });
+          await DataStore.save(new TenagaAhli(modelFields));
+          if (onSuccess) {
+            onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
+          }
+        } catch (err) {
+          if (onError) {
+            onError(modelFields, err.message);
+          }
+        }
+      }}
+      {...getOverrideProps(overrides, "TenagaAhliCreateForm")}
+      {...rest}
+    >
+      <TextField
+        label="Ta id"
+        isRequired={true}
+        isReadOnly={false}
+        value={taId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId: value,
+              taFullName,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taId ?? value;
+          }
+          if (errors.taId?.hasError) {
+            runValidationTasks("taId", value);
+          }
+          setTaId(value);
+        }}
+        onBlur={() => runValidationTasks("taId", taId)}
+        errorMessage={errors.taId?.errorMessage}
+        hasError={errors.taId?.hasError}
+        {...getOverrideProps(overrides, "taId")}
+      ></TextField>
+      <TextField
+        label="Ta full name"
+        isRequired={true}
+        isReadOnly={false}
+        value={taFullName}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName: value,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taFullName ?? value;
+          }
+          if (errors.taFullName?.hasError) {
+            runValidationTasks("taFullName", value);
+          }
+          setTaFullName(value);
+        }}
+        onBlur={() => runValidationTasks("taFullName", taFullName)}
+        errorMessage={errors.taFullName?.errorMessage}
+        hasError={errors.taFullName?.hasError}
+        {...getOverrideProps(overrides, "taFullName")}
+      ></TextField>
+      <TextField
+        label="Ta expertise"
+        isRequired={true}
+        isReadOnly={false}
+        value={taExpertise}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taExpertise: value,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taExpertise ?? value;
+          }
+          if (errors.taExpertise?.hasError) {
+            runValidationTasks("taExpertise", value);
+          }
+          setTaExpertise(value);
+        }}
+        onBlur={() => runValidationTasks("taExpertise", taExpertise)}
+        errorMessage={errors.taExpertise?.errorMessage}
+        hasError={errors.taExpertise?.hasError}
+        {...getOverrideProps(overrides, "taExpertise")}
+      ></TextField>
+      <TextField
+        label="Ta address"
+        isRequired={true}
+        isReadOnly={false}
+        value={taAddress}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taExpertise,
+              taAddress: value,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taAddress ?? value;
+          }
+          if (errors.taAddress?.hasError) {
+            runValidationTasks("taAddress", value);
+          }
+          setTaAddress(value);
+        }}
+        onBlur={() => runValidationTasks("taAddress", taAddress)}
+        errorMessage={errors.taAddress?.errorMessage}
+        hasError={errors.taAddress?.hasError}
+        {...getOverrideProps(overrides, "taAddress")}
+      ></TextField>
+      <TextField
+        label="Ta email"
+        isRequired={true}
+        isReadOnly={false}
+        value={taEmail}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taExpertise,
+              taAddress,
+              taEmail: value,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taEmail ?? value;
+          }
+          if (errors.taEmail?.hasError) {
+            runValidationTasks("taEmail", value);
+          }
+          setTaEmail(value);
+        }}
+        onBlur={() => runValidationTasks("taEmail", taEmail)}
+        errorMessage={errors.taEmail?.errorMessage}
+        hasError={errors.taEmail?.hasError}
+        {...getOverrideProps(overrides, "taEmail")}
+      ></TextField>
+      <TextField
+        label="Ta phone number"
+        isRequired={true}
+        isReadOnly={false}
+        value={taPhoneNumber}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber: value,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taPhoneNumber ?? value;
+          }
+          if (errors.taPhoneNumber?.hasError) {
+            runValidationTasks("taPhoneNumber", value);
+          }
+          setTaPhoneNumber(value);
+        }}
+        onBlur={() => runValidationTasks("taPhoneNumber", taPhoneNumber)}
+        errorMessage={errors.taPhoneNumber?.errorMessage}
+        hasError={errors.taPhoneNumber?.hasError}
+        {...getOverrideProps(overrides, "taPhoneNumber")}
+      ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink: values,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            values = result?.taPortfolioLink ?? values;
+          }
+          setTaPortfolioLink(values);
+          setCurrentTaPortfolioLinkValue("");
+        }}
+        currentFieldValue={currentTaPortfolioLinkValue}
+        label={"Ta portfolio link"}
+        items={taPortfolioLink}
+        hasError={errors?.taPortfolioLink?.hasError}
+        errorMessage={errors?.taPortfolioLink?.errorMessage}
+        setFieldValue={setCurrentTaPortfolioLinkValue}
+        inputFieldRef={taPortfolioLinkRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Ta portfolio link"
+          isRequired={true}
+          isReadOnly={false}
+          value={currentTaPortfolioLinkValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.taPortfolioLink?.hasError) {
+              runValidationTasks("taPortfolioLink", value);
+            }
+            setCurrentTaPortfolioLinkValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("taPortfolioLink", currentTaPortfolioLinkValue)
+          }
+          errorMessage={errors.taPortfolioLink?.errorMessage}
+          hasError={errors.taPortfolioLink?.hasError}
+          ref={taPortfolioLinkRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "taPortfolioLink")}
+        ></TextField>
+      </ArrayField>
+      <TextField
+        label="Ta self description"
+        isRequired={false}
+        isReadOnly={false}
+        value={taSelfDescription}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription: value,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taSelfDescription ?? value;
+          }
+          if (errors.taSelfDescription?.hasError) {
+            runValidationTasks("taSelfDescription", value);
+          }
+          setTaSelfDescription(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("taSelfDescription", taSelfDescription)
+        }
+        errorMessage={errors.taSelfDescription?.errorMessage}
+        hasError={errors.taSelfDescription?.hasError}
+        {...getOverrideProps(overrides, "taSelfDescription")}
+      ></TextField>
+      <TextField
+        label="Created on"
+        isRequired={true}
+        isReadOnly={false}
+        type="datetime-local"
+        value={createdOn && convertToLocal(new Date(createdOn))}
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn: value,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.createdOn ?? value;
+          }
+          if (errors.createdOn?.hasError) {
+            runValidationTasks("createdOn", value);
+          }
+          setCreatedOn(value);
+        }}
+        onBlur={() => runValidationTasks("createdOn", createdOn)}
+        errorMessage={errors.createdOn?.errorMessage}
+        hasError={errors.createdOn?.hasError}
+        {...getOverrideProps(overrides, "createdOn")}
+      ></TextField>
+      <TextField
+        label="Updated on"
+        isRequired={true}
+        isReadOnly={false}
+        type="datetime-local"
+        value={updatedOn && convertToLocal(new Date(updatedOn))}
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.updatedOn ?? value;
+          }
+          if (errors.updatedOn?.hasError) {
+            runValidationTasks("updatedOn", value);
+          }
+          setUpdatedOn(value);
+        }}
+        onBlur={() => runValidationTasks("updatedOn", updatedOn)}
+        errorMessage={errors.updatedOn?.errorMessage}
+        hasError={errors.updatedOn?.hasError}
+        {...getOverrideProps(overrides, "updatedOn")}
+      ></TextField>
+      <Flex
+        justifyContent="space-between"
+        {...getOverrideProps(overrides, "CTAFlex")}
+      >
+        <Button
+          children="Clear"
+          type="reset"
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
+          {...getOverrideProps(overrides, "ClearButton")}
+        ></Button>
+        <Flex
+          gap="15px"
+          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
+        >
+          <Button
+            children="Submit"
+            type="submit"
+            variation="primary"
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            {...getOverrideProps(overrides, "SubmitButton")}
+          ></Button>
+        </Flex>
+      </Flex>
+    </Grid>
+  );
+}

@@ -25,23 +25,22 @@ export default function Login() {
   const [signInError, setSignInError] = useState<string>("");
   const [loginState, setLoginState] = useState(fieldsState);
 
-  const { user, setUser, authenticated, setAuthenticated } = useUser();
+  const {
+    user,
+    setUser,
+    authenticated,
+    setAuthenticated,
+    loading,
+    setLoading,
+  } = useUser();
 
   const handleChange = (e: { target: { id: any; value: any } }) => {
     console.log(loginState);
     setLoginState({ ...loginState, [e.target.id]: e.target.value });
   };
 
-  useEffect(() => {
-    console.log("user effect login: ", user);
-    console.log("auth effect login: ", authenticated);
-
-    if (authenticated) {
-      push("/dashboard");
-    }
-  }, [user, authenticated]);
-
   const handleSubmit = async (e: { preventDefault: () => void }) => {
+    setLoading(true);
     console.log("onsubmit");
     e.preventDefault();
     const returnDataLogin = await login(loginState.email, loginState.password);
@@ -51,11 +50,14 @@ export default function Login() {
       setUser(returnDataLogin.data);
       setAuthenticated(true);
       setSignInError("");
+      setLoading(false);
       setOpen(false);
+      push("/dashboard");
     } else {
       setUser(null);
       setAuthenticated(false);
       setSignInError(returnDataLogin.data.message);
+      setLoading(false);
       setOpen(true);
     }
     console.log(returnDataLogin);
@@ -123,7 +125,11 @@ export default function Login() {
               )}
             </div>
             <FormExtra />
-            <FormAction handleSubmit={handleSubmit} text="Login" />
+            <FormAction
+              handleSubmit={handleSubmit}
+              isLoading={loading}
+              text="Login"
+            />
           </form>
           <Snackbar
             open={open}

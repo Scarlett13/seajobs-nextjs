@@ -3,6 +3,8 @@
 		"id": 1,
 		"categoryname": "General",
 		"subcategoryname": "Ahli Hukum",
+		"label": "Ahli Hukum",
+		"value": "ahli_hukum",
 		"description": "Ahli hukum",
 		"iscollapsible": true
 	},
@@ -10,6 +12,8 @@
 		"id": 2,
 		"categoryname": "General",
 		"subcategoryname": "Ahli Keuangan dan Ekonomi",
+		"label": "Ahli Keuangan dan Ekonomi",
+		"value": "ahli_keuangan_dan_ekonomi",
 		"description": "Ahli keuangan dan ekonomi",
 		"iscollapsible": true
 	},
@@ -17,6 +21,8 @@
 		"id": 3,
 		"categoryname": "General",
 		"subcategoryname": "Ahli Kerja Sama",
+		"label": "Ahli Kerjasama",
+		"value": "ahli_kerjasama",
 		"description": "Ahli kerja sama",
 		"iscollapsible": true
 	},
@@ -24,6 +30,8 @@
 		"id": 4,
 		"categoryname": "General",
 		"subcategoryname": "Ahli Risiko",
+		"label": "Ahli Risiko",
+		"value": "ahli_risiko",
 		"description": "Ahli risiko",
 		"iscollapsible": true
 	},
@@ -31,6 +39,8 @@
 		"id": 5,
 		"categoryname": "General",
 		"subcategoryname": "Ahli Sosial dan LARAP",
+		"label": "Ahli Sosial dan LARAP",
+		"value": "ahli_sosial_larap",
 		"description": "Ahli sosial dan LARAP",
 		"iscollapsible": true
 	},
@@ -38,12 +48,16 @@
 		"id": 6,
 		"categoryname": "General",
 		"subcategoryname": "Ahli Pengadaan",
+		"label": "Ahli Pengadaan",
+		"value": "ahli_pengadaan",
 		"description": "Ahli pengadaan",
 		"iscollapsible": true
 	},
 	{
 		"id": 7,
 		"categoryname": "Arsitektur",
+		"label": "Arsitektur",
+		"value": "arsitektur",
 		"subcategoryname": "-",
 		"description": "-",
 		"iscollapsible": false
@@ -51,6 +65,8 @@
 	{
 		"id": 8,
 		"categoryname": "Sipil",
+		"label": "Sipil",
+		"value": "sipil",
 		"subcategoryname": "-",
 		"description": "-",
 		"iscollapsible": false
@@ -58,6 +74,8 @@
 	{
 		"id": 9,
 		"categoryname": "Mekanikal",
+		"label": "Mekanikal",
+		"value": "mekanikal",
 		"subcategoryname": "-",
 		"description": "-",
 		"iscollapsible": false
@@ -65,6 +83,8 @@
 	{
 		"id": 10,
 		"categoryname": "Elektrikal",
+		"label": "Elektrikal",
+		"value": "elektrikal",
 		"subcategoryname": "-",
 		"description": "-",
 		"iscollapsible": false
@@ -72,6 +92,8 @@
 	{
 		"id": 11,
 		"categoryname": "Tata Lingkungan",
+		"label": "Tata Lingkungan",
+		"value": "tata_lingkungan",
 		"subcategoryname": "-",
 		"description": "-",
 		"iscollapsible": false
@@ -79,6 +101,8 @@
 	{
 		"id": 12,
 		"categoryname": "Manajemen Pelaksana",
+		"label": "Manajemen Pelaksana",
+		"value": "manajemen_pelaksana",
 		"subcategoryname": "-",
 		"description": "-",
 		"iscollapsible": false
@@ -86,6 +110,8 @@
 	{
 		"id": 13,
 		"categoryname": "Pendukung",
+		"label": "Pendukung",
+		"value": "pendukung",
 		"subcategoryname": "-",
 		"description": "-",
 		"iscollapsible": false
