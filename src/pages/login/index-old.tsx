@@ -79,7 +79,11 @@ const LoginForm: NextPageWithLayout = () => {
           )}
         </div>
         <FormExtra />
-        <FormAction handleSubmit={handleSubmit} text="Login" />
+        <FormAction
+          handleSubmit={handleSubmit}
+          text="Login"
+          isLoading={false}
+        />
       </form>
     </>
   );
