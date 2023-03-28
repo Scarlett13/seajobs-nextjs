@@ -1,6 +1,4 @@
 // import styles from "./ProfileSectionLayout.module.css";
-
-import { IPengalamanKerja } from "../../../../constants/profileformconstants/PengalamanKerjaConstants";
 import {
   tambahPerusahaanFields,
   tambahProyekFields,
@@ -18,6 +16,7 @@ export interface IProfileSectionLayout {
   setListPerusahaanFieldsState?: React.Dispatch<React.SetStateAction<any>>;
   tambahPerusahaanFields?: typeof tambahPerusahaanFields;
   setListPengalaman?: React.Dispatch<React.SetStateAction<any[]>>;
+  disabled: boolean;
 }
 
 const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
@@ -30,6 +29,7 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
   setListPerusahaanFieldsState: setListPengalamanFieldsState,
   tambahPerusahaanFields,
   setListPengalaman,
+  disabled,
 }) => {
   return (
     <section id={id}>
@@ -48,7 +48,9 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
             </label>
           </div>
           <div
-            className={`float-right ${canBeAdded ? "visible" : "invisible"}`}
+            className={`float-right ${
+              canBeAdded && !disabled ? "visible" : "invisible"
+            }`}
           >
             {id === "pengalaman_kerja_dan_proyek" ? (
               <ModalInputPerusahaan
@@ -75,6 +77,7 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
                 setListPendidikanFieldsState={setListPengalamanFieldsState}
                 tambahPendidikanFields={tambahPerusahaanFields}
                 setListPendidikan={setListPengalaman}
+                taId={""}
               >
                 {({ openModal }) => (
                   <button

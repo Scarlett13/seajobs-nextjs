@@ -1,11 +1,23 @@
 import { Button, Timeline } from "flowbite-react";
 import { DateTime } from "luxon";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { IPengalamanKerja } from "../../../../constants/profileformconstants/PengalamanKerjaConstants";
+import { useEffect, useLayoutEffect } from "react";
+import useStateRef from "react-usestateref";
+import { PengalamanKerja } from "../../../../API";
+import {
+  IAmplifyPengalamanKerja,
+  IPengalamanKerja,
+} from "../../../../constants/profileformconstants/PengalamanKerjaConstants";
 import { tambahProyekFields } from "../../../../constants/profileformconstants/ProfileFormConstants";
+import { useUser } from "../../../../contexts/AmplifyAuthContext";
 import ModalInputProyek from "../../sections/timelinepengalaman/modalinputperusahaan/ModalInputProyek";
 
 const currentDate = DateTime.now().toFormat("yyyy-MM");
+
+const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
+  arr.reduce((groups, item) => {
+    (groups[key(item)] ||= []).push(item);
+    return groups;
+  }, {} as Record<K, T[]>);
 
 export interface IPengalamanKerjaProyek {
   listPengalaman: IPengalamanKerja[];
@@ -13,12 +25,20 @@ export interface IPengalamanKerjaProyek {
   setListProyekFieldsState?: React.Dispatch<React.SetStateAction<any>>;
   tambahProyekFields?: typeof tambahProyekFields;
   setListPengalaman: React.Dispatch<React.SetStateAction<IPengalamanKerja[]>>;
+  setListKerja: React.Dispatch<React.SetStateAction<IAmplifyPengalamanKerja[]>>;
+  listKerja: IAmplifyPengalamanKerja[];
+  disabled: boolean;
 }
 
 interface IDiffTime {
   perusahaanid: string;
   diff: any;
   isPengalaman: boolean;
+}
+
+interface IFormattedListKerja {
+  companyId: String;
+  projects: IAmplifyPengalamanKerja[];
 }
 
 const fixedTimelineLocationClassName =
@@ -33,68 +53,90 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
   setListProyekFieldsState,
   tambahProyekFields,
   setListPengalaman,
+  setListKerja,
+  listKerja,
+  disabled,
   ...inputProps
 }) => {
   console.log("error pengalaman: ", listPengalaman);
   // var arrayDiff: IDiffTime[] = [];
 
-  const [arrayDiff, setArrayDiff] = useState<IDiffTime[]>([]);
+  const [arrayDiff, setArrayDiff] = useStateRef<IDiffTime[]>([]);
+  const [formattedListKerja, setFormattedListKerja] = useStateRef<
+    IFormattedListKerja[]
+  >([]);
+
+  const { loading, setLoading } = useUser();
 
   useEffect(() => {
+    // if (!loading) {
+    console.log("updatedlistkerja");
     let tempArrayDiff: IDiffTime[] = [];
 
-    listPengalaman.forEach((pengalaman) => {
+    const resultFormats = groupBy(listKerja, (i) => i.companyId);
+
+    let tempArray: IFormattedListKerja[] = [];
+
+    for (const key in resultFormats) {
+      // Get the strongly typed value with this name:
+      let value = resultFormats[key];
+      // Now we have the the strongly typed value for this key (depending on how bigObject was typed in the first place).
+      value = value.sort((one, two) =>
+        `${one.projectEndMonth}-${one.projectEndYear}` >
+        `${two.projectEndMonth}-${two.projectEndYear}`
+          ? -1
+          : 1
+      );
+      tempArray.push({ companyId: key as String, projects: value });
+      // Do something interesting with the property of bigObject...
+    }
+
+    setFormattedListKerja([...tempArray]);
+
+    tempArray.forEach((project) => {
       var arrayCalculateDiff: any[] = [];
-      if (pengalaman.projects) {
-        pengalaman.projects.forEach((project) => {
-          var diffToBePushed;
-          if (project.projectendmonth && project.projectendyear) {
-            diffToBePushed = DateTime.fromISO(
-              `${project.projectendyear}-${project.projectendmonth}`
-            ).diff(
-              DateTime.fromISO(
-                `${project.projectstartyear}-${project.projectstartmonth}`
-              ),
-              ["years", "months"]
-            );
-          } else {
-            diffToBePushed = DateTime.fromISO(currentDate).diff(
-              DateTime.fromISO(
-                `${project.projectstartyear}-${project.projectstartmonth}`
-              ),
-              ["years", "months"]
-            );
-          }
 
-          arrayCalculateDiff = [...arrayCalculateDiff, diffToBePushed];
-        });
+      project.projects.forEach((proyekan) => {
+        var diffToBePushed;
 
-        let totalmonths = 0;
-        let totalyears = 0;
+        diffToBePushed = DateTime.fromISO(
+          `${proyekan.projectEndYear}-${proyekan.projectEndMonth}`
+        ).diff(
+          DateTime.fromISO(
+            `${proyekan.projectStartYear}-${proyekan.projectStartMonth}`
+          ),
+          ["years", "months"]
+        );
 
-        arrayCalculateDiff.forEach((diff, index) => {
-          totalmonths += diff.months + 1;
-          totalyears += diff.years;
-        });
-        while (totalmonths >= 12) {
-          totalmonths -= 12;
-          totalyears += 1;
-        }
-        const newArrayDiff = {
-          perusahaanid: pengalaman.companyid,
-          diff: { months: totalmonths, years: totalyears },
-          isPengalaman: totalmonths > 0 || totalyears > 0,
-        };
+        arrayCalculateDiff = [...arrayCalculateDiff, diffToBePushed];
+      });
 
-        console.log("newarray: ", newArrayDiff);
+      let totalmonths = 0;
+      let totalyears = 0;
 
-        tempArrayDiff = [...tempArrayDiff, newArrayDiff];
+      arrayCalculateDiff.forEach((diff, index) => {
+        totalmonths += diff.months + 1;
+        totalyears += diff.years;
+      });
+      while (totalmonths >= 12) {
+        totalmonths -= 12;
+        totalyears += 1;
       }
+
+      const newArrayDiff = {
+        perusahaanid: project.companyId,
+        diff: { months: totalmonths, years: totalyears },
+        isPengalaman: totalmonths > 0 || totalyears > 0,
+      };
+
+      console.log("newarray: ", newArrayDiff);
+
+      tempArrayDiff = [...tempArrayDiff, newArrayDiff as IDiffTime];
     });
 
     setArrayDiff(tempArrayDiff);
-    console.log("arraydiff1: ", tempArrayDiff);
-  }, [listPengalaman]);
+    // }
+  }, [listKerja]);
 
   // TODO: kalau ngambil proyek dan gak ngambil proyek tetep sama, itung pake ini. cara atas kalau itung per proyek aja
   // console.log("arraydates sebelum sort: ", arrayDates);
@@ -138,21 +180,20 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
   //   console.log("arraydiff1: ", tempArrayDiff);
   // }, [listPengalaman]);
 
-  console.log("arraydiff2: ", arrayDiff.length);
   return (
     <>
-      {listPengalaman.map((pengalaman, index) => (
+      {formattedListKerja.map((pengalaman, index) => (
         <div
-          key={pengalaman.companyid}
+          key={pengalaman.companyId as string}
           className="my-5 border border-zinc-600 p-4"
         >
           <div className="flow-root">
             <div className="float-left">
               <p className="text-white text-xl font-medium capitalize ml-6">
-                {pengalaman.companyname}
+                {pengalaman.projects[0].companyName}
               </p>
               <p className="text-white text-md capitalize ml-6">
-                {`${pengalaman.companyaddress}`}
+                {pengalaman.projects[0].companyaddress}
               </p>
               <p className="text-white text-md capitalize ml-6 pb-4">
                 {`${
@@ -170,19 +211,21 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
                 }`}
               </p>
             </div>
-            <div className="float-right">
+            <div className={`float-right ${disabled ? "hidden" : "visible"}`}>
               <p className="text-white text-xl font-medium capitalize ml-6">
                 &nbsp;
               </p>
               <div className="text-white text-md capitalize ml-6">
                 <ModalInputProyek
                   title={"Tambahkan proyek"}
-                  pengalamanid={pengalaman.companyid}
+                  companyid={pengalaman.companyId as string}
                   listPengalaman={listPengalaman}
                   listProyekFieldsState={listProyekFieldsState}
                   setListProyekFieldsState={setListProyekFieldsState}
                   tambahProyekFields={tambahProyekFields}
                   setListPengalaman={setListPengalaman}
+                  setListKerja={setListKerja}
+                  listKerja={listKerja}
                 >
                   {({ openModal }) => (
                     <Button
@@ -202,47 +245,51 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
 
           <div>
             <Timeline>
-              {pengalaman?.projects?.map((project, index) => (
-                <Timeline.Item key={project.projectid}>
+              {pengalaman.projects.map((project, index) => (
+                <Timeline.Item key={project.projectId}>
                   <Timeline.Point />
                   <Timeline.Content>
-                    <Timeline.Title>{project.projectname}</Timeline.Title>
+                    <Timeline.Title>{project.projectName}</Timeline.Title>
                     <p className={fixedTimelineClientClassName}>
-                      {`${project.projectclientname}`}
+                      {`${project.projectClient}`}
                     </p>
                     <p className={fixedTimelineClientClassName}>
-                      {`${project.projectrolename}`}
+                      {`${project.position}`}
                     </p>
-                    <Timeline.Time>{`${project.projectstartmonth} / ${
-                      project.projectstartyear
+                    <Timeline.Time>{`${project.projectStartMonth} / ${
+                      project.projectStartYear
                     } - ${
-                      project.isstillworking
+                      !project.isFinished
                         ? "current"
-                        : project.projectendmonth +
+                        : project.projectEndMonth +
                           " / " +
-                          project.projectendyear
+                          project.projectEndYear
                     }`}</Timeline.Time>
                     <p className={fixedTimelineLocationClassName}>
-                      {`${project.projectlocation}`}
+                      {`${project.projectLocation}`}
                     </p>
                     <Timeline.Body>
-                      {`${project.projectdescription}`}
+                      {`${project.projectDescription}`}
                     </Timeline.Body>
                     <ModalInputProyek
                       title={"Edit proyek"}
-                      pengalamanid={pengalaman.companyid}
+                      companyid={pengalaman.companyId as string}
                       listPengalaman={listPengalaman}
                       listProyekFieldsState={listProyekFieldsState}
                       setListProyekFieldsState={setListProyekFieldsState}
                       tambahProyekFields={tambahProyekFields}
                       setListPengalaman={setListPengalaman}
                       defaultValue={project}
-                      indexEdit={project.projectid}
+                      projectid={project.projectId}
+                      setListKerja={setListKerja}
+                      listKerja={listKerja}
                     >
                       {({ openModal }) => (
                         <Button
                           color="gray"
-                          className="px-2 mr-4"
+                          className={`px-2 mr-4 ${
+                            disabled ? "hidden" : "visible"
+                          }`}
                           onClick={openModal}
                           title={"Edit proyek"}
                         >
@@ -254,6 +301,57 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
                 </Timeline.Item>
               ))}
             </Timeline>
+          </div>
+        </div>
+      ))}
+
+      {listPengalaman.map((pengalaman, index) => (
+        <div
+          key={pengalaman.companyId as string}
+          className="my-5 border border-zinc-600 p-4"
+        >
+          <div className="flow-root">
+            <div className="float-left">
+              <p className="text-white text-xl font-medium capitalize ml-6">
+                {pengalaman.companyName}
+              </p>
+              <p className="text-white text-md capitalize ml-6">
+                {pengalaman.companyAddress}
+              </p>
+              <p className="text-white text-md capitalize ml-6 pb-4">
+                {`Belum ada pengalaman`}
+              </p>
+            </div>
+            <div className="float-right">
+              <p className="text-white text-xl font-medium capitalize ml-6">
+                &nbsp;
+              </p>
+              <div className="text-white text-md capitalize ml-6">
+                <ModalInputProyek
+                  title={"Tambahkan proyek"}
+                  companyid={pengalaman.companyId as string}
+                  listPengalaman={listPengalaman}
+                  listProyekFieldsState={listProyekFieldsState}
+                  setListProyekFieldsState={setListProyekFieldsState}
+                  tambahProyekFields={tambahProyekFields}
+                  setListPengalaman={setListPengalaman}
+                  setListKerja={setListKerja}
+                  listKerja={listKerja}
+                >
+                  {({ openModal }) => (
+                    <Button
+                      color="info"
+                      className="px-2 mr-4"
+                      onClick={openModal}
+                      title={"Tambahkan proyek"}
+                    >
+                      Tambah proyek
+                    </Button>
+                  )}
+                </ModalInputProyek>
+              </div>
+              <p className="text-white text-md capitalize ml-6 pb-4">&nbsp;</p>
+            </div>
           </div>
         </div>
       ))}

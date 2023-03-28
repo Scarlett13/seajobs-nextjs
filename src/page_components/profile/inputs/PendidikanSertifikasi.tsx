@@ -17,6 +17,8 @@ export interface IPendidikanSertifikasiSection {
   setListPendidikan: React.Dispatch<
     React.SetStateAction<IPendidikanSertifikasi[]>
   >;
+  taId: string;
+  disabled: boolean;
 }
 
 const fixedTimelineLocationClassName =
@@ -31,6 +33,8 @@ const PendidikanSertifikasi: React.FC<IPendidikanSertifikasiSection> = ({
   setListPendidikanFieldsState: setListProyekFieldsState,
   tambahPendidikanSertifikasiFileds: tambahProyekFields,
   setListPendidikan: setListPengalaman,
+  disabled,
+  taId,
   ...inputProps
 }) => {
   return (
@@ -40,28 +44,30 @@ const PendidikanSertifikasi: React.FC<IPendidikanSertifikasiSection> = ({
           <div className="flow-root">
             <div className="float-left">
               <p className="text-white text-xl font-medium capitalize ml-6">
-                {pengalaman.namainstitusi}
+                {pengalaman.institutionName}
               </p>
               <p className="text-white text-lg font-medium capitalize ml-6">
-                {pengalaman.namajurusan}
+                {pengalaman.courseName}
               </p>
               <p className="text-white text-md capitalize ml-6">
                 {`${
-                  pengalaman.alamatinstitusi
-                    ? pengalaman.alamatinstitusi + " \n"
+                  pengalaman.institutionAddress
+                    ? pengalaman.institutionAddress + " \n"
                     : ""
                 }`}
               </p>
               <p className="text-white text-md ml-6">
                 {`${
-                  pengalaman.urlinstitusi ? pengalaman.urlinstitusi + " \n" : ""
+                  pengalaman.institutionUrl
+                    ? pengalaman.institutionUrl + " \n"
+                    : ""
                 } `}
               </p>
               <p className="text-white text-md capitalize ml-6 pb-4">
-                {`${pengalaman.bulanmasuk} / ${pengalaman.tahunmasuk} - ${pengalaman.bulanselesai} / ${pengalaman.tahunselesai}`}
+                {`${pengalaman.entryMonth} / ${pengalaman.entryYear} - ${pengalaman.endMonth} / ${pengalaman.endYear}`}
               </p>
             </div>
-            <div className="float-right">
+            <div className={`float-right ${disabled ? "hidden" : "visible"}`}>
               <p className="text-white text-xl font-medium capitalize ml-6">
                 &nbsp;
               </p>
@@ -74,7 +80,8 @@ const PendidikanSertifikasi: React.FC<IPendidikanSertifikasiSection> = ({
                   tambahPendidikanFields={tambahProyekFields}
                   setListPendidikan={setListPengalaman}
                   defaultValue={pengalaman}
-                  indexEdit={pengalaman.idpendidikan}
+                  indexEdit={pengalaman.pendidikanId}
+                  taId={taId}
                 >
                   {({ openModal }) => (
                     <Button

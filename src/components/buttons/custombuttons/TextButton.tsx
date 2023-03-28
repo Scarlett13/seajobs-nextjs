@@ -1,5 +1,6 @@
 /* eslint-disable react/display-name */
 import * as React from "react";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 
 import clsxm from "../../../libs/clsxm";
 
@@ -9,17 +10,28 @@ const TextButtonVariant = ["primary", "secondary", "basic", "danger"] as const;
 type TextButtonProps = {
   size?: (typeof TextButtonSize)[number];
   variant?: (typeof TextButtonVariant)[number];
+  isLoading?: boolean;
 } & React.ComponentPropsWithRef<"button">;
 
 const TextButton = React.forwardRef<HTMLButtonElement, TextButtonProps>(
   (
-    { children, className, size = "base", variant = "primary", ...rest },
+    {
+      children,
+      className,
+      size = "base",
+      variant = "primary",
+      disabled: buttonDisabled,
+      isLoading,
+      ...rest
+    },
     ref
   ) => {
+    const disabled = isLoading || buttonDisabled;
     return (
       <button
         ref={ref}
         type="button"
+        disabled={disabled}
         className={clsxm(
           "button inline-flex items-center justify-center font-semibold",
           "focus:outline-none focus-visible:ring",

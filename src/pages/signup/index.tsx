@@ -26,16 +26,8 @@ export default function Signup() {
   const [signUpError, setSignUpError] = useState<string>("");
   const [signUpSuccess, setSignUpSuccess] = useState<string>("");
 
-  const { user, setUser, authenticated, setAuthenticated } = useUser();
-
-  useEffect(() => {
-    console.log("user effect login: ", user);
-    console.log("auth effect login: ", authenticated);
-
-    if (authenticated) {
-      push("/dashboard");
-    }
-  }, [user, authenticated]);
+  const { user, loading, authenticated, setAuthenticated, setLoading } =
+    useUser();
 
   const handleChange = (e: { target: { id: any; value: any } }) => {
     if (e.target.id === "confirm_password") {
@@ -59,6 +51,7 @@ export default function Signup() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    setLoading(true);
     if (passwordMatch) {
       console.log(signupState);
       const retdata = await signup(
@@ -74,11 +67,13 @@ export default function Signup() {
             ", silahkan cek email anda!"
         );
         setOpen(true);
+        setLoading(false);
         // push("/login");
       } else {
         setSignUpError(retdata.data.message);
         setSignUpSuccess("");
         setOpen(true);
+        setLoading(false);
       }
     }
   };
@@ -153,7 +148,11 @@ export default function Signup() {
             <p className={"-mt-4 font-extra-light text-sm text-red-500"}>
               {passwordMatch ? "" : "password tidak cocok"}
             </p>
-            <FormAction handleSubmit={handleSubmit} text="Signup" />
+            <FormAction
+              handleSubmit={handleSubmit}
+              isLoading={loading}
+              text="Signup"
+            />
           </div>
         </form>
         <Snackbar
@@ -175,4 +174,4 @@ export default function Signup() {
 
 // export default Signup;
 
-Signup.authenticate = false;
+Signup.authenticate = true;

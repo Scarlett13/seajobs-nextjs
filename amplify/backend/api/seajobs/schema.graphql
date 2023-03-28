@@ -46,17 +46,22 @@ type TenagaAhli
   ) {
   taId: String! @primaryKey
   taFullName: String!
-  taExpertise: EnumExpertise!
+  taNikPassport: String!
+  taDob: AWSDate!
+  taCitizenship: String!
+  taResidentStatus: String!
+  taExpertise: String! #expertise nya dijadiin dalam string aja
   taAddress: String!
-  taEmail: [String!]!
-  taPhoneNumber: [String!]!
-  taPortfolioLink: [TenagaAhliPortfolioLink!]
+  taEmail: String!
+  taPhoneNumber: String!
+  taPortfolioLink: [String!]
   taSelfDescription: String
-  taAdditionalExpertise: [EnumExpertise!]!
   pengalamanKerja: [PengalamanKerja]
     @hasMany(indexName: "byTenagaAhliByTimeline", fields: ["taId"])
   projectBidded: [CompanyProjectBidder]
     @hasMany(indexName: "bidByTa", fields: ["taId"])
+  pendidikanSertifikasi: [PendidikanSertifikasi]
+    @hasMany(indexName: "byTenagaAhliByCourse", fields: ["taId"])
   createdOn: AWSDateTime!
   updatedOn: AWSDateTime!
 }
@@ -75,29 +80,71 @@ type PengalamanKerja
     ]
   ) {
   taId: String!
-    @primaryKey(
-      sortKeyFields: [
-        "sanitisedCompanyName"
-        "contractStart"
-        "sanitisedProjectName"
-      ]
-    )
+    @primaryKey(sortKeyFields: ["companyId", "projectId"])
     @index(
       name: "byTenagaAhliByTimeline"
       sortKeyFields: ["contractStart", "isFinished"]
+      queryField: "pengalamanKerjaByTenagaAhliByTimeline"
     )
+    @index(
+      name: "byTenagaAhliByPerusahaan"
+      sortKeyFields: ["sanitisedCompanyName"]
+      queryField: "pengalamanKerjaByTenagaAhliByPerusahaan"
+    )
+  projectId: String!
   companyName: String!
+  companyId: String!
+  companyaddress: String!
   projectName: String!
   sanitisedCompanyName: String!
   sanitisedProjectName: String!
-  contractType: EnumContractType!
-  contractDuration: String!
-  contractStart: AWSDate!
-  contractEnd: String!
-  isFinished: Boolean!
-  contractCity: String!
-  contractCountry: String!
-  contractDescription: String!
+  employmentType: String!
+  projectClient: String!
+  position: String!
+  contractStart: String! ##perlu buat sorting selain month year start
+  projectStartMonth: String!
+  projectStartYear: String!
+  projectEndMonth: String!
+  projectEndYear: String!
+  isFinished: String!
+  projectLocation: String!
+  projectDescription: String!
+  createdOn: AWSDateTime!
+  updatedOn: AWSDateTime!
+}
+
+type PendidikanSertifikasi
+  @model(timestamps: { createdAt: "createdOn", updatedAt: "updatedOn" })
+  @auth(
+    rules: [
+      ###owner, can do all operations
+      # { allow: owner,  operations: [create, update, read] }
+      {
+        allow: private
+        provider: userPools
+        operations: [create, update, read, delete]
+      }
+    ]
+  ) {
+  taId: String!
+    @primaryKey(sortKeyFields: ["endYear", "pendidikanId"])
+    @index(
+      name: "byTenagaAhliByCourse"
+      sortKeyFields: ["pendidikanId", "courseName"]
+      queryField: "pendidikanByTenagaAhliByCourse"
+    )
+  pendidikanId: String!
+  pendidikanType: String!
+  institutionName: String!
+  sanitisedInstitutionName: String!
+  courseName: String!
+  pendidikanDescription: String
+  institutionAddress: String
+  institutionUrl: String
+  entryMonth: String!
+  entryYear: String!
+  endMonth: String!
+  endYear: String!
   createdOn: AWSDateTime!
   updatedOn: AWSDateTime!
 }
@@ -127,7 +174,11 @@ type Project
   projectSubCategory: [EnumExpertise!]!
   bidders: [CompanyProjectBidder] @hasMany
   projectOwner: String!
-    @index(name: "projectByOwner", sortKeyFields: ["projectStart", "isActive"])
+    @index(
+      name: "projectByOwner"
+      sortKeyFields: ["projectStart", "isActive"]
+      queryField: "projectByOwner"
+    )
   isActive: String!
   isDeleted: Boolean!
   createdOn: AWSDateTime!
@@ -148,8 +199,18 @@ type CompanyProjectBidder
     ]
   ) {
   projectId: String! @primaryKey
-  taId: String! @index(name: "bidByTa", sortKeyFields: ["konsultanId"])
-  konsultanId: String! @index(name: "bidByKonsultan", sortKeyFields: ["taId"])
+  taId: String!
+    @index(
+      name: "bidByTa"
+      sortKeyFields: ["konsultanId"]
+      queryField: "companyProjectBidderByTa"
+    )
+  konsultanId: String!
+    @index(
+      name: "bidByKonsultan"
+      sortKeyFields: ["taId"]
+      queryField: "companyProjectBidderByKonsultan"
+    )
   biddingStatus: EnumBiddingStatus!
   comments: [String!]
   createdOn: AWSDateTime!

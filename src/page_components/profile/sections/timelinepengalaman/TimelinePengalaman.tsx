@@ -1,4 +1,8 @@
-import { IPengalamanKerja } from "../../../../constants/profileformconstants/PengalamanKerjaConstants";
+import { PengalamanKerja } from "../../../../API";
+import {
+  IAmplifyPengalamanKerja,
+  IPengalamanKerja,
+} from "../../../../constants/profileformconstants/PengalamanKerjaConstants";
 import {
   tambahPerusahaanFields,
   tambahProyekFields,
@@ -16,6 +20,9 @@ export interface ITimelinePengalaman {
   listProyekFieldsState?: any;
   setListProyekFieldsState?: React.Dispatch<React.SetStateAction<any>>;
   tambahProyekFields?: typeof tambahProyekFields;
+  setListKerja: React.Dispatch<React.SetStateAction<IAmplifyPengalamanKerja[]>>;
+  listKerja: IAmplifyPengalamanKerja[];
+  disabled: boolean;
 }
 
 const TimelinePengalaman: React.FC<ITimelinePengalaman> = ({
@@ -27,10 +34,14 @@ const TimelinePengalaman: React.FC<ITimelinePengalaman> = ({
   listProyekFieldsState,
   setListProyekFieldsState,
   tambahProyekFields,
+  setListKerja,
+  listKerja,
+  disabled,
 }) => {
   return (
     <ProfileSectionLayout
       isRequired={false}
+      disabled={disabled}
       canBeAdded={true}
       title="Pengalaman kerja dan proyek"
       id="pengalaman_kerja_dan_proyek"
@@ -40,11 +51,14 @@ const TimelinePengalaman: React.FC<ITimelinePengalaman> = ({
       setListPengalaman={setListPengalaman}
     >
       <PengalamanKerjaProyek
+        disabled={disabled}
         listPengalaman={listPengalaman}
         listProyekFieldsState={listProyekFieldsState}
         setListProyekFieldsState={setListProyekFieldsState}
         tambahProyekFields={tambahProyekFields}
         setListPengalaman={setListPengalaman}
+        setListKerja={setListKerja}
+        listKerja={listKerja}
       />
     </ProfileSectionLayout>
   );

@@ -53,9 +53,13 @@ export default function SearchableSelectInput({
     control: (styles) => ({
       ...styles,
       // red-500 and gray-300
-      border: `1px solid ${error ? "#EF4444" : "#D1D5DB"}`,
+      border: `1px solid ${
+        error ? "#EF4444" : disabled ? "#212121" : "#D1D5DB"
+      }`,
       "&:hover": {
-        border: `1px solid ${error ? "#EF4444" : "#D1D5DB"}`,
+        border: `1px solid ${
+          error ? "#EF4444" : disabled ? "#212121" : "#D1D5DB"
+        }`,
       },
       boxShadow: "none",
       transition: "none",
@@ -70,7 +74,7 @@ export default function SearchableSelectInput({
       },
       borderRadius: "0px",
       padding: "0 0.75rem",
-      background: disabled || readOnly ? "#F3F4F6" : "#000000",
+      background: disabled || readOnly ? "#212121" : "#000000",
       cursor: "pointer",
     }),
 
@@ -97,9 +101,9 @@ export default function SearchableSelectInput({
     }),
     dropdownIndicator: (styles) => ({
       ...styles,
-      color: "#878787",
+      color: disabled ? "#212121" : "#878787",
       "&:hover": {
-        color: "#878787",
+        color: disabled ? "#212121" : "#878787",
       },
     }),
     //mainin disini untuk list opsi
@@ -114,6 +118,7 @@ export default function SearchableSelectInput({
     }),
     multiValue: (styles) => ({
       ...styles,
+      color: "#ffffff",
       display: "flex",
       alignItems: "center",
       gap: "0.25rem",
@@ -153,7 +158,12 @@ export default function SearchableSelectInput({
   return (
     <div className={containerClassName}>
       {withLabel && (
-        <Typography as="label" variant="s3" className="block" htmlFor={id}>
+        <Typography
+          as="label"
+          variant="s3"
+          className="block"
+          htmlFor={`id_${id}`}
+        >
           {label}
         </Typography>
       )}
@@ -171,6 +181,8 @@ export default function SearchableSelectInput({
           render={({ field }) => {
             return (
               <Select
+                id={id}
+                instanceId={id}
                 {...field}
                 value={
                   //? null is needed so if the selected value is not found in the options, it will clear the value

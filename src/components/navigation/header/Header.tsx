@@ -25,7 +25,7 @@ IHeader) => {
       label: "Explore",
     },
     {
-      path: "./",
+      path: "/dashboard",
       label: "Dashboard",
     },
     {
@@ -35,7 +35,6 @@ IHeader) => {
   ];
 
   const [navbar, setNavbar] = useState(false);
-  console.log("user header: " + user);
 
   return (
     <div>

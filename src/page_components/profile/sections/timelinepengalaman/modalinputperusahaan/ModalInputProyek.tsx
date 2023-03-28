@@ -9,11 +9,23 @@ import SearchableSelectInput from "../../../../../components/forms/SearchableSel
 import TextArea from "../../../../../components/forms/TextArea";
 import Modal from "../../../../../components/modal/Modal";
 import {
+  IAmplifyPengalamanKerja,
   IPengalamanKerja,
-  IProject,
 } from "../../../../../constants/profileformconstants/PengalamanKerjaConstants";
 import { tambahProyekFields as referFileds } from "../../../../../constants/profileformconstants/ProfileFormConstants";
 import v4 from "uuid-browser/v4";
+import {
+  CreatePengalamanKerjaInput,
+  CreatePengalamanKerjaMutation,
+  DeletePengalamanKerjaMutation,
+  PengalamanKerja,
+  UpdatePengalamanKerjaMutation,
+} from "../../../../../API";
+import { useRouter } from "next/router";
+import { API } from "aws-amplify";
+import { GraphQLQuery } from "@aws-amplify/api";
+import * as mutations from "../../../../../graphql/mutations";
+import { useUser } from "../../../../../contexts/AmplifyAuthContext";
 
 type ModalReturnType = {
   openModal: () => void;
@@ -30,10 +42,12 @@ export default function ExampleModal({
   setListProyekFieldsState,
   tambahProyekFields,
   setListPengalaman,
-  pengalamanid,
+  companyid,
   listPengalaman,
   defaultValue,
-  indexEdit,
+  projectid,
+  setListKerja,
+  listKerja,
 }: {
   children: (props: ModalReturnType) => JSX.Element;
   title: string;
@@ -41,14 +55,20 @@ export default function ExampleModal({
   setListProyekFieldsState?: React.Dispatch<React.SetStateAction<any>>;
   tambahProyekFields?: typeof referFileds;
   setListPengalaman: React.Dispatch<React.SetStateAction<IPengalamanKerja[]>>;
-  pengalamanid: string;
+  companyid: string;
   listPengalaman: IPengalamanKerja[];
-  defaultValue?: any;
-  indexEdit?: string;
+  defaultValue?: IAmplifyPengalamanKerja;
+  projectid?: string;
+  setListKerja: React.Dispatch<React.SetStateAction<IAmplifyPengalamanKerja[]>>;
+  listKerja: IAmplifyPengalamanKerja[];
 }) {
   const tipe_pekerjaan = require("../../../../../constants/profileformconstants/tipe_pekerjaan.json");
 
   const e: string = v4();
+
+  const router = useRouter();
+  const { profile_id } = router.query;
+  const { loading, setLoading } = useUser();
 
   const [open, setOpen] = React.useState(false);
   const modalReturn: ModalReturnType = {
@@ -82,171 +102,239 @@ export default function ExampleModal({
 
   React.useEffect(() => {
     if (formState.isSubmitSuccessful) {
-      if (!defaultValue && !indexEdit) {
+      if (!defaultValue && !companyid && !projectid) {
         reset();
       }
     }
-  }, [defaultValue, formState, indexEdit, reset]);
+  }, [defaultValue, formState, companyid, reset, projectid]);
 
   React.useLayoutEffect(() => {
     if (defaultValue) {
-      console.log("defaultvalue: ", defaultValue);
       const defaultStartProject = new Date();
       var defaultEndProject: any = "";
-      if (defaultValue.projectstartmonth && defaultValue.projectstartyear) {
-        defaultStartProject.setFullYear(defaultValue.projectstartyear);
-        defaultStartProject.setMonth(defaultValue.projectstartmonth);
+      if (defaultValue.projectStartMonth && defaultValue.projectStartYear) {
+        defaultStartProject.setFullYear(
+          defaultValue.projectStartYear as unknown as number
+        );
+        defaultStartProject.setMonth(
+          defaultValue.projectStartMonth as unknown as number
+        );
         defaultStartProject.setMonth(defaultStartProject.getMonth() - 1);
       }
-      if (defaultValue.projectendtmonth && defaultValue.projectendyear) {
+      if (defaultValue.projectEndMonth && defaultValue.projectEndYear) {
         defaultEndProject = new Date();
-        defaultEndProject.setFullYear(defaultValue.projectendyear);
-        defaultEndProject.setMonth(defaultValue.projectendtmonth);
+        defaultEndProject.setFullYear(defaultValue.projectEndYear);
+        defaultEndProject.setMonth(defaultValue.projectEndMonth);
         defaultEndProject.setMonth(defaultEndProject.getMonth() - 1);
       }
-      setValue("nama_proyek", defaultValue.projectname);
-      setValue("nama_klien", defaultValue.projectclientname);
-      setValue("posisi_kerja", defaultValue.projectrolename);
-      setValue("deskripsi_proyek", defaultValue.projectdescription);
-      setValue("lokasi_proyek", defaultValue.projectlocation);
-      setValue("jenis_pekerjaan", defaultValue.employmenttype);
+      setValue("nama_proyek", defaultValue.projectName);
+      setValue("nama_klien", defaultValue.projectClient);
+      setValue("posisi_kerja", defaultValue.position);
+      setValue("deskripsi_proyek", defaultValue.projectDescription);
+      setValue("lokasi_proyek", defaultValue.projectLocation);
+      setValue("jenis_pekerjaan", defaultValue.employmentType);
       setValue("proyek_dimulai", defaultStartProject.toISOString());
-      // setValue("proyek_selesai", "01/2023");
+      setValue("proyek_selesai", defaultEndProject.toISOString());
     }
-  }, [defaultValue, indexEdit, setValue]);
+  }, [defaultValue, setValue]);
 
   //#endregion  //*======== Form ===========
 
   //#region  //*=========== Form Submit ===========
 
-  const submitListPengalaman = (data: any) => {
-    if (setListPengalaman && listProyekFieldsState) {
-      const index = listPengalaman.findIndex(
-        (pp) => pp.companyid === pengalamanid
+  const submitListPengalaman = async (data: any) => {
+    if (!loading) {
+      //initial status untuk proses add, edit data
+      /*status:
+				0 = initial
+				1 = tambah data dari existing company list
+				2 = tambah data dari new company list
+				3 = edit data
+			*/
+      setLoading(true);
+      let status = 0;
+
+      console.log("wubbawewdata: ", data);
+      console.log("wubbawewpengalamanid: ", companyid);
+      console.log("wubbawewlistkerja: ", listKerja);
+      console.log("wubbawewpengalaman: ", listPengalaman);
+
+      let index = listKerja.findIndex(
+        (pp) => pp.companyId === companyid && pp.projectId === projectid
       );
+      console.log("wubbawewindex1: ", index);
 
-      const newPengalaman: IProject = {
-        projectid: indexEdit ? indexEdit : e,
-        projectsanitisedname: `${sanitize
-          .addUnderscore(listPengalaman[index].companyid)
-          .toLowerCase()}_${sanitize
-          .addUnderscore(data.nama_proyek)
-          .toLowerCase()}`,
-        projectname: data.nama_proyek,
-        projectdescription: data.deskripsi_proyek,
-        employmenttype: data.jenis_pekerjaan,
-        projectclientname: data.nama_klien,
-        projectrolename: data.posisi_kerja,
-        projectlocation: data.lokasi_proyek,
-        projectstartmonth: DateTime.fromISO(
-          new Date(data.proyek_dimulai).toISOString()
-        ).toFormat("MM"),
-        projectstartyear: DateTime.fromISO(
-          new Date(data.proyek_dimulai).toISOString()
-        ).toFormat("yyyy"),
-        isprojectfinished: false,
-        projectendmonth: data.proyek_selesai
-          ? DateTime.fromISO(
-              new Date(data.proyek_selesai).toISOString()
-            ).toFormat("MM")
-          : null,
-        projectendyear: data.proyek_selesai
-          ? DateTime.fromISO(
-              new Date(data.proyek_selesai).toISOString()
-            ).toFormat("yyyy")
-          : null,
-        isstillworking: data.proyekselesai ? false : true,
-      };
+      let tempcompanyid = "";
+      let tempcompanyname = "";
+      let tempcompanyaddress = "";
+      let tempcompanysanitisedname = "";
 
-      const tempdata = listPengalaman;
-      const tempproyek = tempdata[index].projects
-        ? tempdata[index].projects
-        : [];
-      if (tempproyek) {
-        if (defaultValue && indexEdit) {
-          console.log("masuk edit");
-          tempproyek.map((item) =>
-            item.projectid === indexEdit
-              ? Object.assign(item, newPengalaman)
-              : item
-          );
+      if (index === -1) {
+        //jadinya add data baru, karena belum ada di array listKerja
+
+        //perlu cek apakah ini tambah proyek baru di existing list company atau tambah data baru dari list company baru
+        index = listKerja.findIndex((pp) => pp.companyId === companyid);
+        if (index === -1) {
+          //jadinya tambah proyek baru dari list company baru karena belum ada data di database sama sekali
+          status = 2;
+          index = listPengalaman.findIndex((pp) => pp.companyId === companyid);
+          console.log("wubbawewindex3: ", index);
+          tempcompanyid = listPengalaman[index].companyId;
+          tempcompanyname = listPengalaman[index].companyName;
+          tempcompanyaddress = listPengalaman[index].companyAddress;
+          tempcompanysanitisedname = listPengalaman[index].sanitisedCompanyName;
         } else {
-          console.log("masuk add");
-          tempproyek.push(newPengalaman);
+          //jadinya tambah proyek baru dari list existing company karena sudah ada data di database
+          status = 1;
+          console.log("wubbawewindex2: ", index);
+          tempcompanyid = listKerja[index].companyId;
+          tempcompanyname = listKerja[index].companyName;
+          tempcompanyaddress = listKerja[index].companyaddress;
+          tempcompanysanitisedname = listKerja[index].sanitisedCompanyName;
         }
+      } else {
+        //jadinya edit data lama, karena sudah ada di array listKerja
+        status = 3;
+        console.log("wubbawewindex4: ", index);
+        tempcompanyid = listKerja[index].companyId;
+        tempcompanyname = listKerja[index].companyName;
+        tempcompanyaddress = listKerja[index].companyaddress;
+        tempcompanysanitisedname = listKerja[index].sanitisedCompanyName;
       }
 
-      tempdata[index].projects = tempproyek;
+      const newPengalaman = {
+        projectId: projectid ? projectid : e,
+        sanitisedProjectName: `${tempcompanysanitisedname}_${sanitize
+          .addUnderscore(data.nama_proyek)
+          .toLowerCase()}`,
+        projectName: data.nama_proyek,
+        projectDescription: data.deskripsi_proyek,
+        employmentType: data.jenis_pekerjaan,
+        projectClient: data.nama_klien,
+        position: data.posisi_kerja,
+        projectLocation: data.lokasi_proyek,
+        projectStartMonth: DateTime.fromISO(
+          new Date(data.proyek_dimulai).toISOString()
+        ).toFormat("MM"),
+        projectStartYear: DateTime.fromISO(
+          new Date(data.proyek_dimulai).toISOString()
+        ).toFormat("yyyy"),
+        isFinished: data.proyekselesai ? "true" : "false",
+        projectEndMonth: DateTime.fromISO(
+          new Date(data.proyek_selesai).toISOString()
+        ).toFormat("MM"),
 
-      listPengalaman.map((pengalaman) => {
-        if (pengalaman.companyid === pengalamanid) {
-          pengalaman.projects = tempproyek;
-        }
-      });
+        projectEndYear: DateTime.fromISO(
+          new Date(data.proyek_selesai).toISOString()
+        ).toFormat("yyyy"),
+        contractStart: DateTime.fromISO(
+          new Date(data.proyek_dimulai).toISOString()
+        ).toFormat("MM/yyyy"),
+        taId: profile_id as string,
+        companyName: tempcompanyname,
+        companyId: tempcompanyid,
+        companyaddress: tempcompanyaddress,
+        sanitisedCompanyName: tempcompanysanitisedname,
+      };
 
-      const testdateluxon = DateTime.fromISO(
-        new Date(data.proyek_dimulai).toISOString()
-      ).toFormat("MM/yyyy");
-      // console.log("testdate: ", testdateluxon);
-
-      // console.log("def dan index: ", defaultValue && indexEdit);
-      // console.log("def: ", defaultValue);
-      // console.log(" index: ", indexEdit);
-
-      setListPengalaman((pengalamans) => {
-        const newWeekdays = pengalamans.map((item, index) => {
-          if (item.companyid === pengalamanid) {
-            return { ...item, projects: tempproyek };
-          }
-          return { ...item };
+      let newProyek;
+      if (status === 3) {
+        newProyek = await API.graphql<
+          GraphQLQuery<UpdatePengalamanKerjaMutation>
+        >({
+          query: mutations.updatePengalamanKerja,
+          variables: { input: newPengalaman },
         });
+        setLoading(false);
+      } else if (status === 2) {
+        newProyek = await API.graphql<
+          GraphQLQuery<CreatePengalamanKerjaMutation>
+        >({
+          query: mutations.createPengalamanKerja,
+          variables: { input: newPengalaman },
+        });
+
+        const tempDeleteAddedCompany = listPengalaman;
+        tempDeleteAddedCompany.splice(index, 1);
+        setListPengalaman(tempDeleteAddedCompany);
+        setLoading(false);
+      } else if (status === 1) {
+        newProyek = await API.graphql<
+          GraphQLQuery<CreatePengalamanKerjaMutation>
+        >({
+          query: mutations.createPengalamanKerja,
+          variables: { input: newPengalaman },
+        });
+        setLoading(false);
+      }
+
+      setListKerja((pengalamans) => {
+        let newWeekdays = pengalamans.map((item, index) => {
+          if (item.companyId === companyid && item.projectId === projectid) {
+            return { ...newPengalaman };
+          } else {
+            return { ...item };
+          }
+        });
+        if (status === 1 || status === 2) {
+          newWeekdays = [...newWeekdays, newPengalaman];
+        }
+
         return newWeekdays;
       });
 
-      onClose(setOpen);
+      console.log("updatedlistkerja: ", listKerja);
     }
+
+    onClose(setOpen);
   };
 
   //#endregion  //*======== Form Submit ===========
 
   //#region  //*=========== Delete Item ===========
 
-  const deleteProject = (data: any) => {
-    if (setListPengalaman && listProyekFieldsState) {
-      const index = listPengalaman.findIndex(
-        (pp) => pp.companyid === pengalamanid
-      );
+  const deleteProject = async (data: any) => {
+    if (projectid && companyid && !loading) {
+      setLoading(true);
 
-      const tempdata = listPengalaman;
-      const tempproyek = tempdata[index].projects
-        ? tempdata[index].projects
-        : [];
-      if (tempproyek) {
-        const indextobedeleted = tempproyek.findIndex(
-          (pp) => pp.projectid === indexEdit
-        );
-        if (indextobedeleted !== -1) {
-          tempproyek.splice(indextobedeleted, 1);
-        }
-      }
-
-      tempdata[index].projects = tempproyek;
-
-      listPengalaman.map((pengalaman) => {
-        if (pengalaman.companyid === pengalamanid) {
-          pengalaman.projects = tempproyek;
-        }
-      });
-
-      setListPengalaman((pengalamans) => {
-        const newWeekdays = pengalamans.map((item, index) => {
-          if (item.companyid === pengalamanid) {
-            return { ...item, projects: tempproyek };
-          }
-          return { ...item };
+      try {
+        const deletePendidikan = await API.graphql<
+          GraphQLQuery<DeletePengalamanKerjaMutation>
+        >({
+          query: mutations.deletePengalamanKerja,
+          variables: {
+            input: {
+              taId: profile_id,
+              projectId: projectid,
+              companyId: companyid,
+            },
+          },
         });
-        return newWeekdays;
-      });
+
+        setListKerja((pengalamans) => {
+          const index = listKerja.findIndex(
+            (pp) => pp.companyId === companyid && pp.projectId === projectid
+          );
+
+          if (index !== -1) {
+            pengalamans.splice(index, 1);
+          }
+
+          const newWeekdays = pengalamans.map((item) => {
+            return { ...item };
+          });
+
+          return newWeekdays;
+        });
+
+        setLoading(false);
+        onClose(setOpen);
+        return;
+      } catch (error) {
+        setLoading(false);
+        onClose(setOpen);
+        return;
+      }
     }
   };
 
@@ -259,7 +347,7 @@ export default function ExampleModal({
     setOpen(false);
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     // logger({ data }, 'rhf.tsx line 33');
 
     // submitListPengalaman(data);
@@ -272,14 +360,13 @@ export default function ExampleModal({
       return;
     }
 
-    submitListPengalaman(data);
-    setOpen(false);
+    await submitListPengalaman(data);
+    // setOpen(false);
     return;
   };
 
-  const onDelete = (data: any) => {
-    deleteProject(data);
-    setOpen(false);
+  const onDelete = async (data: any) => {
+    await deleteProject(data);
     return;
   };
 
@@ -406,7 +493,7 @@ export default function ExampleModal({
               variant="danger"
               type="submit"
               onClick={handleSubmit(onDelete)}
-              className={defaultValue && indexEdit ? "" : "hidden"}
+              className={defaultValue && companyid && projectid ? "" : "hidden"}
             >
               Hapus proyek
             </Button>
@@ -415,7 +502,9 @@ export default function ExampleModal({
               type="submit"
               onClick={handleSubmit(onSubmit)}
             >
-              {defaultValue && indexEdit ? "Edit Proyek" : "Tambah Proyek"}
+              {defaultValue && companyid && projectid
+                ? "Edit Proyek"
+                : "Tambah Proyek"}
             </Button>
           </div>
         </Modal.Section>

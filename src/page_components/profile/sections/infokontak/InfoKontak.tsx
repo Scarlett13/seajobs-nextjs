@@ -1,48 +1,90 @@
 import { Listbox } from "@headlessui/react";
+import Input from "../../../../components/forms/Input";
 import { infoKontakFields } from "../../../../constants/profileformconstants/ProfileFormConstants";
-import Input from "../../../../components/inputs/reguler/InputTemplate";
 import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
 // import styles from "./InfoKontak.module.css";
 
 export interface IInfoKontak {
-  infoKontak: any;
-  setInfoKontak: React.Dispatch<React.SetStateAction<any>>;
   infoKontakFields: typeof infoKontakFields;
+  disabled: boolean;
 }
 
-const InfoKontak: React.FC<IInfoKontak> = ({
-  infoKontak,
-  setInfoKontak,
-  infoKontakFields,
-}) => {
-  const handleInfoKontakChange = (e: { target: { id: any; value: any } }) => {
-    //TODO: validation check
-    setInfoKontak({ ...infoKontak, [e.target.id]: e.target.value });
-  };
-
+const InfoKontak: React.FC<IInfoKontak> = ({ infoKontakFields, disabled }) => {
   return (
     <ProfileSectionLayout
       isRequired={true}
       title="info kontak"
       id="info_kontak"
+      disabled={disabled}
     >
-      {infoKontakFields.map((field) => (
-        <section key={field.titelKey}>
-          <p className="-mb-4 font-light text-gray-400">{field.labelText}</p>
-          <Input
-            key={field.id}
-            handleChange={handleInfoKontakChange}
-            value={infoKontak[field.id]}
-            labelText={field.labelText}
-            labelFor={field.labelFor}
-            id={field.id}
-            name={field.name}
-            type={field.type}
-            isRequired={field.isRequired}
-            placeholder={field.placeholder}
-          />
-        </section>
-      ))}
+      {infoKontakFields.map((field) => {
+        if (field.type === "email") {
+          return (
+            <section key={field.titelKey} className={"mb-4"}>
+              <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
+              <Input
+                id={field.id}
+                type={field.type}
+                label={null}
+                disabled={disabled}
+                validation={{
+                  required: {
+                    value: field.isRequired,
+                    message: `${field.labelText} harus di isi!`,
+                  },
+                  pattern: {
+                    value:
+                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/gi,
+                    message: "email tidak valid",
+                  },
+                }}
+                placeholder={field.placeholder}
+                helperText={undefined}
+              />
+            </section>
+          );
+        } else if (field.type === "tel") {
+          return (
+            <section key={field.titelKey} className={"mb-4"}>
+              <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
+              <Input
+                id={field.id}
+                type={field.type}
+                disabled={disabled}
+                label={null}
+                validation={{
+                  required: {
+                    value: field.isRequired,
+                    message: `${field.labelText} harus di isi!`,
+                  },
+                }}
+                placeholder={field.placeholder}
+                helperText={undefined}
+              />
+            </section>
+          );
+        } else {
+          return (
+            <section key={field.titelKey} className={"mb-4"}>
+              <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
+              <Input
+                id={field.id}
+                type={field.type}
+                label={null}
+                disabled={disabled}
+                validation={{
+                  required: {
+                    value: field.isRequired,
+                    message: `${field.labelText} harus di isi!`,
+                  },
+                }}
+                placeholder={field.placeholder}
+                helperText={undefined}
+              />
+            </section>
+          );
+        }
+      })}
     </ProfileSectionLayout>
   );
 };

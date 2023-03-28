@@ -21,6 +21,7 @@ export type AmplifyDependentResourcesAttributes = {
     "konsultankudc6f81cfdc6f81cfCustomMessage": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     }

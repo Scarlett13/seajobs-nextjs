@@ -51,6 +51,7 @@
 		"react-router": "^6.8.1",
 		"react-select": "^5.7.0",
 		"react-ui-scrollspy": "^2.3.0",
+		"react-usestateref": "^1.0.8",
 		"string-sanitizer": "^2.0.2",
 		"styled-components": "^5.3.6",
 		"tailwind-merge": "^1.10.0",

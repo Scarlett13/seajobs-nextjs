@@ -21,6 +21,9 @@
           "deploymentBucketName": "amplify-konsultanku-dev-143555-deployment",
           "s3Key": "amplify-builds/konsultankudc6f81cfdc6f81cfCustomMessage-2b755a3257506976624c-build.zip"
         }
+      },
+      "api": {
+        "seajobs": {}
       }
     }
   }
