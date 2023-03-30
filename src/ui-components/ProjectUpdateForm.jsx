@@ -14,7 +14,6 @@ import {
   Grid,
   Icon,
   ScrollView,
-  SelectField,
   SwitchField,
   Text,
   TextField,
@@ -201,11 +200,14 @@ export default function ProjectUpdateForm(props) {
     projectValue: "",
     projectDuration: "",
     projectStart: "",
-    projectCategories: [],
+    projectCategories: "",
+    projectDescription: "",
+    projectClient: "",
     projectDeadline: "",
-    projectSubCategory: [],
+    projecImageUrl: [],
     projectOwner: "",
     isActive: "",
+    projectStatus: "",
     isDeleted: false,
     createdOn: "",
     updatedOn: "",
@@ -229,16 +231,25 @@ export default function ProjectUpdateForm(props) {
   const [projectCategories, setProjectCategories] = React.useState(
     initialValues.projectCategories
   );
+  const [projectDescription, setProjectDescription] = React.useState(
+    initialValues.projectDescription
+  );
+  const [projectClient, setProjectClient] = React.useState(
+    initialValues.projectClient
+  );
   const [projectDeadline, setProjectDeadline] = React.useState(
     initialValues.projectDeadline
   );
-  const [projectSubCategory, setProjectSubCategory] = React.useState(
-    initialValues.projectSubCategory
+  const [projecImageUrl, setProjecImageUrl] = React.useState(
+    initialValues.projecImageUrl
   );
   const [projectOwner, setProjectOwner] = React.useState(
     initialValues.projectOwner
   );
   const [isActive, setIsActive] = React.useState(initialValues.isActive);
+  const [projectStatus, setProjectStatus] = React.useState(
+    initialValues.projectStatus
+  );
   const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [createdOn, setCreatedOn] = React.useState(initialValues.createdOn);
   const [updatedOn, setUpdatedOn] = React.useState(initialValues.updatedOn);
@@ -253,13 +264,15 @@ export default function ProjectUpdateForm(props) {
     setProjectValue(cleanValues.projectValue);
     setProjectDuration(cleanValues.projectDuration);
     setProjectStart(cleanValues.projectStart);
-    setProjectCategories(cleanValues.projectCategories ?? []);
-    setCurrentProjectCategoriesValue("");
+    setProjectCategories(cleanValues.projectCategories);
+    setProjectDescription(cleanValues.projectDescription);
+    setProjectClient(cleanValues.projectClient);
     setProjectDeadline(cleanValues.projectDeadline);
-    setProjectSubCategory(cleanValues.projectSubCategory ?? []);
-    setCurrentProjectSubCategoryValue("");
+    setProjecImageUrl(cleanValues.projecImageUrl ?? []);
+    setCurrentProjecImageUrlValue("");
     setProjectOwner(cleanValues.projectOwner);
     setIsActive(cleanValues.isActive);
+    setProjectStatus(cleanValues.projectStatus);
     setIsDeleted(cleanValues.isDeleted);
     setCreatedOn(cleanValues.createdOn);
     setUpdatedOn(cleanValues.updatedOn);
@@ -276,25 +289,9 @@ export default function ProjectUpdateForm(props) {
     queryData();
   }, [idProp, projectModelProp]);
   React.useEffect(resetStateValues, [projectRecord]);
-  const [currentProjectCategoriesValue, setCurrentProjectCategoriesValue] =
+  const [currentProjecImageUrlValue, setCurrentProjecImageUrlValue] =
     React.useState("");
-  const projectCategoriesRef = React.createRef();
-  const [currentProjectSubCategoryValue, setCurrentProjectSubCategoryValue] =
-    React.useState("");
-  const projectSubCategoryRef = React.createRef();
-  const getDisplayValue = {
-    projectSubCategory: (r) => {
-      const enumDisplayValueMap = {
-        Hukum: "Hukum",
-        Keuangan_dan_Ekonomi: "Keuangan dan ekonomi",
-        Kerja_Sama: "Kerja sama",
-        Manajemen_Resiko: "Manajemen resiko",
-        Sosial_dan_LARAP: "Sosial dan larap",
-        Pengadaan: "Pengadaan",
-      };
-      return enumDisplayValueMap[r];
-    },
-  };
+  const projecImageUrlRef = React.createRef();
   const validations = {
     projectId: [{ type: "Required" }],
     projectTitle: [{ type: "Required" }],
@@ -303,10 +300,13 @@ export default function ProjectUpdateForm(props) {
     projectDuration: [{ type: "Required" }],
     projectStart: [{ type: "Required" }],
     projectCategories: [{ type: "Required" }],
+    projectDescription: [{ type: "Required" }],
+    projectClient: [],
     projectDeadline: [{ type: "Required" }],
-    projectSubCategory: [{ type: "Required" }],
+    projecImageUrl: [],
     projectOwner: [{ type: "Required" }],
     isActive: [{ type: "Required" }],
+    projectStatus: [{ type: "Required" }],
     isDeleted: [{ type: "Required" }],
     createdOn: [{ type: "Required" }],
     updatedOn: [{ type: "Required" }],
@@ -361,10 +361,13 @@ export default function ProjectUpdateForm(props) {
           projectDuration,
           projectStart,
           projectCategories,
+          projectDescription,
+          projectClient,
           projectDeadline,
-          projectSubCategory,
+          projecImageUrl,
           projectOwner,
           isActive,
+          projectStatus,
           isDeleted,
           createdOn,
           updatedOn,
@@ -430,10 +433,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
@@ -467,10 +473,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
@@ -504,10 +513,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
@@ -541,10 +553,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
@@ -578,10 +593,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration: value,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
@@ -616,10 +634,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart: value,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
@@ -637,9 +658,13 @@ export default function ProjectUpdateForm(props) {
         hasError={errors.projectStart?.hasError}
         {...getOverrideProps(overrides, "projectStart")}
       ></TextField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
+      <TextField
+        label="Project categories"
+        isRequired={true}
+        isReadOnly={false}
+        value={projectCategories}
+        onChange={(e) => {
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
               projectId,
@@ -648,55 +673,115 @@ export default function ProjectUpdateForm(props) {
               projectValue,
               projectDuration,
               projectStart,
-              projectCategories: values,
+              projectCategories: value,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
             };
             const result = onChange(modelFields);
-            values = result?.projectCategories ?? values;
+            value = result?.projectCategories ?? value;
           }
-          setProjectCategories(values);
-          setCurrentProjectCategoriesValue("");
+          if (errors.projectCategories?.hasError) {
+            runValidationTasks("projectCategories", value);
+          }
+          setProjectCategories(value);
         }}
-        currentFieldValue={currentProjectCategoriesValue}
-        label={"Project categories"}
-        items={projectCategories}
-        hasError={errors?.projectCategories?.hasError}
-        errorMessage={errors?.projectCategories?.errorMessage}
-        setFieldValue={setCurrentProjectCategoriesValue}
-        inputFieldRef={projectCategoriesRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Project categories"
-          isRequired={true}
-          isReadOnly={false}
-          value={currentProjectCategoriesValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.projectCategories?.hasError) {
-              runValidationTasks("projectCategories", value);
-            }
-            setCurrentProjectCategoriesValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks(
-              "projectCategories",
-              currentProjectCategoriesValue
-            )
+        onBlur={() =>
+          runValidationTasks("projectCategories", projectCategories)
+        }
+        errorMessage={errors.projectCategories?.errorMessage}
+        hasError={errors.projectCategories?.hasError}
+        {...getOverrideProps(overrides, "projectCategories")}
+      ></TextField>
+      <TextField
+        label="Project description"
+        isRequired={true}
+        isReadOnly={false}
+        value={projectDescription}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              projectId,
+              projectTitle,
+              projectLocation,
+              projectValue,
+              projectDuration,
+              projectStart,
+              projectCategories,
+              projectDescription: value,
+              projectClient,
+              projectDeadline,
+              projecImageUrl,
+              projectOwner,
+              isActive,
+              projectStatus,
+              isDeleted,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.projectDescription ?? value;
           }
-          errorMessage={errors.projectCategories?.errorMessage}
-          hasError={errors.projectCategories?.hasError}
-          ref={projectCategoriesRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "projectCategories")}
-        ></TextField>
-      </ArrayField>
+          if (errors.projectDescription?.hasError) {
+            runValidationTasks("projectDescription", value);
+          }
+          setProjectDescription(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("projectDescription", projectDescription)
+        }
+        errorMessage={errors.projectDescription?.errorMessage}
+        hasError={errors.projectDescription?.hasError}
+        {...getOverrideProps(overrides, "projectDescription")}
+      ></TextField>
+      <TextField
+        label="Project client"
+        isRequired={false}
+        isReadOnly={false}
+        value={projectClient}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              projectId,
+              projectTitle,
+              projectLocation,
+              projectValue,
+              projectDuration,
+              projectStart,
+              projectCategories,
+              projectDescription,
+              projectClient: value,
+              projectDeadline,
+              projecImageUrl,
+              projectOwner,
+              isActive,
+              projectStatus,
+              isDeleted,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.projectClient ?? value;
+          }
+          if (errors.projectClient?.hasError) {
+            runValidationTasks("projectClient", value);
+          }
+          setProjectClient(value);
+        }}
+        onBlur={() => runValidationTasks("projectClient", projectClient)}
+        errorMessage={errors.projectClient?.errorMessage}
+        hasError={errors.projectClient?.hasError}
+        {...getOverrideProps(overrides, "projectClient")}
+      ></TextField>
       <TextField
         label="Project deadline"
         isRequired={true}
@@ -714,10 +799,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline: value,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
@@ -747,85 +835,53 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory: values,
+              projecImageUrl: values,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
             };
             const result = onChange(modelFields);
-            values = result?.projectSubCategory ?? values;
+            values = result?.projecImageUrl ?? values;
           }
-          setProjectSubCategory(values);
-          setCurrentProjectSubCategoryValue("");
+          setProjecImageUrl(values);
+          setCurrentProjecImageUrlValue("");
         }}
-        currentFieldValue={currentProjectSubCategoryValue}
-        label={"Project sub category"}
-        items={projectSubCategory}
-        hasError={errors?.projectSubCategory?.hasError}
-        errorMessage={errors?.projectSubCategory?.errorMessage}
-        getBadgeText={getDisplayValue.projectSubCategory}
-        setFieldValue={setCurrentProjectSubCategoryValue}
-        inputFieldRef={projectSubCategoryRef}
+        currentFieldValue={currentProjecImageUrlValue}
+        label={"Projec image url"}
+        items={projecImageUrl}
+        hasError={errors?.projecImageUrl?.hasError}
+        errorMessage={errors?.projecImageUrl?.errorMessage}
+        setFieldValue={setCurrentProjecImageUrlValue}
+        inputFieldRef={projecImageUrlRef}
         defaultFieldValue={""}
       >
-        <SelectField
-          label="Project sub category"
-          placeholder="Please select an option"
-          isDisabled={false}
-          value={currentProjectSubCategoryValue}
+        <TextField
+          label="Projec image url"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentProjecImageUrlValue}
           onChange={(e) => {
             let { value } = e.target;
-            if (errors.projectSubCategory?.hasError) {
-              runValidationTasks("projectSubCategory", value);
+            if (errors.projecImageUrl?.hasError) {
+              runValidationTasks("projecImageUrl", value);
             }
-            setCurrentProjectSubCategoryValue(value);
+            setCurrentProjecImageUrlValue(value);
           }}
           onBlur={() =>
-            runValidationTasks(
-              "projectSubCategory",
-              currentProjectSubCategoryValue
-            )
+            runValidationTasks("projecImageUrl", currentProjecImageUrlValue)
           }
-          errorMessage={errors.projectSubCategory?.errorMessage}
-          hasError={errors.projectSubCategory?.hasError}
-          ref={projectSubCategoryRef}
+          errorMessage={errors.projecImageUrl?.errorMessage}
+          hasError={errors.projecImageUrl?.hasError}
+          ref={projecImageUrlRef}
           labelHidden={true}
-          {...getOverrideProps(overrides, "projectSubCategory")}
-        >
-          <option
-            children="Hukum"
-            value="Hukum"
-            {...getOverrideProps(overrides, "projectSubCategoryoption0")}
-          ></option>
-          <option
-            children="Keuangan dan ekonomi"
-            value="Keuangan_dan_Ekonomi"
-            {...getOverrideProps(overrides, "projectSubCategoryoption1")}
-          ></option>
-          <option
-            children="Kerja sama"
-            value="Kerja_Sama"
-            {...getOverrideProps(overrides, "projectSubCategoryoption2")}
-          ></option>
-          <option
-            children="Manajemen resiko"
-            value="Manajemen_Resiko"
-            {...getOverrideProps(overrides, "projectSubCategoryoption3")}
-          ></option>
-          <option
-            children="Sosial dan larap"
-            value="Sosial_dan_LARAP"
-            {...getOverrideProps(overrides, "projectSubCategoryoption4")}
-          ></option>
-          <option
-            children="Pengadaan"
-            value="Pengadaan"
-            {...getOverrideProps(overrides, "projectSubCategoryoption5")}
-          ></option>
-        </SelectField>
+          {...getOverrideProps(overrides, "projecImageUrl")}
+        ></TextField>
       </ArrayField>
       <TextField
         label="Project owner"
@@ -843,10 +899,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner: value,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
@@ -880,10 +939,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive: value,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn,
@@ -901,6 +963,46 @@ export default function ProjectUpdateForm(props) {
         hasError={errors.isActive?.hasError}
         {...getOverrideProps(overrides, "isActive")}
       ></TextField>
+      <TextField
+        label="Project status"
+        isRequired={true}
+        isReadOnly={false}
+        value={projectStatus}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              projectId,
+              projectTitle,
+              projectLocation,
+              projectValue,
+              projectDuration,
+              projectStart,
+              projectCategories,
+              projectDescription,
+              projectClient,
+              projectDeadline,
+              projecImageUrl,
+              projectOwner,
+              isActive,
+              projectStatus: value,
+              isDeleted,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.projectStatus ?? value;
+          }
+          if (errors.projectStatus?.hasError) {
+            runValidationTasks("projectStatus", value);
+          }
+          setProjectStatus(value);
+        }}
+        onBlur={() => runValidationTasks("projectStatus", projectStatus)}
+        errorMessage={errors.projectStatus?.errorMessage}
+        hasError={errors.projectStatus?.hasError}
+        {...getOverrideProps(overrides, "projectStatus")}
+      ></TextField>
       <SwitchField
         label="Is deleted"
         defaultChecked={false}
@@ -917,10 +1019,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted: value,
               createdOn,
               updatedOn,
@@ -956,10 +1061,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn: value,
               updatedOn,
@@ -995,10 +1103,13 @@ export default function ProjectUpdateForm(props) {
               projectDuration,
               projectStart,
               projectCategories,
+              projectDescription,
+              projectClient,
               projectDeadline,
-              projectSubCategory,
+              projecImageUrl,
               projectOwner,
               isActive,
+              projectStatus,
               isDeleted,
               createdOn,
               updatedOn: value,

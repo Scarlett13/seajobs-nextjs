@@ -24,10 +24,13 @@ export const getKonsultan = /* GraphQL */ `
         projectDuration
         projectStart
         projectCategories
+        projectDescription
+        projectClient
         projectDeadline
-        projectSubCategory
+        projecImageUrl
         projectOwner
         isActive
+        projectStatus
         isDeleted
         createdOn
         updatedOn
@@ -281,15 +284,13 @@ export const listPendidikanSertifikasis = /* GraphQL */ `
 export const getProject = /* GraphQL */ `
   query GetProject(
     $projectId: String!
+    $projectOwner: String!
     $isActive: String!
-    $projectDeadline: AWSDate!
-    $projectStart: AWSDate!
   ) {
     getProject(
       projectId: $projectId
+      projectOwner: $projectOwner
       isActive: $isActive
-      projectDeadline: $projectDeadline
-      projectStart: $projectStart
     ) {
       projectId
       projectTitle
@@ -298,13 +299,16 @@ export const getProject = /* GraphQL */ `
       projectDuration
       projectStart
       projectCategories
+      projectDescription
+      projectClient
       projectDeadline
-      projectSubCategory
+      projecImageUrl
       bidders {
         nextToken
       }
       projectOwner
       isActive
+      projectStatus
       isDeleted
       createdOn
       updatedOn
@@ -314,7 +318,7 @@ export const getProject = /* GraphQL */ `
 export const listProjects = /* GraphQL */ `
   query ListProjects(
     $projectId: String
-    $isActiveProjectDeadlineProjectStart: ModelProjectPrimaryCompositeKeyConditionInput
+    $projectOwnerIsActive: ModelProjectPrimaryCompositeKeyConditionInput
     $filter: ModelProjectFilterInput
     $limit: Int
     $nextToken: String
@@ -322,7 +326,7 @@ export const listProjects = /* GraphQL */ `
   ) {
     listProjects(
       projectId: $projectId
-      isActiveProjectDeadlineProjectStart: $isActiveProjectDeadlineProjectStart
+      projectOwnerIsActive: $projectOwnerIsActive
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -336,10 +340,13 @@ export const listProjects = /* GraphQL */ `
         projectDuration
         projectStart
         projectCategories
+        projectDescription
+        projectClient
         projectDeadline
-        projectSubCategory
+        projecImageUrl
         projectOwner
         isActive
+        projectStatus
         isDeleted
         createdOn
         updatedOn
@@ -349,8 +356,16 @@ export const listProjects = /* GraphQL */ `
   }
 `;
 export const getCompanyProjectBidder = /* GraphQL */ `
-  query GetCompanyProjectBidder($projectId: String!) {
-    getCompanyProjectBidder(projectId: $projectId) {
+  query GetCompanyProjectBidder(
+    $projectId: String!
+    $taId: String!
+    $konsultanId: String!
+  ) {
+    getCompanyProjectBidder(
+      projectId: $projectId
+      taId: $taId
+      konsultanId: $konsultanId
+    ) {
       projectId
       taId
       konsultanId
@@ -359,15 +374,15 @@ export const getCompanyProjectBidder = /* GraphQL */ `
       createdOn
       updatedOn
       projectBiddersId
+      projectBiddersProjectOwner
       projectBiddersIsActive
-      projectBiddersProjectDeadline
-      projectBiddersProjectStart
     }
   }
 `;
 export const listCompanyProjectBidders = /* GraphQL */ `
   query ListCompanyProjectBidders(
     $projectId: String
+    $taIdKonsultanId: ModelCompanyProjectBidderPrimaryCompositeKeyConditionInput
     $filter: ModelCompanyProjectBidderFilterInput
     $limit: Int
     $nextToken: String
@@ -375,6 +390,7 @@ export const listCompanyProjectBidders = /* GraphQL */ `
   ) {
     listCompanyProjectBidders(
       projectId: $projectId
+      taIdKonsultanId: $taIdKonsultanId
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -389,9 +405,8 @@ export const listCompanyProjectBidders = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
+        projectBiddersProjectOwner
         projectBiddersIsActive
-        projectBiddersProjectDeadline
-        projectBiddersProjectStart
       }
       nextToken
     }
@@ -548,10 +563,13 @@ export const projectByOwner = /* GraphQL */ `
         projectDuration
         projectStart
         projectCategories
+        projectDescription
+        projectClient
         projectDeadline
-        projectSubCategory
+        projecImageUrl
         projectOwner
         isActive
+        projectStatus
         isDeleted
         createdOn
         updatedOn
@@ -586,9 +604,8 @@ export const companyProjectBidderByTa = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
+        projectBiddersProjectOwner
         projectBiddersIsActive
-        projectBiddersProjectDeadline
-        projectBiddersProjectStart
       }
       nextToken
     }
@@ -620,9 +637,8 @@ export const companyProjectBidderByKonsultan = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
+        projectBiddersProjectOwner
         projectBiddersIsActive
-        projectBiddersProjectDeadline
-        projectBiddersProjectStart
       }
       nextToken
     }

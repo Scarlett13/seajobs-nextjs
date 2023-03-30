@@ -162,16 +162,17 @@ type Project
       }
     ]
   ) {
-  projectId: String!
-    @primaryKey(sortKeyFields: ["isActive", "projectDeadline", "projectStart"])
+  projectId: String! @primaryKey(sortKeyFields: ["projectOwner", "isActive"])
   projectTitle: String!
   projectLocation: String!
   projectValue: String!
   projectDuration: String!
   projectStart: AWSDate!
-  projectCategories: [String!]!
+  projectCategories: String!
+  projectDescription: String!
+  projectClient: String
   projectDeadline: AWSDate!
-  projectSubCategory: [EnumExpertise!]!
+  projecImageUrl: [String]
   bidders: [CompanyProjectBidder] @hasMany
   projectOwner: String!
     @index(
@@ -180,6 +181,7 @@ type Project
       queryField: "projectByOwner"
     )
   isActive: String!
+  projectStatus: String!
   isDeleted: Boolean!
   createdOn: AWSDateTime!
   updatedOn: AWSDateTime!
@@ -198,7 +200,7 @@ type CompanyProjectBidder
       }
     ]
   ) {
-  projectId: String! @primaryKey
+  projectId: String! @primaryKey(sortKeyFields: ["taId", "konsultanId"])
   taId: String!
     @index(
       name: "bidByTa"
