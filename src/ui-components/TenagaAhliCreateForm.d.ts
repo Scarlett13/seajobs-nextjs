@@ -15,6 +15,10 @@ export declare type ValidationFunction<T> = (value: T, validationResponse: Valid
 export declare type TenagaAhliCreateFormInputValues = {
     taId?: string;
     taFullName?: string;
+    taNikPassport?: string;
+    taDob?: string;
+    taCitizenship?: string;
+    taResidentStatus?: string;
     taExpertise?: string;
     taAddress?: string;
     taEmail?: string;
@@ -27,6 +31,10 @@ export declare type TenagaAhliCreateFormInputValues = {
 export declare type TenagaAhliCreateFormValidationValues = {
     taId?: ValidationFunction<string>;
     taFullName?: ValidationFunction<string>;
+    taNikPassport?: ValidationFunction<string>;
+    taDob?: ValidationFunction<string>;
+    taCitizenship?: ValidationFunction<string>;
+    taResidentStatus?: ValidationFunction<string>;
     taExpertise?: ValidationFunction<string>;
     taAddress?: ValidationFunction<string>;
     taEmail?: ValidationFunction<string>;
@@ -41,6 +49,10 @@ export declare type TenagaAhliCreateFormOverridesProps = {
     TenagaAhliCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     taId?: PrimitiveOverrideProps<TextFieldProps>;
     taFullName?: PrimitiveOverrideProps<TextFieldProps>;
+    taNikPassport?: PrimitiveOverrideProps<TextFieldProps>;
+    taDob?: PrimitiveOverrideProps<TextFieldProps>;
+    taCitizenship?: PrimitiveOverrideProps<TextFieldProps>;
+    taResidentStatus?: PrimitiveOverrideProps<TextFieldProps>;
     taExpertise?: PrimitiveOverrideProps<TextFieldProps>;
     taAddress?: PrimitiveOverrideProps<TextFieldProps>;
     taEmail?: PrimitiveOverrideProps<TextFieldProps>;

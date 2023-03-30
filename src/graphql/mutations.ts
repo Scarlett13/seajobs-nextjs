@@ -27,10 +27,13 @@ export const createKonsultan = /* GraphQL */ `
         projectDuration
         projectStart
         projectCategories
+        projectDescription
+        projectClient
         projectDeadline
-        projectSubCategory
+        projecImageUrl
         projectOwner
         isActive
+        projectStatus
         isDeleted
         createdOn
         updatedOn
@@ -65,10 +68,13 @@ export const updateKonsultan = /* GraphQL */ `
         projectDuration
         projectStart
         projectCategories
+        projectDescription
+        projectClient
         projectDeadline
-        projectSubCategory
+        projecImageUrl
         projectOwner
         isActive
+        projectStatus
         isDeleted
         createdOn
         updatedOn
@@ -103,10 +109,13 @@ export const deleteKonsultan = /* GraphQL */ `
         projectDuration
         projectStart
         projectCategories
+        projectDescription
+        projectClient
         projectDeadline
-        projectSubCategory
+        projecImageUrl
         projectOwner
         isActive
+        projectStatus
         isDeleted
         createdOn
         updatedOn
@@ -387,13 +396,16 @@ export const createProject = /* GraphQL */ `
       projectDuration
       projectStart
       projectCategories
+      projectDescription
+      projectClient
       projectDeadline
-      projectSubCategory
+      projecImageUrl
       bidders {
         nextToken
       }
       projectOwner
       isActive
+      projectStatus
       isDeleted
       createdOn
       updatedOn
@@ -413,13 +425,16 @@ export const updateProject = /* GraphQL */ `
       projectDuration
       projectStart
       projectCategories
+      projectDescription
+      projectClient
       projectDeadline
-      projectSubCategory
+      projecImageUrl
       bidders {
         nextToken
       }
       projectOwner
       isActive
+      projectStatus
       isDeleted
       createdOn
       updatedOn
@@ -439,13 +454,16 @@ export const deleteProject = /* GraphQL */ `
       projectDuration
       projectStart
       projectCategories
+      projectDescription
+      projectClient
       projectDeadline
-      projectSubCategory
+      projecImageUrl
       bidders {
         nextToken
       }
       projectOwner
       isActive
+      projectStatus
       isDeleted
       createdOn
       updatedOn
@@ -466,9 +484,8 @@ export const createCompanyProjectBidder = /* GraphQL */ `
       createdOn
       updatedOn
       projectBiddersId
+      projectBiddersProjectOwner
       projectBiddersIsActive
-      projectBiddersProjectDeadline
-      projectBiddersProjectStart
     }
   }
 `;
@@ -486,9 +503,8 @@ export const updateCompanyProjectBidder = /* GraphQL */ `
       createdOn
       updatedOn
       projectBiddersId
+      projectBiddersProjectOwner
       projectBiddersIsActive
-      projectBiddersProjectDeadline
-      projectBiddersProjectStart
     }
   }
 `;
@@ -506,9 +522,8 @@ export const deleteCompanyProjectBidder = /* GraphQL */ `
       createdOn
       updatedOn
       projectBiddersId
+      projectBiddersProjectOwner
       projectBiddersIsActive
-      projectBiddersProjectDeadline
-      projectBiddersProjectStart
     }
   }
 `;

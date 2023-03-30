@@ -194,6 +194,10 @@ export default function TenagaAhliCreateForm(props) {
   const initialValues = {
     taId: "",
     taFullName: "",
+    taNikPassport: "",
+    taDob: "",
+    taCitizenship: "",
+    taResidentStatus: "",
     taExpertise: "",
     taAddress: "",
     taEmail: "",
@@ -205,6 +209,16 @@ export default function TenagaAhliCreateForm(props) {
   };
   const [taId, setTaId] = React.useState(initialValues.taId);
   const [taFullName, setTaFullName] = React.useState(initialValues.taFullName);
+  const [taNikPassport, setTaNikPassport] = React.useState(
+    initialValues.taNikPassport
+  );
+  const [taDob, setTaDob] = React.useState(initialValues.taDob);
+  const [taCitizenship, setTaCitizenship] = React.useState(
+    initialValues.taCitizenship
+  );
+  const [taResidentStatus, setTaResidentStatus] = React.useState(
+    initialValues.taResidentStatus
+  );
   const [taExpertise, setTaExpertise] = React.useState(
     initialValues.taExpertise
   );
@@ -225,6 +239,10 @@ export default function TenagaAhliCreateForm(props) {
   const resetStateValues = () => {
     setTaId(initialValues.taId);
     setTaFullName(initialValues.taFullName);
+    setTaNikPassport(initialValues.taNikPassport);
+    setTaDob(initialValues.taDob);
+    setTaCitizenship(initialValues.taCitizenship);
+    setTaResidentStatus(initialValues.taResidentStatus);
     setTaExpertise(initialValues.taExpertise);
     setTaAddress(initialValues.taAddress);
     setTaEmail(initialValues.taEmail);
@@ -242,6 +260,10 @@ export default function TenagaAhliCreateForm(props) {
   const validations = {
     taId: [{ type: "Required" }],
     taFullName: [{ type: "Required" }],
+    taNikPassport: [{ type: "Required" }],
+    taDob: [{ type: "Required" }],
+    taCitizenship: [{ type: "Required" }],
+    taResidentStatus: [{ type: "Required" }],
     taExpertise: [{ type: "Required" }],
     taAddress: [{ type: "Required" }],
     taEmail: [{ type: "Required" }],
@@ -296,6 +318,10 @@ export default function TenagaAhliCreateForm(props) {
         let modelFields = {
           taId,
           taFullName,
+          taNikPassport,
+          taDob,
+          taCitizenship,
+          taResidentStatus,
           taExpertise,
           taAddress,
           taEmail,
@@ -360,6 +386,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId: value,
               taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise,
               taAddress,
               taEmail,
@@ -393,6 +423,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId,
               taFullName: value,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise,
               taAddress,
               taEmail,
@@ -416,6 +450,155 @@ export default function TenagaAhliCreateForm(props) {
         {...getOverrideProps(overrides, "taFullName")}
       ></TextField>
       <TextField
+        label="Ta nik passport"
+        isRequired={true}
+        isReadOnly={false}
+        value={taNikPassport}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taNikPassport: value,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taNikPassport ?? value;
+          }
+          if (errors.taNikPassport?.hasError) {
+            runValidationTasks("taNikPassport", value);
+          }
+          setTaNikPassport(value);
+        }}
+        onBlur={() => runValidationTasks("taNikPassport", taNikPassport)}
+        errorMessage={errors.taNikPassport?.errorMessage}
+        hasError={errors.taNikPassport?.hasError}
+        {...getOverrideProps(overrides, "taNikPassport")}
+      ></TextField>
+      <TextField
+        label="Ta dob"
+        isRequired={true}
+        isReadOnly={false}
+        type="date"
+        value={taDob}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taNikPassport,
+              taDob: value,
+              taCitizenship,
+              taResidentStatus,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taDob ?? value;
+          }
+          if (errors.taDob?.hasError) {
+            runValidationTasks("taDob", value);
+          }
+          setTaDob(value);
+        }}
+        onBlur={() => runValidationTasks("taDob", taDob)}
+        errorMessage={errors.taDob?.errorMessage}
+        hasError={errors.taDob?.hasError}
+        {...getOverrideProps(overrides, "taDob")}
+      ></TextField>
+      <TextField
+        label="Ta citizenship"
+        isRequired={true}
+        isReadOnly={false}
+        value={taCitizenship}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship: value,
+              taResidentStatus,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taCitizenship ?? value;
+          }
+          if (errors.taCitizenship?.hasError) {
+            runValidationTasks("taCitizenship", value);
+          }
+          setTaCitizenship(value);
+        }}
+        onBlur={() => runValidationTasks("taCitizenship", taCitizenship)}
+        errorMessage={errors.taCitizenship?.errorMessage}
+        hasError={errors.taCitizenship?.hasError}
+        {...getOverrideProps(overrides, "taCitizenship")}
+      ></TextField>
+      <TextField
+        label="Ta resident status"
+        isRequired={true}
+        isReadOnly={false}
+        value={taResidentStatus}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus: value,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taResidentStatus ?? value;
+          }
+          if (errors.taResidentStatus?.hasError) {
+            runValidationTasks("taResidentStatus", value);
+          }
+          setTaResidentStatus(value);
+        }}
+        onBlur={() => runValidationTasks("taResidentStatus", taResidentStatus)}
+        errorMessage={errors.taResidentStatus?.errorMessage}
+        hasError={errors.taResidentStatus?.hasError}
+        {...getOverrideProps(overrides, "taResidentStatus")}
+      ></TextField>
+      <TextField
         label="Ta expertise"
         isRequired={true}
         isReadOnly={false}
@@ -426,6 +609,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId,
               taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise: value,
               taAddress,
               taEmail,
@@ -459,6 +646,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId,
               taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise,
               taAddress: value,
               taEmail,
@@ -492,6 +683,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId,
               taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise,
               taAddress,
               taEmail: value,
@@ -525,6 +720,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId,
               taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise,
               taAddress,
               taEmail,
@@ -554,6 +753,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId,
               taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise,
               taAddress,
               taEmail,
@@ -611,6 +814,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId,
               taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise,
               taAddress,
               taEmail,
@@ -648,6 +855,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId,
               taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise,
               taAddress,
               taEmail,
@@ -683,6 +894,10 @@ export default function TenagaAhliCreateForm(props) {
             const modelFields = {
               taId,
               taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
               taExpertise,
               taAddress,
               taEmail,
