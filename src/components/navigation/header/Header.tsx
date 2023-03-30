@@ -21,7 +21,7 @@ IHeader) => {
       label: "Home",
     },
     {
-      path: "./",
+      path: "/explore",
       label: "Explore",
     },
     {

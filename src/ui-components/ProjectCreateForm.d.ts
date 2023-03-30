@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
@@ -19,11 +19,14 @@ export declare type ProjectCreateFormInputValues = {
     projectValue?: string;
     projectDuration?: string;
     projectStart?: string;
-    projectCategories?: string[];
+    projectCategories?: string;
+    projectDescription?: string;
+    projectClient?: string;
     projectDeadline?: string;
-    projectSubCategory?: string[];
+    projecImageUrl?: string[];
     projectOwner?: string;
     isActive?: string;
+    projectStatus?: string;
     isDeleted?: boolean;
     createdOn?: string;
     updatedOn?: string;
@@ -36,10 +39,13 @@ export declare type ProjectCreateFormValidationValues = {
     projectDuration?: ValidationFunction<string>;
     projectStart?: ValidationFunction<string>;
     projectCategories?: ValidationFunction<string>;
+    projectDescription?: ValidationFunction<string>;
+    projectClient?: ValidationFunction<string>;
     projectDeadline?: ValidationFunction<string>;
-    projectSubCategory?: ValidationFunction<string>;
+    projecImageUrl?: ValidationFunction<string>;
     projectOwner?: ValidationFunction<string>;
     isActive?: ValidationFunction<string>;
+    projectStatus?: ValidationFunction<string>;
     isDeleted?: ValidationFunction<boolean>;
     createdOn?: ValidationFunction<string>;
     updatedOn?: ValidationFunction<string>;
@@ -54,10 +60,13 @@ export declare type ProjectCreateFormOverridesProps = {
     projectDuration?: PrimitiveOverrideProps<TextFieldProps>;
     projectStart?: PrimitiveOverrideProps<TextFieldProps>;
     projectCategories?: PrimitiveOverrideProps<TextFieldProps>;
+    projectDescription?: PrimitiveOverrideProps<TextFieldProps>;
+    projectClient?: PrimitiveOverrideProps<TextFieldProps>;
     projectDeadline?: PrimitiveOverrideProps<TextFieldProps>;
-    projectSubCategory?: PrimitiveOverrideProps<SelectFieldProps>;
+    projecImageUrl?: PrimitiveOverrideProps<TextFieldProps>;
     projectOwner?: PrimitiveOverrideProps<TextFieldProps>;
     isActive?: PrimitiveOverrideProps<TextFieldProps>;
+    projectStatus?: PrimitiveOverrideProps<TextFieldProps>;
     isDeleted?: PrimitiveOverrideProps<SwitchFieldProps>;
     createdOn?: PrimitiveOverrideProps<TextFieldProps>;
     updatedOn?: PrimitiveOverrideProps<TextFieldProps>;
