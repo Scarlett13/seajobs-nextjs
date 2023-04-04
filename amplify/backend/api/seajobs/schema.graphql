@@ -27,6 +27,7 @@ type Konsultan
   projectBidders: [CompanyProjectBidder]
     @hasMany(indexName: "bidByKonsultan", fields: ["konsultanId"])
   projects: [Project]
+    @hasMany(indexName: "projectByOwner", fields: ["konsultanId"])
   createdOn: AWSDateTime!
   updatedOn: AWSDateTime!
 }
@@ -180,6 +181,7 @@ type Project
       sortKeyFields: ["projectStart", "isActive"]
       queryField: "projectByOwner"
     )
+  companyOwner: Konsultan @hasOne(fields: ["projectOwner"])
   isActive: String!
   projectStatus: String!
   isDeleted: Boolean!

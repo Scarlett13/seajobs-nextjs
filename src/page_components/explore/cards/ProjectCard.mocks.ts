@@ -18,9 +18,12 @@ const dummyProject: IAmplifyProjectCard =
     projectStatus: "Bidding",
     isDeleted: false,
   }
-const base: IProjectCard = {
-  project: dummyProject,
-};
+
+	const base: IProjectCard={
+		project: dummyProject,
+		taId: "ta id"
+	}
+
 
 export const mockProjectCardProps = {
   base,

@@ -20,23 +20,7 @@ export const createKonsultan = /* GraphQL */ `
         nextToken
       }
       projects {
-        projectId
-        projectTitle
-        projectLocation
-        projectValue
-        projectDuration
-        projectStart
-        projectCategories
-        projectDescription
-        projectClient
-        projectDeadline
-        projecImageUrl
-        projectOwner
-        isActive
-        projectStatus
-        isDeleted
-        createdOn
-        updatedOn
+        nextToken
       }
       createdOn
       updatedOn
@@ -61,23 +45,7 @@ export const updateKonsultan = /* GraphQL */ `
         nextToken
       }
       projects {
-        projectId
-        projectTitle
-        projectLocation
-        projectValue
-        projectDuration
-        projectStart
-        projectCategories
-        projectDescription
-        projectClient
-        projectDeadline
-        projecImageUrl
-        projectOwner
-        isActive
-        projectStatus
-        isDeleted
-        createdOn
-        updatedOn
+        nextToken
       }
       createdOn
       updatedOn
@@ -102,23 +70,7 @@ export const deleteKonsultan = /* GraphQL */ `
         nextToken
       }
       projects {
-        projectId
-        projectTitle
-        projectLocation
-        projectValue
-        projectDuration
-        projectStart
-        projectCategories
-        projectDescription
-        projectClient
-        projectDeadline
-        projecImageUrl
-        projectOwner
-        isActive
-        projectStatus
-        isDeleted
-        createdOn
-        updatedOn
+        nextToken
       }
       createdOn
       updatedOn
@@ -404,6 +356,18 @@ export const createProject = /* GraphQL */ `
         nextToken
       }
       projectOwner
+      companyOwner {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        createdOn
+        updatedOn
+      }
       isActive
       projectStatus
       isDeleted
@@ -433,6 +397,18 @@ export const updateProject = /* GraphQL */ `
         nextToken
       }
       projectOwner
+      companyOwner {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        createdOn
+        updatedOn
+      }
       isActive
       projectStatus
       isDeleted
@@ -462,6 +438,18 @@ export const deleteProject = /* GraphQL */ `
         nextToken
       }
       projectOwner
+      companyOwner {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        createdOn
+        updatedOn
+      }
       isActive
       projectStatus
       isDeleted

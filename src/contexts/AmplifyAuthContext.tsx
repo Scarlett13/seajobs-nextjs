@@ -45,6 +45,9 @@ export default function AuthContext(
       setUser(amplifyUser);
       setAuthenticated(true);
       setLoading(false);
+      if (router.pathname === "/login" || router.pathname === "/signup") {
+        push("/dashboard");
+      }
       console.log("masuk ke loading false 1");
     } catch (error) {
       // No current signed in user.

@@ -11842,6 +11842,11 @@ lodash.debounce@^4.0.6, lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
+lodash.escaperegexp@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/lodash.escaperegexp/-/lodash.escaperegexp-4.1.2.tgz#64762c48618082518ac3df4ccf5d5886dae20347"
+  integrity sha512-TM9YBvyC84ZxE3rgfefxUWiQKLilstD6k7PTGt6wfbtXF8ixIJLOL3VYyV/z+ZiPLsVxAsKAFVwWlWeb2Y8Yyw==
+
 lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
@@ -14487,6 +14492,13 @@ slash@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
+
+smart-array-filter@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/smart-array-filter/-/smart-array-filter-4.0.0.tgz#63ace5ae65e8f8366a299bf023ab0d694d42d10f"
+  integrity sha512-pAU9bDDanXvtF9D/dcWwIZn+yOg26AyD5jhFDECPs+vNZolaz6xRrHVJzCXqEtmY9woeGcS//+D9ot417PXxsQ==
+  dependencies:
+    lodash.escaperegexp "^4.1.2"
 
 snake-case@^3.0.4:
   version "3.0.4"

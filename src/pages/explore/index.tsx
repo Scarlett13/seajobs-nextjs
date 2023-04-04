@@ -15,81 +15,17 @@ import {
 } from "../../API";
 import * as queries from "../../graphql/queries";
 import usePush from "@utils/UsePush";
+import { DateTime } from "luxon";
+import { filterStringInArray } from "../../libs/arrayHelpers";
+import * as arrayFilters from "smart-array-filter";
+import { filter } from "smart-array-filter";
 
-interface projectFilter {
-  projectCategories?: string[];
-  projectLocation?: string[];
+interface IProjectFilter {
+  projectCategories: string[];
+  projectLocation: string[];
 }
 
-const dummyProject: IAmplifyProjectCard[] = [
-  {
-    projectId: "pid",
-    projectTitle: "Project Perusahaan Dummy",
-    projectLocation: "Jakarta",
-    projectValue: "500,000,000",
-    projectDuration: "6 Bulan",
-    projectStart: "28 Oktober 2023",
-    projectCategories: "Finance",
-    projectDescription: "Disini project description yang panjang",
-    projectClient: "Pemprov DKI",
-    projectDeadline: "Sebelum 20 September 2023",
-    projectOwner: "PT Adhikari",
-    isActive: "true",
-    projectStatus: "Bidding",
-    isDeleted: false,
-  },
-  {
-    projectId: "pid2",
-    projectTitle: "Project Perusahaan Dummy 2",
-    projectLocation: "Bandung",
-    projectValue: "180,000,000",
-    projectDuration: "1 tahun 6 Bulan",
-    projectStart: "28 Oktober 2023",
-    projectCategories: "Arsitektur, Komputer, Finance, Ahli Hukum",
-    projectDescription: "Disini project description yang panjang",
-    projectClient: "Pemprov DKI",
-    projectDeadline: "Sebelum 20 September 2023",
-    projectOwner: "PT Adhikari",
-    isActive: "true",
-    projectStatus: "Bidding",
-    isDeleted: false,
-  },
-];
-
-const dummyProject2 = [
-  {
-    projectId: "pid",
-    projectTitle: "Project Perusahaan Dummy",
-    projectLocation: "Jakarta",
-    projectValue: "500,000,000",
-    projectDuration: "6 Bulan",
-    projectStart: "28 Oktober 2023",
-    projectCategories: ["Ahli Hukum", "Ahli LARAP", "FINANCE"],
-    projectDescription: "Disini project description yang panjang",
-    projectClient: "Pemprov DKI",
-    projectDeadline: "Sebelum 20 September 2023",
-    projectOwner: "PT Adhikari",
-    isActive: "true",
-    projectStatus: "Bidding",
-    isDeleted: false,
-  },
-  {
-    projectId: "pid2",
-    projectTitle: "Project Perusahaan Dummy 2",
-    projectLocation: "Bandung",
-    projectValue: "180,000,000",
-    projectDuration: "1 tahun 6 Bulan",
-    projectStart: "28 Oktober 2023",
-    projectCategories: ["Arsitektur", "Komputer", "FINANCE", "Ahli Hukum"],
-    projectDescription: "Disini project description yang panjang",
-    projectClient: "Pemprov DKI",
-    projectDeadline: "Sebelum 20 September 2023",
-    projectOwner: "PT Adhikari",
-    isActive: "true",
-    projectStatus: "Bidding",
-    isDeleted: false,
-  },
-];
+const today = DateTime.now().toFormat("yyyy-MM-dd");
 
 export default function Explore() {
   const {
@@ -101,11 +37,18 @@ export default function Explore() {
     setLoading,
   } = useUser();
 
+  const [projectFilter, setProjectFilter] = useState<IProjectFilter>({
+    projectCategories: [],
+    projectLocation: [],
+  });
   const [filterKeahlian, setFilterKeahlian] = useState<string[]>([]);
   const [filterArea, setFilterArea] = useState<string[]>([]);
   const [listAllProjects, setListAllProjects] = useState<IAmplifyProjectCard[]>(
     []
   );
+  const [filteredProjects, setFilteredProject] = useState<
+    IAmplifyProjectCard[]
+  >([]);
   const [userId, setUserId] = useState<string>("");
 
   const push = usePush();
@@ -114,28 +57,35 @@ export default function Explore() {
     mode: "onTouched",
   });
 
-  async function checkUser() {
-    setLoading(true);
-    try {
-      const amplifyUser = await Auth.currentAuthenticatedUser();
-      if (!userId) {
-        setUserId(amplifyUser.getUsername());
-      }
-
-      setLoading(false);
-      console.log("masuk ke loading false 1");
-    } catch (error) {
-      // No current signed in user.
-      console.error("error getuser: ", error);
-      setLoading(false);
-    }
-  }
+  //------------------ Check user START ----------------------//
 
   useEffect(() => {
+    async function checkUser() {
+      setLoading(true);
+      try {
+        const amplifyUser = await Auth.currentAuthenticatedUser();
+        if (!userId) {
+          setUserId(amplifyUser.getUsername());
+          setLoading(false);
+        } else {
+          setLoading(false);
+          return false;
+        }
+
+        console.log("masuk ke loading false 1");
+      } catch (error) {
+        // No current signed in user.
+        console.error("error getuser: ", error);
+        setLoading(false);
+      }
+    }
+
     checkUser();
   }, [userId]);
 
-  //fetch data
+  //------------------ Check user END ----------------------//
+
+  //------------------ Fetch data START ----------------------//
   useEffect(() => {
     const getTa = async () => {
       if (!user || !userId) {
@@ -159,7 +109,7 @@ export default function Explore() {
             {
               isActive: { eq: "true" },
               isDeleted: { ne: true },
-              projectStart: { gt: "2023-03-30" },
+              projectStart: { gt: today },
             },
           ],
         },
@@ -169,149 +119,147 @@ export default function Explore() {
         GraphQLQuery<ListProjectsQuery>
       >({ query: queries.listProjects, variables: filter });
 
-      console.log(listProjectsResults);
+      // console.log(listProjectsResults);
 
       if (
         listProjectsResults.data &&
         listProjectsResults.data.listProjects &&
         listProjectsResults.data.listProjects.items
       ) {
-        setListAllProjects(
-          listProjectsResults.data.listProjects.items as IAmplifyProjectCard[]
+        const tempdummy: IAmplifyProjectCard[] = listProjectsResults.data
+          .listProjects.items as IAmplifyProjectCard[];
+        setListAllProjects(tempdummy);
+
+        setFilteredProject(tempdummy);
+
+        const tempListAllKeahlian = tempdummy.map(function (el) {
+          return el.projectCategories;
+        });
+
+        const tempListAllArea = tempdummy.map(function (el) {
+          return el.projectLocation;
+        });
+
+        let tempListAllKeahlianString: string[] = [];
+        let tempListAllAreaString: string[] = [];
+
+        tempListAllKeahlian.forEach((item) => {
+          tempListAllKeahlianString = [
+            ...tempListAllKeahlianString,
+            ...item.split(", "),
+          ];
+        });
+
+        tempListAllArea.forEach((item) => {
+          tempListAllAreaString = [...tempListAllAreaString, item];
+        });
+
+        tempListAllKeahlianString = tempListAllKeahlianString.filter(
+          (value, index) => tempListAllKeahlianString.indexOf(value) === index
         );
+
+        tempListAllAreaString = tempListAllAreaString.filter(
+          (value, index) => tempListAllAreaString.indexOf(value) === index
+        );
+
+        tempListAllAreaString.sort((one, two) => (one > two ? 1 : -1));
+
+        setFilterKeahlian(tempListAllKeahlianString);
+        setFilterArea(tempListAllAreaString);
       }
-
-      // if (getTa.data && getTa.data.getTenagaAhli) {
-      //   const tadob = new Date(getTa.data.getTenagaAhli.taDob);
-
-      //   setValue("fullname", getTa.data.getTenagaAhli.taFullName);
-      //   setValue("ic_number", getTa.data.getTenagaAhli.taNikPassport);
-      //   setValue("dob", tadob);
-      //   setValue("nationality", getTa.data.getTenagaAhli.taCitizenship);
-      //   setValue("res_status_id", getTa.data.getTenagaAhli.taResidentStatus);
-      //   setValue("deskripsi_diri", getTa.data.getTenagaAhli.taSelfDescription);
-      //   setValue("address", getTa.data.getTenagaAhli.taAddress);
-      //   setValue("email", getTa.data.getTenagaAhli.taEmail);
-      //   setValue("phone_number", getTa.data.getTenagaAhli.taPhoneNumber);
-      //   setValue(
-      //     "portfolio_link",
-      //     getTa.data.getTenagaAhli.taPortfolioLink?.join(", ")
-      //   );
-      //   setValue(
-      //     "keahlian_id",
-      //     getTa.data.getTenagaAhli.taExpertise.split(",")
-      //   );
-      // }
-
-      // const getPend = await API.graphql<
-      //   GraphQLQuery<PendidikanByTenagaAhliByCourseQuery>
-      // >(
-      //   graphqlOperation(queries.pendidikanByTenagaAhliByCourse, {
-      //     taId: profile_id,
-      //   })
-      // );
-
-      // if (
-      //   getPend.data &&
-      //   getPend.data.pendidikanByTenagaAhliByCourse &&
-      //   getPend.data.pendidikanByTenagaAhliByCourse.items
-      // ) {
-      //   setListPendidikan(
-      //     getPend.data.pendidikanByTenagaAhliByCourse
-      //       .items as IPendidikanSertifikasi[]
-      //   );
-      // }
-
-      // const getProjects = await API.graphql<
-      //   GraphQLQuery<PengalamanKerjaByTenagaAhliByPerusahaanQuery>
-      // >(
-      //   graphqlOperation(queries.pengalamanKerjaByTenagaAhliByPerusahaan, {
-      //     taId: profile_id,
-      //   })
-      // );
-
-      // if (
-      //   getProjects.data &&
-      //   getProjects.data.pengalamanKerjaByTenagaAhliByPerusahaan &&
-      //   getProjects.data.pengalamanKerjaByTenagaAhliByPerusahaan.items
-      // ) {
-      //   setListKerja(
-      //     getProjects.data.pengalamanKerjaByTenagaAhliByPerusahaan
-      //       .items as PengalamanKerja[]
-      //   );
-      // }
 
       setLoading(false);
     };
 
     // if (submitStatus) {
     getTa();
-  }, [user, loading, userId]);
+  }, [user, userId]);
 
+  //------------------ Fetch data END ----------------------//
+
+  //------------------ Filter handler START ----------------------//
   useEffect(() => {
-    const tempListAllKeahlian = listAllProjects.map(function (el) {
-      return el.projectCategories;
-    });
+    // console.log(projectFilter);
+    const keywordcategories = projectFilter.projectCategories
+      .join(",")
+      .replace(/Ahli/g, "");
+    const keywordlocation = projectFilter.projectLocation.join(",");
+    let keyword = `${
+      keywordcategories ? "projectCategories:" + keywordcategories : ""
+    } ${keywordlocation ? "projectLocation:" + keywordlocation : ""}`;
 
-    const tempListAllArea = listAllProjects.map(function (el) {
-      return el.projectLocation;
-    });
+    let filtered;
 
-    let tempListAllKeahlianString: string[] = [];
-    let tempListAllAreaString: string[] = [];
+    if (keywordcategories && keywordcategories.length > 5) {
+      filtered = filter(listAllProjects, {
+        predicate: "OR",
+        keywords: `projectCategories:${keywordcategories}`,
+      });
+      if (keywordlocation && keywordlocation.length > 5) {
+        //filter lokasi berdasarkan hasil dari categories
+        filtered = filter(filtered, {
+          predicate: "OR",
+          keywords: `projectLocation:${keywordlocation}`,
+        });
+      }
+    } else {
+      if (keywordlocation && keywordlocation.length > 5) {
+        //filter lokasi berdasarkan hasil dari categories
+        filtered = filter(listAllProjects, {
+          predicate: "OR",
+          keywords: `projectLocation:${keywordlocation}`,
+        });
+      } else {
+        filtered = listAllProjects;
+      }
+    }
 
-    tempListAllKeahlian.forEach((item) => {
-      tempListAllKeahlianString = [
-        ...tempListAllKeahlianString,
-        ...item.split(", "),
-      ];
-    });
+    setFilteredProject(filtered);
+  }, [projectFilter]);
 
-    tempListAllArea.forEach((item) => {
-      tempListAllAreaString = [...tempListAllAreaString, item];
-    });
+  //------------------ Filter handler END ----------------------//
 
-    tempListAllKeahlianString = tempListAllKeahlianString.filter(
-      (value, index) => tempListAllKeahlianString.indexOf(value) === index
-    );
+  //------------------ Checkbox handler START ----------------------//
 
-    tempListAllAreaString = tempListAllAreaString.filter(
-      (value, index) => tempListAllAreaString.indexOf(value) === index
-    );
+  function onKeahlianCheckBoxChanged(checked: boolean, label: string) {
+    let temparraykeahlian = projectFilter.projectCategories;
 
-    tempListAllAreaString.sort((one, two) => (one > two ? 1 : -1));
+    if (!checked) {
+      temparraykeahlian.forEach((item, index) => {
+        if (item === label) temparraykeahlian.splice(index, 1);
+      });
+    } else {
+      temparraykeahlian = [...temparraykeahlian, label];
+    }
 
-    setFilterKeahlian(tempListAllKeahlianString);
-    setFilterArea(tempListAllAreaString);
-  }, [listAllProjects]);
+    const tempArrayFilterProject: IProjectFilter = {
+      projectCategories: temparraykeahlian,
+      projectLocation: projectFilter.projectLocation,
+    };
 
-  // useEffect(() => {
-  //   const getValue = (value: string) =>
-  //     typeof value === "string" ? value.toUpperCase() : value;
+    setProjectFilter(tempArrayFilterProject);
+  }
 
-  //   function filterPlainArray(array: any[], filters: { [x: string]: any[] }) {
-  //     const filterKeys = Object.keys(filters);
-  //     console.log("keys: ", filterKeys);
-  //     return array.filter((item) => {
-  //       // validates all filter criteria
-  //       return filterKeys.every((key) => {
-  //         // ignores an empty filter
-  //         if (!filters[key].length) return true;
-  //         return filters[key].find(
-  //           (filter) => getValue(filter) === getValue(item[key])
-  //         );
-  //       });
-  //     });
-  //   }
+  function onLocationCheckBoxChanged(checked: boolean, label: string) {
+    let temparraylocation = projectFilter.projectLocation;
 
-  //   const filters = {
-  //     projectCategories: ["Finance"],
-  //   };
+    if (!checked) {
+      temparraylocation.forEach((item, index) => {
+        if (item === label) temparraylocation.splice(index, 1);
+      });
+    } else {
+      temparraylocation = [...temparraylocation, label];
+    }
 
-  //   const filtered = filterPlainArray(dummyProject, filters);
+    const tempArrayFilterProject: IProjectFilter = {
+      projectCategories: projectFilter.projectCategories,
+      projectLocation: temparraylocation,
+    };
 
-  //   console.log(filtered);
-  // });
+    setProjectFilter(tempArrayFilterProject);
+  }
+
+  //------------------ Checkbox handler END ----------------------//
 
   const {
     handleSubmit,
@@ -325,15 +273,15 @@ export default function Explore() {
     <ExploreMainLayout user={user}>
       <div className="layout relative flex min-h-screen flex-row justify-center py-12 text-center bg-black ">
         <div className="bg-black lg:w-1/4 md:w-1/3 pr-12 hidden md:block pl-12 md:pl-8 md:pr-8">
-          <div className="position-relative w-100 sticky top-0">
+          <aside className="self-start position-relative w-100 sticky top-0 pb-12">
             <h1 className="ml-1 text-white text-left mb-2">Filter</h1>
             <div className=" ps-5 text-white bg-form-bg">
               <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(() => {})}>
                   <div className="border-2 border-black ">
-                    <div className="text-left pl-4  pt-2 dark:border-black0 mx-2 text-lg ml-4 py-2 items-center pb-4">
+                    <div className="text-left  pt-2 dark:border-black0 mx-2 text-lg ml-4 py-2 items-center pb-4">
                       <p className="mb-2">Keahlian</p>
-                      <section>
+                      <section className="max-h-80 overflow-y-auto">
                         {filterKeahlian.map((keahlian) => {
                           return (
                             <Checkbox
@@ -341,6 +289,13 @@ export default function Explore() {
                               customTextClass="text-white"
                               label={keahlian}
                               name={keahlian}
+                              onChange={(value) => {
+                                onKeahlianCheckBoxChanged(
+                                  value.target.checked,
+                                  value.target.name
+                                );
+                                // console.log(value.target.name);
+                              }}
                             ></Checkbox>
                           );
                         })}
@@ -348,10 +303,10 @@ export default function Explore() {
                     </div>
                   </div>
 
-                  <div className="border-2 border-black ">
-                    <div className="text-left pl-4  pt-2 dark:border-black0 mx-2 text-lg ml-4 py-2 items-center pb-8">
+                  <div className="h-2/6 border-2 border-black ">
+                    <div className="text-left pt-2 dark:border-black0 mx-2 text-lg ml-4 py-2 items-center pb-8">
                       <p className="mb-2">Area proyek</p>
-                      <section>
+                      <section className="max-h-80 overflow-y-auto">
                         {filterArea.map((area) => {
                           return (
                             <Checkbox
@@ -359,6 +314,13 @@ export default function Explore() {
                               customTextClass="text-white"
                               label={area}
                               name={area}
+                              onChange={(value) => {
+                                onLocationCheckBoxChanged(
+                                  value.target.checked,
+                                  value.target.name
+                                );
+                                // console.log(value.target.name);
+                              }}
                             ></Checkbox>
                           );
                         })}
@@ -368,20 +330,20 @@ export default function Explore() {
                 </form>
               </FormProvider>
             </div>
-          </div>
+          </aside>
         </div>
 
         <div className="mx-4 mt-4 mb-24 w-2/3 lg:w-3/4 xl:w-6/12 xl:pr-12 lg:pr-12 md:pr-8">
           <ExploreSectionLayout>
             {loading ? (
               <p className="text-white">Sedang mencari proyek...</p>
-            ) : listAllProjects.length < 1 ? (
+            ) : filteredProjects.length < 1 ? (
               <p className="text-white">Belum ada proyek available</p>
             ) : (
-              listAllProjects.map((project) => {
+              filteredProjects.map((project) => {
                 return (
                   <section className="pb-4" key={project.projectId}>
-                    <ProjectCard project={project} />
+                    <ProjectCard project={project} taId={userId} />
                   </section>
                 );
               })
