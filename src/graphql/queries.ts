@@ -17,23 +17,7 @@ export const getKonsultan = /* GraphQL */ `
         nextToken
       }
       projects {
-        projectId
-        projectTitle
-        projectLocation
-        projectValue
-        projectDuration
-        projectStart
-        projectCategories
-        projectDescription
-        projectClient
-        projectDeadline
-        projecImageUrl
-        projectOwner
-        isActive
-        projectStatus
-        isDeleted
-        createdOn
-        updatedOn
+        nextToken
       }
       createdOn
       updatedOn
@@ -307,6 +291,18 @@ export const getProject = /* GraphQL */ `
         nextToken
       }
       projectOwner
+      companyOwner {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        createdOn
+        updatedOn
+      }
       isActive
       projectStatus
       isDeleted

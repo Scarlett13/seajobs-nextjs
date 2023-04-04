@@ -1,3 +1,4 @@
+import { useState } from "react";
 import MainCtaButton from "../../../components/buttons/mainctabutton/MainCtaButton";
 import { IAmplifyProjectCard } from "../../../constants/exploreformconstants/ProjectCard";
 import ModalDetailProyek from "../modals/ModalDetailProyek";
@@ -5,10 +6,10 @@ import styles from "./ProjectCard.module.css";
 
 export interface IProjectCard {
   project: IAmplifyProjectCard;
-  // key: string;
+  taId: string;
 }
 
-const ProjectCard: React.FC<IProjectCard> = ({ project }) => {
+const ProjectCard: React.FC<IProjectCard> = ({ project, taId }) => {
   return (
     <div
       className={
@@ -23,27 +24,27 @@ const ProjectCard: React.FC<IProjectCard> = ({ project }) => {
           {project.projectCategories}
         </p>
         <span className="h-1 w-full bg-white mb-4"></span>
-        <div className={"flex flex-col md:flex-row justify-between"}>
-          <div className={"flex flex-col justify-between sm:pb-4 mr-4"}>
+        <div className={"flex flex-col sm:flex-row justify-between"}>
+          <div className={"justify-between mb-4 mr-4"}>
             <p className={"text-white text-sm "}>Area proyek</p>
             <p className={"text-white text-sm "}>{project.projectLocation}</p>
           </div>
-          <div className={"flex flex-col justify-between sm:pb-4 mr-4"}>
+          <div className={"justify-between mb-4 mr-4"}>
             <p className={"text-white text-sm "}>Nilai proyek</p>
             <p
               className={"text-white text-sm "}
             >{`IDR ${project.projectValue}`}</p>
           </div>
-          <div className={"flex flex-col justify-between sm:pb-4 mr-4"}>
+          <div className={"justify-between mb-4 mr-4"}>
             <p className={"text-white text-sm "}>Durasi proyek</p>
             <p className={"text-white text-sm "}>{project.projectDuration}</p>
           </div>
-          <div className={"flex flex-col justify-between sm:pb-4 mr-4"}>
+          <div className={"justify-between mb-4 mr-4"}>
             <p className={"text-white text-sm "}>Start proyek</p>
             <p className={"text-white text-sm "}>{project.projectStart}</p>
           </div>
-          <div className={"flex flex-col justify-between sm:pb-4"}>
-            <ModalDetailProyek project={project} taId={"taId"}>
+          <div className={"justify-between mb-4"}>
+            <ModalDetailProyek project={project} taId={taId}>
               {({ openModal }) => (
                 <MainCtaButton
                   className=" w-24 text-center xl:w-48 group relative flex justify-center py-2 border border-transparent text-sm font-medium rounded-md text-white bg-main-cta-button-bg hover:bg-main-cta-button-bg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"

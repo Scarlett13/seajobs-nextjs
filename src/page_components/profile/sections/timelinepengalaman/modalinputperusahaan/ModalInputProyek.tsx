@@ -154,10 +154,10 @@ export default function ExampleModal({
       setLoading(true);
       let status = 0;
 
-      console.log("wubbawewdata: ", data);
-      console.log("wubbawewpengalamanid: ", companyid);
-      console.log("wubbawewlistkerja: ", listKerja);
-      console.log("wubbawewpengalaman: ", listPengalaman);
+      // console.log("wubbawewdata: ", data);
+      // console.log("wubbawewpengalamanid: ", companyid);
+      // console.log("wubbawewlistkerja: ", listKerja);
+      // console.log("wubbawewpengalaman: ", listPengalaman);
 
       let index = listKerja.findIndex(
         (pp) => pp.companyId === companyid && pp.projectId === projectid
