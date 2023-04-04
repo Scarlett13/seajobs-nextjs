@@ -14,6 +14,13 @@ module.exports = {
     },
 
     extend: {
+      maxHeight: {
+        10: "10%",
+        25: "25%",
+        40: "40%",
+        50: "50%",
+        75: "75%",
+      },
       colors: {
         "footer-bg": "#05070E",
         "hero-bg": "#09090A",
