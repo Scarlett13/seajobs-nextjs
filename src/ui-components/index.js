@@ -9,5 +9,3 @@ export { default as KonsultanCreateForm } from "./KonsultanCreateForm";
 export { default as KonsultanUpdateForm } from "./KonsultanUpdateForm";
 export { default as TenagaAhliCreateForm } from "./TenagaAhliCreateForm";
 export { default as TenagaAhliUpdateForm } from "./TenagaAhliUpdateForm";
-export { default as ProjectCreateForm } from "./ProjectCreateForm";
-export { default as ProjectUpdateForm } from "./ProjectUpdateForm";
