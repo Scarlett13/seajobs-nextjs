@@ -30,6 +30,7 @@ const TypographyColor = [
   "tertiary",
   "danger",
   "custom_white",
+  "custom_success",
 ] as const;
 const TypographyFont = ["averta", "inter"] as const;
 
@@ -115,6 +116,7 @@ const Typography: TypographyComponent = React.forwardRef(
             color === "tertiary" && ["text-gray-500"],
             color === "danger" && ["text-red-500"],
             color === "custom_white" && ["text-white"],
+            color === "custom_success" && ["text-green-400"],
           ],
           //#endregion  //*======== Color ===========
           //#region  //*=========== Font ===========

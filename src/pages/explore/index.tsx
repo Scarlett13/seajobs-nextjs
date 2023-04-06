@@ -16,8 +16,6 @@ import {
 import * as queries from "../../graphql/queries";
 import usePush from "@utils/UsePush";
 import { DateTime } from "luxon";
-import { filterStringInArray } from "../../libs/arrayHelpers";
-import * as arrayFilters from "smart-array-filter";
 import { filter } from "smart-array-filter";
 
 interface IProjectFilter {
@@ -81,7 +79,7 @@ export default function Explore() {
     }
 
     checkUser();
-  }, [userId]);
+  }, []);
 
   //------------------ Check user END ----------------------//
 

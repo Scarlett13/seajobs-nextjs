@@ -63,7 +63,9 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
                 {({ openModal }) => (
                   <button
                     className={`text-form-section-blue text-md -mt-2 font-medium ml-2`}
-                    onClick={openModal}
+                    onClick={() => {
+                      console.log("clicked kerj");
+                    }}
                     title={"Tambahkan perusahaan"}
                   >
                     + Tambahkan perusahaan
@@ -82,7 +84,9 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
                 {({ openModal }) => (
                   <button
                     className={`text-form-section-blue text-md -mt-2 font-medium ml-2`}
-                    onClick={openModal}
+                    onClick={() => {
+                      console.log("clicked pend");
+                    }}
                   >
                     + Tambahkan pendidikan
                   </button>

@@ -51,8 +51,9 @@ export default function Signup() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setLoading(true);
+
     if (passwordMatch) {
+      setLoading(true);
       console.log(signupState);
       const retdata = await signup(
         signupState.fullname,
