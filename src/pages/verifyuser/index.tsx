@@ -59,7 +59,7 @@ export default function VerifyUser() {
   return (
     <PrimaryLayout user={user}>
       <main className="h-screen bg-black items-center justify-center flex flex-col ">
-        {!success ? (
+        {success ? (
           <div>
             <Typography variant="h2" color="custom_success">
               Akun berhasil di konfirmasi! silahkan{" "}
