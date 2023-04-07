@@ -11,6 +11,7 @@ import { CognitoUser } from "@aws-amplify/auth";
 import { Auth, Hub, Logger } from "aws-amplify";
 import usePush from "@utils/UsePush";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface UserContextType {
   user: CognitoUser | null;
@@ -58,7 +59,8 @@ export default function AuthContext(
       if (
         router.pathname !== "/login" &&
         router.pathname !== "/" &&
-        router.pathname !== "/signup"
+        router.pathname !== "/signup" &&
+        router.pathname !== "/verifyuser"
       ) {
         push("/login");
       }
@@ -80,7 +82,7 @@ export default function AuthContext(
     const listener = (data: { payload: { event: any } }) => {
       logger.info("the Auth module is configured");
       console.log("auth event auth ctx: ", data.payload.event);
-      checkUser();
+      // checkUser();
     };
 
     Hub.listen("auth", listener);
@@ -112,5 +114,69 @@ export default function AuthContext(
   //   return <></>;
   // }
 }
+
+interface IProtectRoute {
+  children?: any;
+}
+
+export const ProtectRoute = ({ children }: IProtectRoute) => {
+  const { authenticated, loading } = useUser();
+  const push = usePush();
+  const router = useRouter();
+
+  if (!authenticated) {
+    if (
+      router.pathname !== "/login" &&
+      router.pathname !== "/" &&
+      router.pathname !== "/signup" &&
+      router.pathname !== "/verifyuser"
+    ) {
+      return (
+        <>
+          (
+          <div>
+            <h4>
+              You are not Authorized. <Link href="/login">Please log in</Link>
+            </h4>
+          </div>
+          )
+        </>
+      );
+    } else {
+      return children;
+    }
+  } else {
+    if (router.pathname === "/login" || router.pathname === "/signup") {
+      return (
+        <>
+          (
+          <div>
+            <h4>
+              You are Authorized.{" "}
+              <Link href="/dahsboard">Please go back to dashboard</Link>
+            </h4>
+          </div>
+          )
+        </>
+      );
+    } else {
+      return children;
+    }
+  }
+
+  // if (
+  //   !authenticated &&
+  //   router.pathname !== "/login" &&
+  //   router.pathname !== "/" &&
+  //   router.pathname !== "/signup"
+  // ) {
+
+  // } else if (
+  //   authenticated &&
+  //   (router.pathname === "/login" || router.pathname === "/signup")
+  // ) {
+  //   return children;
+  // }
+};
 
 export const useUser = (): UserContextType => useContext(UserContext);

@@ -2,20 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useUser } from "../../contexts/AmplifyAuthContext";
 import usePush from "@utils/UsePush";
-import {
-  FormFields,
-  identitasDiriFields,
-  infoKontakFields,
-} from "../../constants/profileformconstants/ProfileFormConstants";
 import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
 import { Auth } from "aws-amplify";
-import {
-  CompanyProjectBidder,
-  CompanyProjectBidderByTaQuery,
-  GetTenagaAhliQuery,
-} from "../../API";
-import v4 from "uuid-browser/v4";
-import { DateTime } from "luxon";
+import { CompanyProjectBidderByTaQuery, GetTenagaAhliQuery } from "../../API";
 import { API, graphqlOperation } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import * as queries from "../../graphql/queries";
@@ -23,7 +12,7 @@ import { IAmplifyCompanyProjectBidder } from "../../constants/dashboardconstants
 import StatisticsCard from "../../components/cards/StatisticsCard";
 import { Files } from "lucide-react";
 
-export default function Dashboard() {
+export default function ProjectHistory() {
   const [listProyekBid, setListProyekBid] = useState<
     IAmplifyCompanyProjectBidder[]
   >([]);
@@ -32,6 +21,17 @@ export default function Dashboard() {
   const [totalApproved, setaTotalApproved] = useState<number>(0);
   const [totalRejected, setaTotalRejected] = useState<number>(0);
   const push = usePush();
+
+  async function abc() {
+    const amplifyUser = await Auth.currentAuthenticatedUser();
+    const { signInUserSession } = amplifyUser;
+    console.log(
+      "user: ",
+      signInUserSession.accessToken.payload["cognito:groups"]
+    );
+  }
+
+  abc();
 
   const {
     user,
@@ -49,7 +49,7 @@ export default function Dashboard() {
       }
       setLoading(true);
 
-      console.log("woi: ", user.getUsername());
+      console.log("woi: ", user.getSignInUserSession.toString());
 
       const getTa = await API.graphql<GraphQLQuery<GetTenagaAhliQuery>>(
         graphqlOperation(queries.getTenagaAhli, {
@@ -160,4 +160,4 @@ export default function Dashboard() {
   );
 }
 
-Dashboard.authenticate = true;
+ProjectHistory.authenticate = true;

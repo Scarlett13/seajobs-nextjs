@@ -255,7 +255,7 @@ export default function EditProfile() {
 
   const submitListPengalaman = async (data: any) => {
     setLoading(true);
-    console.log("wubbalubba", data);
+    console.log("wubbalubbasubmitlistpengalaman", data);
 
     const newTenagaAhli = {
       taId: profile_id as string,
@@ -309,6 +309,7 @@ export default function EditProfile() {
 
   const onSubmit = async (data: any) => {
     // logger({ data }, 'rhf.tsx line 33');
+    console.log("submitdata");
 
     // submitListPengalaman(data);
 
