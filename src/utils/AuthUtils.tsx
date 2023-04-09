@@ -24,9 +24,6 @@ export async function signup(
   email: string,
   password: string
 ): Promise<returnData> {
-  console.log("username utils: ", email);
-  console.log("fullname utils: ", fullname);
-  console.log("pwd utils: ", password);
   try {
     const { user } = await Auth.signUp({
       username: email,
@@ -43,11 +40,16 @@ export async function signup(
     });
     return { success: true, data: user } as returnData;
   } catch (error) {
-    console.log("error signing up:", error);
     return { success: false, data: error } as returnData;
   }
 }
 
 export async function logout() {
-  await Auth.signOut();
+  console.log("signout fired");
+  try {
+    await Auth.signOut();
+    return true;
+  } catch (error) {
+    return false;
+  }
 }

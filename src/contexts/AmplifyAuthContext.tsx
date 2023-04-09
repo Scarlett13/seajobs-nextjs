@@ -12,6 +12,7 @@ import { Auth, Hub, Logger } from "aws-amplify";
 import usePush from "@utils/UsePush";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import PrivateRoute from "../components/privateroute/PrivateRoute";
 
 interface UserContextType {
   user: CognitoUser | null;
@@ -82,7 +83,7 @@ export default function AuthContext(
     const listener = (data: { payload: { event: any } }) => {
       logger.info("the Auth module is configured");
       console.log("auth event auth ctx: ", data.payload.event);
-      // checkUser();
+      checkUser();
     };
 
     Hub.listen("auth", listener);
@@ -120,7 +121,7 @@ interface IProtectRoute {
 }
 
 export const ProtectRoute = ({ children }: IProtectRoute) => {
-  const { authenticated, loading } = useUser();
+  const { authenticated, loading, user } = useUser();
   const push = usePush();
   const router = useRouter();
 
@@ -131,34 +132,13 @@ export const ProtectRoute = ({ children }: IProtectRoute) => {
       router.pathname !== "/signup" &&
       router.pathname !== "/verifyuser"
     ) {
-      return (
-        <>
-          (
-          <div>
-            <h4>
-              You are not Authorized. <Link href="/login">Please log in</Link>
-            </h4>
-          </div>
-          )
-        </>
-      );
+      return <PrivateRoute user={user} success={authenticated} />;
     } else {
       return children;
     }
   } else {
     if (router.pathname === "/login" || router.pathname === "/signup") {
-      return (
-        <>
-          (
-          <div>
-            <h4>
-              You are Authorized.{" "}
-              <Link href="/dahsboard">Please go back to dashboard</Link>
-            </h4>
-          </div>
-          )
-        </>
-      );
+      return <PrivateRoute user={user} success={authenticated} />;
     } else {
       return children;
     }
