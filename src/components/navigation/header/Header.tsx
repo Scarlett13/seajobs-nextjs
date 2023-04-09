@@ -5,6 +5,9 @@ import { CognitoUser } from "@aws-amplify/auth";
 import { logout } from "@utils/AuthUtils";
 import Image from "next/image";
 import logo_full from "@assets/logo/svg/logo_2.svg";
+import { useRouter } from "next/router";
+import usePush from "@utils/UsePush";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 
 export interface IHeader {
   user?: CognitoUser | null;
@@ -14,7 +17,10 @@ export const Header = ({
   user,
 }: // onCreateAccount,
 IHeader) => {
-  console.log("headrprops: ", user);
+  const router = useRouter();
+  const push = usePush();
+  const { setAuthenticated, setUser } = useUser();
+
   const navigations = [
     {
       path: "./",
@@ -35,6 +41,15 @@ IHeader) => {
   ];
 
   const [navbar, setNavbar] = useState(false);
+
+  async function logoutHeader() {
+    const logoutdata = await logout();
+    console.log("wubbalubba: ", logoutdata);
+    if (logoutdata) {
+      // setUser(null);
+      // setAuthenticated(false);
+    }
+  }
 
   return (
     <div>
@@ -99,7 +114,12 @@ IHeader) => {
                 {navigations.map((nav) => (
                   <li
                     key={nav.label}
-                    className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className={`text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${
+                      !user &&
+                      (nav.label === "Dashboard" || nav.label === "Explore")
+                        ? "hidden"
+                        : "block"
+                    }`}
                   >
                     <Link
                       href={nav.path}
@@ -114,12 +134,14 @@ IHeader) => {
                     key="login"
                     className="visible md:invisible text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
-                    <p
-                      onClick={logout}
+                    <button
+                      onClick={async () => {
+                        await logoutHeader();
+                      }}
                       className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >
                       Keluar
-                    </p>
+                    </button>
                   </li>
                 ) : (
                   <li
@@ -142,12 +164,14 @@ IHeader) => {
             <div
               className={`invisible md:visible items-end justify-end gap-2 md:gap-8 place-it`}
             >
-              <p
-                onClick={logout}
+              <button
+                onClick={async () => {
+                  await logoutHeader();
+                }}
                 className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
               >
                 Keluar
-              </p>
+              </button>
             </div>
           ) : (
             <div
