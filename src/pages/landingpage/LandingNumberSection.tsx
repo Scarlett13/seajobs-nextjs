@@ -1,6 +1,8 @@
+import usePush from "@utils/UsePush";
 import MainCtaButton from "../../components/buttons/mainctabutton/MainCtaButton";
 
 const LandingNumberSection = () => {
+  const push = usePush();
   return (
     <>
       <section className="w-full h-screen flex flex-col items-center text-white overflow-hidden bg-hero-bg bg-no-repeat bg-cover">
@@ -25,6 +27,7 @@ const LandingNumberSection = () => {
                   <MainCtaButton
                     className=" border-1 py-3 my-8 px-6 sm:px-6 bg-main-cta-button-bg rounded font-bold text-black w-30 "
                     buttonName="Daftar sekarang"
+                    onClick={() => push("/signup")}
                   />
                 </div>
               </div>
