@@ -47,7 +47,12 @@ export default function AuthContext(
       setUser(amplifyUser);
       setAuthenticated(true);
       setLoading(false);
-      if (router.pathname === "/login" || router.pathname === "/signup") {
+      if (
+        router.pathname === "/login" ||
+        router.pathname === "/signup" ||
+        router.pathname === "/verifyuser" ||
+        router.pathname === "/forgotpassword"
+      ) {
         push("/dashboard");
       }
       console.log("masuk ke loading false 1");
@@ -61,7 +66,8 @@ export default function AuthContext(
         router.pathname !== "/login" &&
         router.pathname !== "/" &&
         router.pathname !== "/signup" &&
-        router.pathname !== "/verifyuser"
+        router.pathname !== "/verifyuser" &&
+        router.pathname !== "/forgotpassword"
       ) {
         push("/login");
       }
