@@ -2,17 +2,17 @@ import React, { ReactElement, useState } from "react";
 import { Auth } from "aws-amplify";
 import { useRouter } from "next/router";
 import { Alert, Snackbar, SnackbarCloseReason } from "@mui/material";
-import PasswordTemplate from "../../components/inputs/password/PasswordTemplate";
-import Input from "../../components/inputs/reguler/InputTemplate";
-import FormExtra from "../../components/inputs/extras/FormExtra";
-import FormAction from "../../components/inputs/actions/FormAction";
+import PasswordTemplate from "../../../components/inputs/password/PasswordTemplate";
+import Input from "../../../components/inputs/reguler/InputTemplate";
+import FormExtra from "../../../components/inputs/extras/FormExtra";
+import FormAction from "../../../components/inputs/actions/FormAction";
 import {
   FormFields,
   loginFields,
-} from "../../constants/authformconstants/AuthFormConstants";
-import { NextPageWithLayout } from "../page";
-import FormHeaderLayout from "../../components/layouts/formheaderlayout/FormHeaderLayout";
-import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
+} from "../../../constants/authformconstants/AuthFormConstants";
+import { NextPageWithLayout } from "../../page";
+import FormHeaderLayout from "../../../components/layouts/formheaderlayout/FormHeaderLayout";
+import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
 
 const LoginForm: NextPageWithLayout = () => {
   const fields = loginFields;

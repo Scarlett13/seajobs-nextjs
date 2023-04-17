@@ -17,15 +17,15 @@ import {
   PendidikanByTenagaAhliByCourseQuery,
   PengalamanKerja,
   PengalamanKerjaByTenagaAhliByPerusahaanQuery,
-} from "../../API";
-import MainCtaButton from "../../components/buttons/mainctabutton/MainCtaButton";
+} from "../../../API";
+import MainCtaButton from "../../../components/buttons/mainctabutton/MainCtaButton";
 
-import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
-import { IPendidikanSertifikasi } from "../../constants/profileformconstants/PendidikanSertifikasiConstants";
+import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
+import { IPendidikanSertifikasi } from "../../../constants/profileformconstants/PendidikanSertifikasiConstants";
 import {
   IAmplifyPengalamanKerja,
   IPengalamanKerja,
-} from "../../constants/profileformconstants/PengalamanKerjaConstants";
+} from "../../../constants/profileformconstants/PengalamanKerjaConstants";
 import {
   deskripsiDiriFields,
   FormFields,
@@ -34,15 +34,15 @@ import {
   tambahPendidikanSertifikasiFileds,
   tambahPerusahaanFields,
   tambahProyekFields,
-} from "../../constants/profileformconstants/ProfileFormConstants";
-import { useUser } from "../../contexts/AmplifyAuthContext";
-import ProfileMainLayout from "../../page_components/profile/layouts/profilemainlayout/ProfileMainLayout";
-import DeskripsiDiri from "../../page_components/profile/sections/deskripsidiri/DeskripsiDiri";
-import IdentitasDiri from "../../page_components/profile/sections/identitasdiri/IdentitasDiri";
-import InfoKontak from "../../page_components/profile/sections/infokontak/InfoKontak";
-import RiwayatPendidikan from "../../page_components/profile/sections/pendidikan/RiwayatPendidikan";
-import TimelinePengalaman from "../../page_components/profile/sections/timelinepengalaman/TimelinePengalaman";
-import * as queries from "../../graphql/queries";
+} from "../../../constants/profileformconstants/ProfileFormConstants";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
+import ProfileMainLayout from "../../../page_components/profile/layouts/profilemainlayout/ProfileMainLayout";
+import DeskripsiDiri from "../../../page_components/profile/sections/deskripsidiri/DeskripsiDiri";
+import IdentitasDiri from "../../../page_components/profile/sections/identitasdiri/IdentitasDiri";
+import InfoKontak from "../../../page_components/profile/sections/infokontak/InfoKontak";
+import RiwayatPendidikan from "../../../page_components/profile/sections/pendidikan/RiwayatPendidikan";
+import TimelinePengalaman from "../../../page_components/profile/sections/timelinepengalaman/TimelinePengalaman";
+import * as queries from "../../../graphql/queries";
 import { GraphQLQuery } from "@aws-amplify/api";
 import ScrollSpy from "react-ui-scrollspy";
 
@@ -66,7 +66,7 @@ export default function Profile() {
   useEffect(() => {
     if (user) {
       if ((profile_id as string) !== user.getUsername()) {
-        push(`/profile/${user?.getUsername()}`);
+        push(`/ta/profile/${user?.getUsername()}`);
       }
     }
   }, [user]);
@@ -364,7 +364,7 @@ export default function Profile() {
             buttonName="Edit"
             isLoading={loading}
             onClick={() => {
-              push(`/profile/editprofile/${profile_id}`);
+              push(`/ta/profile/editprofile/${profile_id}`);
             }}
           />
         </div>

@@ -1,13 +1,13 @@
 import { SyntheticEvent, useEffect, useState } from "react";
-import { signupFields } from "../../constants/authformconstants/AuthFormConstants";
-import Input from "../../components/inputs/reguler/InputTemplate";
-import { NextPageWithLayout } from "../page";
-import FormAction from "../../components/inputs/actions/FormAction";
-import FormHeaderLayout from "../../components/layouts/formheaderlayout/FormHeaderLayout";
-import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
-import PasswordTemplate from "../../components/inputs/password/PasswordTemplate";
+import { signupFields } from "../../../constants/authformconstants/AuthFormConstants";
+import Input from "../../../components/inputs/reguler/InputTemplate";
+import { NextPageWithLayout } from "../../page";
+import FormAction from "../../../components/inputs/actions/FormAction";
+import FormHeaderLayout from "../../../components/layouts/formheaderlayout/FormHeaderLayout";
+import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
+import PasswordTemplate from "../../../components/inputs/password/PasswordTemplate";
 import usePush from "@utils/UsePush";
-import { useUser } from "../../contexts/AmplifyAuthContext";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 import { Alert, Snackbar, SnackbarCloseReason } from "@mui/material";
 import { signup } from "@utils/AuthUtils";
 import { isEmpty } from "@utils/StringUtils";
@@ -58,7 +58,8 @@ export default function Signup() {
       const retdata = await signup(
         signupState.fullname,
         signupState.email_address,
-        signupState.password
+        signupState.password,
+        "ta"
       );
       if (retdata.success) {
         setSignUpError("");
@@ -103,7 +104,7 @@ export default function Signup() {
         heading="Daftar"
         paragraph="Sudah mempunyai akun? "
         linkName="Masuk"
-        linkUrl="/login"
+        linkUrl="/ta/login"
       >
         <form className="mt-10" onSubmit={handleSubmit} autoComplete="off">
           <div className="">
@@ -124,6 +125,7 @@ export default function Signup() {
                     type={field.type}
                     isRequired={field.isRequired}
                     placeholder={field.placeholder}
+                    isTa={true}
                   />
                 </section>
               ) : (
@@ -142,6 +144,7 @@ export default function Signup() {
                     type={field.type}
                     isRequired={field.isRequired}
                     placeholder={field.placeholder}
+                    isTa={true}
                   />
                 </section>
               )
@@ -153,6 +156,7 @@ export default function Signup() {
               handleSubmit={handleSubmit}
               isLoading={loading}
               text="Signup"
+              isTa={true}
             />
           </div>
         </form>

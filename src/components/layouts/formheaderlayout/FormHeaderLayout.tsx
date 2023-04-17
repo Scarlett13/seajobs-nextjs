@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 
 export interface IFormHeaderLayout {
   heading?: string;
@@ -15,8 +16,13 @@ const FormHeaderLayout: React.FC<IFormHeaderLayout> = ({
   linkName,
   children,
 }) => {
+  const { isTa } = useUser();
   return (
-    <div className=" text-white min-h-screen  place-items-center hero mx-auto pb-10 flex justify-center bg-hero1-bg bg-no-repeat bg-cover">
+    <div
+      className={`  min-h-screen  place-items-center hero mx-auto pb-10 flex justify-center bg-no-repeat bg-cover ${
+        isTa ? "bg-hero1-bg text-white" : "bg-hero2-bg text-gray-900"
+      }`}
+    >
       {/* <div className="flex justify-center">
         <img
           alt=""
@@ -26,12 +32,24 @@ const FormHeaderLayout: React.FC<IFormHeaderLayout> = ({
       </div> */}
       {/* ganti kalau mau centered item ketengah */}
       {/* <div className="lg:-mt-96 -mt-72  w-3/4 md:w-2/4 lg:w-1/4"></div> */}
-      <div className="bg-form-bg shadow-md rounded px-8 pt-6 mb-4 pb-10 w-fit md:w-3/4 lg:w-2/5 xl:w-1/4">
-        <h2 className="text-center text-3xl font-extrabold text-white">
+      <div
+        className={` shadow-md rounded px-8 pt-6 mb-4 pb-10 w-fit md:w-3/4 lg:w-2/5 xl:w-1/4 ${
+          isTa ? "bg-form-bg" : "bg-white"
+        }`}
+      >
+        <h2
+          className={`text-center text-3xl font-extrabold  ${
+            isTa ? "text-white" : "text-gray-900"
+          }`}
+        >
           {heading}
         </h2>
         {children}
-        <div className="text-center text-sm text-white mt-10">
+        <div
+          className={`text-center text-sm  mt-10 ${
+            isTa ? "text-white" : "text-gray-900"
+          }`}
+        >
           {paragraph}{" "}
           <Link
             href={linkUrl ? linkUrl : "/"}

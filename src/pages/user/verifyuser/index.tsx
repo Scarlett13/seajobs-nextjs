@@ -1,10 +1,10 @@
 import usePush from "@utils/UsePush";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useUser } from "../../contexts/AmplifyAuthContext";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 import { Auth } from "aws-amplify";
-import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
-import Typography from "../../components/typography/Typography";
+import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
+import Typography from "../../../components/typography/Typography";
 import Link from "next/link";
 
 export interface IVerifyUser {
@@ -17,7 +17,7 @@ export default function VerifyUser() {
   const router = useRouter();
   const push = usePush();
 
-  const { loading, setLoading, user } = useUser();
+  const { loading, setLoading, user, isTa } = useUser();
   const [pageLoading, setPageLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function VerifyUser() {
                 type={"button"}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black mt-10"
                 onClick={() => {
-                  push("/login");
+                  isTa ? push("/ta/login") : push("/com/login");
                 }}
                 disabled={false}
               >
@@ -83,7 +83,7 @@ export default function VerifyUser() {
                 type={"button"}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black mt-10"
                 onClick={() => {
-                  push("/signup");
+                  isTa ? push("/com/signup") : push("/com/signup");
                 }}
                 disabled={false}
               >

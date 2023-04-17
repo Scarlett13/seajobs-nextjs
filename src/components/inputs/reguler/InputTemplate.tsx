@@ -9,11 +9,14 @@ export interface IInputTemplate {
   isRequired?: boolean;
   placeholder?: string;
   customClass?: string;
+  isTa: boolean;
 }
 
-const fixedInputClass =
+const fixedInputClassTa =
   "bg-black rounded-none appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg focus:z-10 sm:text-sm";
 
+const fixedInputClassCom =
+  "bg-white rounded-none appearance-none relative block w-full px-3 py-2 border border-gray-500 placeholder-gray-500  focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg focus:z-10 sm:text-sm text-gray-900";
 const InputTemplate: React.FC<IInputTemplate> = ({
   handleChange,
   value,
@@ -25,6 +28,7 @@ const InputTemplate: React.FC<IInputTemplate> = ({
   isRequired,
   placeholder,
   customClass,
+  isTa,
   ...inputProps
 }) => {
   return (
@@ -40,7 +44,9 @@ const InputTemplate: React.FC<IInputTemplate> = ({
           name={name}
           type={type}
           required={isRequired}
-          className={fixedInputClass + customClass}
+          className={
+            isTa ? fixedInputClassTa : fixedInputClassCom + customClass
+          }
           placeholder={placeholder}
         />
       </div>

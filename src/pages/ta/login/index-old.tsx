@@ -1,18 +1,19 @@
-import { useAtom } from "jotai";
-import PageLoader from "next/dist/client/page-loader";
-import { useRouter } from "next/router";
+"use-client";
+
 import { useEffect, useState } from "react";
-import PasswordTemplate from "../../components/inputs/password/PasswordTemplate";
-import FormHeaderLayout from "../../components/layouts/formheaderlayout/FormHeaderLayout";
+import FormHeaderLayout from "../../../components/layouts/formheaderlayout/FormHeaderLayout";
+import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
 import {
   FormFields,
   loginFields,
-} from "../../constants/authformconstants/AuthFormConstants";
-import { NextPageWithLayout } from "../page";
-import Input from "../../components/inputs/reguler/InputTemplate";
-import FormExtra from "../../components/inputs/extras/FormExtra";
-import FormAction from "../../components/inputs/actions/FormAction";
-import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
+} from "../../../constants/authformconstants/AuthFormConstants";
+import Input from "../../../components/inputs/reguler/InputTemplate";
+import { NextPageWithLayout } from "../../page";
+import FormExtra from "../../../components/inputs/extras/FormExtra";
+import FormAction from "../../../components/inputs/actions/FormAction";
+import { Auth } from "aws-amplify";
+import router from "next/router";
+import PasswordTemplate from "../../../components/inputs/password/PasswordTemplate";
 
 const fields = loginFields;
 let fieldsState: any = {};
@@ -27,9 +28,20 @@ const LoginForm: NextPageWithLayout = () => {
   };
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
-    console.log("onsubmit");
     e.preventDefault();
-    // login(loginState.email, loginState.password);
+    authenticateUser(e);
+  };
+
+  //Handle Login API Integration here oi
+  const authenticateUser = async (e: any) => {
+    console.log(loginState.email);
+    try {
+      await Auth.signIn(loginState.email, loginState.password);
+
+      await router.push("/dashboard");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -77,19 +89,26 @@ const LoginForm: NextPageWithLayout = () => {
   );
 };
 
-export default function Login() {
-  const router = useRouter();
+const Login: NextPageWithLayout = () => {
+  // const { user, login, logOut } = useAuth();
+  // const router = useRouter();
   // const [isAuthorized] = useAtom(authorizationAtom);
+
+  // console.log("36", isAuthorized);
 
   // useEffect(() => {
   //   (async () => {
+  //     console.log("40", isAuthorized);
   //     if (isAuthorized) {
+  //       console.log("42", isAuthorized);
   //       return router.push("/dashboard");
   //     }
   //   })();
-  // }, [isAuthorized, router]);
+  // }, [isAuthorized]);
 
-  // if (isAuthorized) return <PageLoader />;
+  // console.log("48", user);
+
+  // if (isAuthorized ) return router.push("/dashboard");
 
   return (
     <>
@@ -105,9 +124,11 @@ export default function Login() {
       </section>
     </>
   );
-}
+};
 
-Login.getLayout = (page: any) => {
+export default Login;
+
+Login.getLayout = (page) => {
   return (
     <>
       <PrimaryLayout>{page}</PrimaryLayout>

@@ -6,7 +6,7 @@ import ScrollSpy from "react-ui-scrollspy";
 import {
   IAmplifyPengalamanKerja,
   IPengalamanKerja,
-} from "../../../constants/profileformconstants/PengalamanKerjaConstants";
+} from "../../../../constants/profileformconstants/PengalamanKerjaConstants";
 import {
   FormFields,
   identitasDiriFields,
@@ -15,16 +15,16 @@ import {
   tambahPerusahaanFields,
   tambahProyekFields,
   tambahPendidikanSertifikasiFileds,
-} from "../../../constants/profileformconstants/ProfileFormConstants";
-import { useUser } from "../../../contexts/AmplifyAuthContext";
-import ProfileMainLayout from "../../../page_components/profile/layouts/profilemainlayout/ProfileMainLayout";
-import DeskripsiDiri from "../../../page_components/profile/sections/deskripsidiri/DeskripsiDiri";
-import IdentitasDiri from "../../../page_components/profile/sections/identitasdiri/IdentitasDiri";
-import InfoKontak from "../../../page_components/profile/sections/infokontak/InfoKontak";
-import RiwayatPendidikan from "../../../page_components/profile/sections/pendidikan/RiwayatPendidikan";
-import TimelinePengalaman from "../../../page_components/profile/sections/timelinepengalaman/TimelinePengalaman";
-import { IPendidikanSertifikasi } from "../../../constants/profileformconstants/PendidikanSertifikasiConstants";
-import MainCtaButton from "../../../components/buttons/mainctabutton/MainCtaButton";
+} from "../../../../constants/profileformconstants/ProfileFormConstants";
+import { useUser } from "../../../../contexts/AmplifyAuthContext";
+import ProfileMainLayout from "../../../../page_components/profile/layouts/profilemainlayout/ProfileMainLayout";
+import DeskripsiDiri from "../../../../page_components/profile/sections/deskripsidiri/DeskripsiDiri";
+import IdentitasDiri from "../../../../page_components/profile/sections/identitasdiri/IdentitasDiri";
+import InfoKontak from "../../../../page_components/profile/sections/infokontak/InfoKontak";
+import RiwayatPendidikan from "../../../../page_components/profile/sections/pendidikan/RiwayatPendidikan";
+import TimelinePengalaman from "../../../../page_components/profile/sections/timelinepengalaman/TimelinePengalaman";
+import { IPendidikanSertifikasi } from "../../../../constants/profileformconstants/PendidikanSertifikasiConstants";
+import MainCtaButton from "../../../../components/buttons/mainctabutton/MainCtaButton";
 import usePush from "@utils/UsePush";
 import { useRouter } from "next/router";
 import {
@@ -35,13 +35,13 @@ import {
   PengalamanKerja,
   PengalamanKerjaByTenagaAhliByPerusahaanQuery,
   UpdateTenagaAhliMutation,
-} from "../../../API";
+} from "../../../../API";
 import v4 from "uuid-browser/v4";
 import { DateTime } from "luxon";
 import { API, graphqlOperation } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
-import * as mutations from "../../../graphql/mutations";
-import * as queries from "../../../graphql/queries";
+import * as mutations from "../../../../graphql/mutations";
+import * as queries from "../../../../graphql/queries";
 
 export default function EditProfile() {
   // const parentScrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -63,7 +63,7 @@ export default function EditProfile() {
   useEffect(() => {
     if (user) {
       if ((profile_id as string) !== user.getUsername()) {
-        push(`/profile/editprofile/${user?.getUsername()}`);
+        push(`/ta/profile/editprofile/${user?.getUsername()}`);
       }
     }
   }, [user]);
@@ -299,7 +299,7 @@ export default function EditProfile() {
       setSubmitStatus(true);
       console.log("success submit");
       setLoading(false);
-      push(`/profile/${profile_id}`);
+      push(`/ta/profile/${profile_id}`);
     } catch (error) {
       setSubmitStatus(false);
       setLoading(false);

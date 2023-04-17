@@ -14,6 +14,7 @@ export interface IPrivateRoute {
 
 export default function PrivateRoute({ success, user }: IPrivateRoute) {
   const push = usePush();
+  const { isTa } = useUser();
 
   return (
     // <PrimaryLayout user={user}>
@@ -26,7 +27,7 @@ export default function PrivateRoute({ success, user }: IPrivateRoute) {
               type={"button"}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black mt-10"
               onClick={() => {
-                push("/dashboard");
+                isTa ? push("/ta/dashboard") : push("/com/dashboard");
               }}
               disabled={false}
             >
@@ -42,7 +43,7 @@ export default function PrivateRoute({ success, user }: IPrivateRoute) {
               type={"button"}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-400 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black mt-10"
               onClick={() => {
-                push("/login");
+                isTa ? push("/ta/login") : push("/com/login");
               }}
               disabled={false}
             >

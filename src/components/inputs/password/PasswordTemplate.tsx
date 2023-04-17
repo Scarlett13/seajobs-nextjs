@@ -16,10 +16,14 @@ export interface IPasswordTemplate {
   isRequired?: boolean;
   placeholder?: string;
   customClass?: string;
+  isTa: boolean;
 }
 
-const fixedInputClass =
-  "bg-black rounded-md appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg sm:text-sm";
+const fixedInputClassTa =
+  "bg-black rounded-none appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg sm:text-sm";
+
+const fixedInputClassCom =
+  "bg-white rounded-none appearance-none relative block w-full px-3 py-2 border border-gray-500 placeholder-gray-500  focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg sm:text-sm text-gray-900";
 
 const PasswordTemplate: React.FC<IPasswordTemplate> = ({
   handleChange,
@@ -32,6 +36,7 @@ const PasswordTemplate: React.FC<IPasswordTemplate> = ({
   isRequired,
   placeholder,
   customClass,
+  isTa,
   ...inputProps
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -48,11 +53,15 @@ const PasswordTemplate: React.FC<IPasswordTemplate> = ({
           name={name}
           type={visible ? "text" : "password"}
           required={isRequired}
-          className={fixedInputClass + customClass}
+          className={
+            isTa ? fixedInputClassTa : fixedInputClassCom + customClass
+          }
           placeholder={placeholder}
           minLength={8}
         />
-        <span className="relative block cursor-pointer -mt-8 mr-4 float-right">
+        <span
+          className={`relative block cursor-pointer -mt-8 mr-4 float-right`}
+        >
           {
             <FontAwesomeIcon
               icon={visible ? faEye : faEyeSlash}

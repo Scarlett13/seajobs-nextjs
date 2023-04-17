@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import PrimaryLayout from "../components/layouts/primary/PrimaryLayout";
 import { useUser } from "../contexts/AmplifyAuthContext";
-import LandingNumberSection from "./landingpage/LandingNumberSection";
-import MainHeroSection from "./landingpage/MainHeroSection";
+import LandingNumberSection from "../page_components/landingpage/LandingNumberSection";
+import MainHeroSection from "../page_components/landingpage/MainHeroSection";
 
 export default function Home() {
-  const { user, authenticated } = useUser();
+  const { user, authenticated, isTa } = useUser();
   useEffect(() => {
     if (authenticated) {
       return;

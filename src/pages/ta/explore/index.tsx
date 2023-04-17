@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import Checkbox from "../../components/forms/Checkbox";
-import { IAmplifyProjectCard } from "../../constants/exploreformconstants/ProjectCard";
-import { useUser } from "../../contexts/AmplifyAuthContext";
-import ProjectCard from "../../page_components/explore/cards/ProjectCard";
-import ExploreMainLayout from "../../page_components/explore/layouts/ExploreMainLayout";
-import ExploreSectionLayout from "../../page_components/explore/layouts/ExploreSectionLayout";
+import Checkbox from "../../../components/forms/Checkbox";
+import { IAmplifyProjectCard } from "../../../constants/exploreformconstants/ProjectCard";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
+import ProjectCard from "../../../page_components/explore/cards/ProjectCard";
+import ExploreMainLayout from "../../../page_components/explore/layouts/ExploreMainLayout";
+import ExploreSectionLayout from "../../../page_components/explore/layouts/ExploreSectionLayout";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import {
   GetTenagaAhliQuery,
   ListProjectsQuery,
   ListProjectsQueryVariables,
-} from "../../API";
-import * as queries from "../../graphql/queries";
+} from "../../../API";
+import * as queries from "../../../graphql/queries";
 import usePush from "@utils/UsePush";
 import { DateTime } from "luxon";
 import { filter } from "smart-array-filter";

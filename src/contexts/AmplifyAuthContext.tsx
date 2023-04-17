@@ -21,6 +21,8 @@ interface UserContextType {
   setLoading: Dispatch<SetStateAction<boolean>>;
   authenticated: boolean;
   setAuthenticated: Dispatch<SetStateAction<boolean>>;
+  isTa: boolean;
+  setIsTa: Dispatch<SetStateAction<boolean>>;
 }
 
 const UserContext = createContext<UserContextType>({} as UserContextType);
@@ -34,6 +36,7 @@ export default function AuthContext(
   { children }: Props
 ): ReactElement {
   const [user, setUser] = useState<CognitoUser | null>(null);
+  const [isTa, setIsTa] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const push = usePush();
@@ -48,12 +51,12 @@ export default function AuthContext(
       setAuthenticated(true);
       setLoading(false);
       if (
-        router.pathname === "/login" ||
-        router.pathname === "/signup" ||
-        router.pathname === "/verifyuser" ||
-        router.pathname === "/forgotpassword"
+        router.pathname.includes("login") ||
+        router.pathname.includes("signup") ||
+        router.pathname.includes("verifyuser") ||
+        router.pathname.includes("forgotpassword")
       ) {
-        push("/dashboard");
+        // isTa ? push("/ta/dashboard") : push("/com/dashboard");
       }
       console.log("masuk ke loading false 1");
     } catch (error) {
@@ -63,21 +66,39 @@ export default function AuthContext(
       setAuthenticated(false);
       setLoading(false);
       if (
-        router.pathname !== "/login" &&
-        router.pathname !== "/" &&
-        router.pathname !== "/signup" &&
-        router.pathname !== "/verifyuser" &&
-        router.pathname !== "/forgotpassword"
+        !router.pathname.includes("login") &&
+        !router.pathname.includes("signup") &&
+        !router.pathname.includes("verifyuser") &&
+        !router.pathname.includes("forgotpassword") &&
+        router.pathname !== "/"
       ) {
-        push("/login");
+        // isTa ? push("/ta/login") : push("/com/login");
       }
 
       console.log("masuk ke loading false 2");
     }
   }
+
+  async function checkRole() {
+    const role = JSON.parse(localStorage.getItem("isTa") as string);
+    if (role === undefined || role === null || role === "") {
+      localStorage.setItem("isTa", JSON.stringify(true));
+      setIsTa(true);
+    } else {
+      console.log("rolenya: ", role);
+      setIsTa(role);
+    }
+  }
+
   useEffect(() => {
     checkUser();
+    checkRole();
   }, []);
+
+  useEffect(() => {
+    console.log("isTa update: ", isTa);
+    localStorage.setItem("isTa", JSON.stringify(isTa));
+  }, [isTa]);
 
   useEffect(() => {
     console.log("loading-ganti: ", loading);
@@ -90,6 +111,7 @@ export default function AuthContext(
       logger.info("the Auth module is configured");
       console.log("auth event auth ctx: ", data.payload.event);
       checkUser();
+      checkRole();
     };
 
     Hub.listen("auth", listener);
@@ -104,6 +126,8 @@ export default function AuthContext(
         setLoading,
         authenticated,
         setAuthenticated,
+        isTa,
+        setIsTa,
       }}
     >
       {children}
@@ -133,17 +157,23 @@ export const ProtectRoute = ({ children }: IProtectRoute) => {
 
   if (!authenticated) {
     if (
-      router.pathname !== "/login" &&
-      router.pathname !== "/" &&
-      router.pathname !== "/signup" &&
-      router.pathname !== "/verifyuser"
+      !router.pathname.includes("login") &&
+      !router.pathname.includes("signup") &&
+      !router.pathname.includes("verifyuser") &&
+      !router.pathname.includes("forgotpassword") &&
+      router.pathname !== "/"
     ) {
       return <PrivateRoute user={user} success={authenticated} />;
     } else {
       return children;
     }
   } else {
-    if (router.pathname === "/login" || router.pathname === "/signup") {
+    if (
+      router.pathname.includes("login") ||
+      router.pathname.includes("signup") ||
+      router.pathname.includes("verifyuser") ||
+      router.pathname.includes("forgotpassword")
+    ) {
       return <PrivateRoute user={user} success={authenticated} />;
     } else {
       return children;
