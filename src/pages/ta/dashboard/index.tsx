@@ -58,7 +58,7 @@ export default function Dashboard() {
       );
 
       if (!getTa.data || !getTa.data.getTenagaAhli) {
-        push(`/profile/editprofile/${user.getUsername()}`);
+        push(`/ta/profile/editprofile/${user.getUsername()}`);
       }
 
       const result = await API.graphql<
@@ -138,7 +138,7 @@ export default function Dashboard() {
           <button
             className="mt-2 text-lg text-white font-semibold bg-green-500 py-3 px-6 rounded-md"
             onClick={() => {
-              push(`profile/${user?.getUsername()}`);
+              push(`/ta/profile/${user?.getUsername()}`);
             }}
           >
             Lihat profile
