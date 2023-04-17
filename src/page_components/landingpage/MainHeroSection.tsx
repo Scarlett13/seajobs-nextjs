@@ -1,5 +1,6 @@
 import usePush from "@utils/UsePush";
 import MainCtaButton from "../../components/buttons/mainctabutton/MainCtaButton";
+import Typography from "../../components/typography/Typography";
 import { useUser } from "../../contexts/AmplifyAuthContext";
 
 const MainHeroSection = () => {
@@ -13,28 +14,20 @@ const MainHeroSection = () => {
         }`}
       >
         <main className="w-full h-screen  lg:w-100 backdrop-blur-sm">
-          <div className=" relative mt-20 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-10 lg:px-8 xl:mt-20">
+          <div className=" relative mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-40 sm:px-8 md:px-16 lg:px-40">
             <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
               <div className="relative">
-                <h1
-                  className={`text-xl xl:text-9xl tracking-tight font-extrabold md:text-6xl ${
-                    isTa ? "text-white" : "text-black"
-                  }`}
+                <Typography
+                  variant={"j1"}
+                  color={isTa ? "custom_white" : "primary"}
                 >
-                  <span
-                    className={`block xl:inline ${
-                      isTa ? "text-white" : "text-black"
-                    }`}
-                  >
-                    {`Temukan ${isTa ? "proyek" : "tenaga ahli"}`}
-                  </span>
+                  {`Temukan ${
+                    isTa ? "proyek" : "tenaga ahli"
+                  } yang sesuai dengan ${
+                    isTa ? "keahlianmu" : "kebutuhan proyekmu"
+                  }`}
+                </Typography>
 
-                  <span className="block  xl:inline">yang sesuai dengan </span>
-
-                  <span className="block  xl:inline">
-                    {`${isTa ? "keahlianmu" : "kebutuhan proyekmu"}`}{" "}
-                  </span>
-                </h1>
                 <p
                   className={`mt-3 text-base sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 ${
                     isTa ? "text-gray-300" : "text-gray-900"
@@ -57,7 +50,7 @@ const MainHeroSection = () => {
                   className="border-1 py-3 my-8 px-6 sm:px-6 bg-main-cta-button-bg rounded font-bold text-black w-30 "
                   buttonName="Daftar sekarang"
                   onClick={() => {
-                    isTa ? push("ta/signup") : push("com/signup");
+                    isTa ? push("/ta/signup") : push("/com/signup");
                   }}
                 />
               </div>
