@@ -1,26 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { useUser } from "../../contexts/AmplifyAuthContext";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 import usePush from "@utils/UsePush";
 import {
   FormFields,
   identitasDiriFields,
   infoKontakFields,
-} from "../../constants/profileformconstants/ProfileFormConstants";
-import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
+} from "../../../constants/profileformconstants/ProfileFormConstants";
+import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
 import { Auth } from "aws-amplify";
 import {
   CompanyProjectBidder,
   CompanyProjectBidderByTaQuery,
   GetTenagaAhliQuery,
-} from "../../API";
+} from "../../../API";
 import v4 from "uuid-browser/v4";
 import { DateTime } from "luxon";
 import { API, graphqlOperation } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
-import * as queries from "../../graphql/queries";
-import { IAmplifyCompanyProjectBidder } from "../../constants/dashboardconstants/ProjectBid";
-import StatisticsCard from "../../components/cards/StatisticsCard";
+import * as queries from "../../../graphql/queries";
+import { IAmplifyCompanyProjectBidder } from "../../../constants/dashboardconstants/ProjectBid";
+import StatisticsCard from "../../../components/cards/StatisticsCard";
 import { Files } from "lucide-react";
 
 export default function Dashboard() {

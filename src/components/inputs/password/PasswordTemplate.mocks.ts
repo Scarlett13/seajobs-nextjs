@@ -11,6 +11,7 @@ const base: IPasswordTemplate = {
   isRequired: false,
   placeholder: "string",
   customClass: "any",
+	isTa: false
 };
 
 export const mockPasswordTemplateProps = {

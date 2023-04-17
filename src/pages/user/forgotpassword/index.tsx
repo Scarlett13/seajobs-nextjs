@@ -1,29 +1,29 @@
 import usePush from "@utils/UsePush";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useUser } from "../../contexts/AmplifyAuthContext";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 import { Auth } from "aws-amplify";
-import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
-import Typography from "../../components/typography/Typography";
+import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
+import Typography from "../../../components/typography/Typography";
 import { FormProvider, useForm } from "react-hook-form";
 import {
   resetPasswordRequestFields,
   confirmResetPasswordRequestFields,
   FormFields,
-} from "../../constants/forgotpassordconstants/ForgotPasswordConstants";
-import Input from "../../components/forms/Input";
-import PasswordInput from "../../components/forms/PasswordInput";
+} from "../../../constants/forgotpassordconstants/ForgotPasswordConstants";
+import Input from "../../../components/forms/Input";
+import PasswordInput from "../../../components/forms/PasswordInput";
 
 export default function ForgotPassword() {
-  const [message, setMessage] = useState<string>("qwewqeqwe");
+  const [message, setMessage] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>("hilham.qq1@gmail.com");
+  const [userName, setUserName] = useState<string>("");
   const [requestSent, setRequestSent] = useState<boolean>(false);
   const [finished, setFinished] = useState<boolean>(false);
   const router = useRouter();
   const push = usePush();
 
-  const { loading, setLoading, user } = useUser();
+  const { loading, setLoading, user, isTa } = useUser();
 
   const resetPasswordFieldsComp = resetPasswordRequestFields;
   let resetPasswordFieldsState: any = {};
@@ -319,7 +319,7 @@ export default function ForgotPassword() {
             type={"button"}
             className={` py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-main-cta-button-bg hover:bg-main-cta-button-bg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black mt-10`}
             onClick={() => {
-              push("/login");
+              isTa ? push("/ta/login") : push("/com/login");
             }}
           >
             {loading === null || loading === undefined

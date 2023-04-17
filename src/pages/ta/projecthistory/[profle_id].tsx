@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { useUser } from "../../contexts/AmplifyAuthContext";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 import usePush from "@utils/UsePush";
-import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
+import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
 import { Auth } from "aws-amplify";
-import { CompanyProjectBidderByTaQuery, GetTenagaAhliQuery } from "../../API";
+import {
+  CompanyProjectBidderByTaQuery,
+  GetTenagaAhliQuery,
+} from "../../../API";
 import { API, graphqlOperation } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
-import * as queries from "../../graphql/queries";
-import { IAmplifyCompanyProjectBidder } from "../../constants/dashboardconstants/ProjectBid";
-import StatisticsCard from "../../components/cards/StatisticsCard";
+import * as queries from "../../../graphql/queries";
+import { IAmplifyCompanyProjectBidder } from "../../../constants/dashboardconstants/ProjectBid";
+import StatisticsCard from "../../../components/cards/StatisticsCard";
 import { Files } from "lucide-react";
 
 export default function ProjectHistory() {

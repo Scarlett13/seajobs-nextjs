@@ -6,23 +6,32 @@ import {
   BsInstagram,
   BsTwitter,
 } from "react-icons/bs";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 export interface IFooter extends React.ComponentPropsWithoutRef<"footer"> {}
 
 const Footer: React.FC<IFooter> = ({ className, ...footerProps }) => {
+  const { isTa } = useUser();
   return (
-    <footer className="right-0 left-0 bottom-0 text-center lg:text-left bg-footer-bg text-white">
+    <footer
+      className={`right-0 left-0 bottom-0 text-center lg:text-left ${
+        isTa ? "bg-footer-bg text-white" : "bg-white text-gray-900"
+      }`}
+    >
       <div className="flex justify-center items-center lg:justify-between p-6 border-b border-gray-300">
         <div className="mr-12 hidden lg:block">
           <span>© {new Date().getFullYear()} Copyright:</span>
           <a
-            className="text-white font-semibold"
+            className={`${isTa ? "text-white" : "text-gray-900"} font-semibold`}
             href="https://tailwind-elements.com/"
           >
             Seajobs
           </a>
         </div>
         <div className="flex justify-center">
-          <a href="#!" className="mr-6 text-white">
+          <a
+            href="#!"
+            className={`mr-6  ${isTa ? "text-white" : "text-gray-900"}`}
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -39,7 +48,10 @@ const Footer: React.FC<IFooter> = ({ className, ...footerProps }) => {
               ></path>
             </svg>
           </a>
-          <a href="#!" className="mr-6 text-white">
+          <a
+            href="#!"
+            className={`mr-6  ${isTa ? "text-white" : "text-gray-900"}`}
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -56,7 +68,10 @@ const Footer: React.FC<IFooter> = ({ className, ...footerProps }) => {
               ></path>
             </svg>
           </a>
-          <a href="#!" className="mr-6 text-white">
+          <a
+            href="#!"
+            className={`mr-6  ${isTa ? "text-white" : "text-gray-900"}`}
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -73,7 +88,10 @@ const Footer: React.FC<IFooter> = ({ className, ...footerProps }) => {
               ></path>
             </svg>
           </a>
-          <a href="#!" className="mr-6 text-white">
+          <a
+            href="#!"
+            className={`mr-6  ${isTa ? "text-white" : "text-gray-900"}`}
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -90,7 +108,10 @@ const Footer: React.FC<IFooter> = ({ className, ...footerProps }) => {
               ></path>
             </svg>
           </a>
-          <a href="#!" className="mr-6 text-white">
+          <a
+            href="#!"
+            className={`mr-6  ${isTa ? "text-white" : "text-gray-900"}`}
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -107,7 +128,10 @@ const Footer: React.FC<IFooter> = ({ className, ...footerProps }) => {
               ></path>
             </svg>
           </a>
-          <a href="#!" className="text-white">
+          <a
+            href="#!"
+            className={`mr-6  ${isTa ? "text-white" : "text-gray-900"}`}
+          >
             <svg
               aria-hidden="true"
               focusable="false"

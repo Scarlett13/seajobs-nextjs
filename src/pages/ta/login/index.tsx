@@ -1,18 +1,18 @@
 import { Alert, Snackbar, SnackbarCloseReason } from "@mui/material";
-import { login } from "@utils/AuthUtils";
+import { login, logout } from "@utils/AuthUtils";
 import usePush from "@utils/UsePush";
 import { useEffect, useState } from "react";
-import FormAction from "../../components/inputs/actions/FormAction";
-import FormExtra from "../../components/inputs/extras/FormExtra";
-import PasswordTemplate from "../../components/inputs/password/PasswordTemplate";
-import Input from "../../components/inputs/reguler/InputTemplate";
-import FormHeaderLayout from "../../components/layouts/formheaderlayout/FormHeaderLayout";
-import PrimaryLayout from "../../components/layouts/primary/PrimaryLayout";
+import FormAction from "../../../components/inputs/actions/FormAction";
+import FormExtra from "../../../components/inputs/extras/FormExtra";
+import PasswordTemplate from "../../../components/inputs/password/PasswordTemplate";
+import Input from "../../../components/inputs/reguler/InputTemplate";
+import FormHeaderLayout from "../../../components/layouts/formheaderlayout/FormHeaderLayout";
+import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
 import {
   FormFields,
   loginFields,
-} from "../../constants/authformconstants/AuthFormConstants";
-import { useUser } from "../../contexts/AmplifyAuthContext";
+} from "../../../constants/authformconstants/AuthFormConstants";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 
 export default function Login() {
   const fields = loginFields;
@@ -43,7 +43,11 @@ export default function Login() {
     setLoading(true);
     console.log("onsubmit");
     e.preventDefault();
-    const returnDataLogin = await login(loginState.email, loginState.password);
+    const returnDataLogin = await login(
+      loginState.email,
+      loginState.password,
+      true
+    );
     if (returnDataLogin.success) {
       console.log("login user: " + user);
       console.log("login resultlogin: " + returnDataLogin);
@@ -52,13 +56,14 @@ export default function Login() {
       setSignInError("");
       setLoading(false);
       setOpen(false);
-      push("/dashboard");
+      push("/ta/dashboard");
     } else {
       setUser(null);
       setAuthenticated(false);
       setSignInError(returnDataLogin.data.message);
       setLoading(false);
       setOpen(true);
+      await logout();
     }
     console.log(returnDataLogin);
   };
@@ -91,6 +96,7 @@ export default function Login() {
                       {field.labelText}
                     </p>
                     <PasswordTemplate
+                      isTa={true}
                       key={field.id}
                       handleChange={handleChange}
                       value={loginState[field.id]}
@@ -119,13 +125,15 @@ export default function Login() {
                       type={field.type}
                       isRequired={field.isRequired}
                       placeholder={field.placeholder}
+                      isTa={true}
                     />
                   </section>
                 )
               )}
             </div>
-            <FormExtra />
+            <FormExtra isTa={true} />
             <FormAction
+              isTa={true}
               handleSubmit={handleSubmit}
               isLoading={loading}
               text="Login"
