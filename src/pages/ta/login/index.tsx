@@ -85,7 +85,7 @@ export default function Login() {
           heading="Masuk"
           paragraph="Belum mempunyai akun? "
           linkName="Daftar"
-          linkUrl="/signup"
+          linkUrl="/ta/signup"
         >
           <form onSubmit={handleSubmit} autoComplete="off">
             <div className="">
