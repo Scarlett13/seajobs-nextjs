@@ -104,6 +104,7 @@ export default function ExampleModal({
                 type={field.type}
                 isRequired={field.isRequired}
                 placeholder={field.placeholder}
+                isTa={true}
               />
             </section>
           ))}

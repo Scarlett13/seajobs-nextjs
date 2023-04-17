@@ -51,6 +51,7 @@ const LoginForm: NextPageWithLayout = () => {
           {fields.map((field) =>
             field.type === "password" ? (
               <PasswordTemplate
+                isTa={true}
                 key={field.id}
                 handleChange={handleChange}
                 value={loginState[field.id]}
@@ -64,6 +65,7 @@ const LoginForm: NextPageWithLayout = () => {
               />
             ) : (
               <Input
+                isTa={true}
                 key={field.id}
                 handleChange={handleChange}
                 value={loginState[field.id]}
@@ -78,8 +80,9 @@ const LoginForm: NextPageWithLayout = () => {
             )
           )}
         </div>
-        <FormExtra />
+        <FormExtra isTa={true} />
         <FormAction
+          isTa={true}
           handleSubmit={handleSubmit}
           text="Login"
           isLoading={false}

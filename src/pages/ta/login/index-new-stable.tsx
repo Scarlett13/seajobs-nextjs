@@ -69,6 +69,7 @@ const LoginForm: NextPageWithLayout = () => {
                 type={field.type}
                 isRequired={field.isRequired}
                 placeholder={field.placeholder}
+                isTa={true}
               />
             ) : (
               <Input
@@ -81,13 +82,15 @@ const LoginForm: NextPageWithLayout = () => {
                 name={field.name}
                 type={field.type}
                 isRequired={field.isRequired}
+                isTa={true}
                 placeholder={field.placeholder}
               />
             );
           })}
         </div>
-        <FormExtra />
+        <FormExtra isTa={true} />
         <FormAction
+          isTa={true}
           handleSubmit={handleSubmit}
           text="Login"
           isLoading={false}
