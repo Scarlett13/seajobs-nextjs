@@ -17,6 +17,7 @@ export interface IProjectCard {
   projectId: string;
   isTa: boolean;
   functiongg: Function;
+  projectStatus: string;
 }
 
 const ProjectBidderCards: React.FC<IProjectCard> = ({
@@ -26,6 +27,7 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
   konsultanId,
   projectId,
   functiongg,
+  projectStatus,
 }) => {
   const [biddingStatusState, setBiddingStatusState] =
     React.useState<string>(biddingStatus);
@@ -84,7 +86,11 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
         <span
           className={`h-1 w-full mb-4 ${isTa ? "bg-white" : "bg-gray-900"}`}
         ></span>
-        <div className={"flex flex-col sm:flex-row justify-end"}>
+        <div
+          className={`flex flex-col sm:flex-row justify-end ${
+            projectStatus !== "Aktif" ? "hidden" : "block"
+          }`}
+        >
           <div className={"justify-end mb-2 mr-8"}>
             <Button
               variant="primary"

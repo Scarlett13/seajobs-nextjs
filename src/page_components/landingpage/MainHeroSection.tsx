@@ -5,7 +5,7 @@ import { useUser } from "../../contexts/AmplifyAuthContext";
 
 const MainHeroSection = () => {
   const push = usePush();
-  const { isTa } = useUser();
+  const { isTa, user } = useUser();
   return (
     <>
       <section
@@ -48,9 +48,15 @@ const MainHeroSection = () => {
 
                 <MainCtaButton
                   className="border-1 py-3 my-8 px-6 sm:px-6 bg-main-cta-button-bg rounded font-bold text-black w-30 "
-                  buttonName="Daftar sekarang"
+                  buttonName={user ? "Explore sekarang" : "Daftar sekarang"}
                   onClick={() => {
-                    isTa ? push("/ta/signup") : push("/com/signup");
+                    user
+                      ? isTa
+                        ? push("/ta/dashboard")
+                        : push("/com/dashboard")
+                      : isTa
+                      ? push("/ta/signup")
+                      : push("/com/signup");
                   }}
                 />
               </div>

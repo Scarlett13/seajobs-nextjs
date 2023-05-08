@@ -50,6 +50,7 @@ export default function EditProject() {
   const [isProjectActive, setIsProjectActive] = useState<boolean>(false);
   const [projectMessage, setProjectMessage] = useState<string>("");
   const [formAction, setFormAction] = useState<string>("");
+  const [projectStatus, setProjectStatus] = useState<string>("");
 
   console.log("query: ", router.query);
 
@@ -150,8 +151,15 @@ export default function EditProject() {
         new Date(data.project_deadline).toISOString()
       ).toFormat("yyyy-MM-dd"),
       projectOwner: userId,
-      isActive: action && action === "Aktif" ? "true" : "false",
-      projectStatus: action ? action : "Aktif",
+      isActive:
+        (action && action === "Aktif") || (action && action === "Simpan")
+          ? "true"
+          : "false",
+      projectStatus: action
+        ? action === "Simpan"
+          ? projectStatus
+          : action
+        : "Aktif",
       isDeleted: false,
     };
 
@@ -209,6 +217,7 @@ export default function EditProject() {
         setIsProjectActive(
           project.isActive === "true" || project.isActive === "True"
         );
+        setProjectStatus(project.projectStatus);
 
         setValue("project_name", project.projectTitle);
         setValue("project_area", project.projectLocation);
