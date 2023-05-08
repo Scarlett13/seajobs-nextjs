@@ -203,18 +203,22 @@ export default function ProjectDetail() {
 
   //------------------ Filter handler START ----------------------//
   useEffect(() => {
-    let keyword = `${filterStatus ? "biddingStatus:" + filterStatus : ""}`;
+    const keywordStatus = bidderFilter.biddingStatus.join(",");
 
     let filtered;
 
-    if (filterStatus && filterStatus.length > 3) {
+    if (keywordStatus && keywordStatus.length > 3) {
       filtered = filter(listAllBidder, {
         predicate: "OR",
-        keywords: keyword,
+        keywords: `biddingStatus:${keywordStatus}`,
       });
+      console.log("filtered: if");
     } else {
+      console.log("filtered: else");
       filtered = listAllBidder;
     }
+
+    console.log("filtered: ", keywordStatus);
 
     setFilteredBidder(filtered);
   }, [bidderFilter]);
@@ -317,20 +321,30 @@ export default function ProjectDetail() {
             ) : filteredBidder.length < 1 ? (
               <p className="text-white">Belum ada proyek available</p>
             ) : (
-              filteredBidder.map((bidder) => {
-                return (
-                  <section className="pb-4" key={bidder.projectId}>
-                    <ProjectBidderCards
-                      tenagaAhli={bidder.taDetail}
-                      isTa={false}
-                      biddingStatus={bidder.biddingStatus}
-                      konsultanId={userId}
-                      projectId={bidder.projectId}
-                      functiongg={getData}
-                    />
-                  </section>
-                );
-              })
+              <>
+                <Typography variant="h2" color="primary" className="mb-4">
+                  {`Daftar pelamar untuk proyek "${project?.projectTitle}" `}
+                  {/** (${filteredBidder.length} pelamar) */}
+                </Typography>
+                {filteredBidder.map((bidder) => {
+                  return (
+                    <section
+                      className="pb-4"
+                      key={`${bidder.projectId}-${bidder.konsultanId}-${bidder.taId}`}
+                    >
+                      <ProjectBidderCards
+                        tenagaAhli={bidder.taDetail}
+                        isTa={false}
+                        biddingStatus={bidder.biddingStatus}
+                        konsultanId={userId}
+                        projectId={bidder.projectId}
+                        functiongg={getData}
+                        projectStatus={project?.projectStatus as string}
+                      />
+                    </section>
+                  );
+                })}
+              </>
             )}
           </ExploreSectionLayout>
         </div>

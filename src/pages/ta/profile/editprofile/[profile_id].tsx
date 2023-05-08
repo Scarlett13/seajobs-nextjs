@@ -38,7 +38,7 @@ import {
 } from "../../../../API";
 import v4 from "uuid-browser/v4";
 import { DateTime } from "luxon";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, Auth, graphqlOperation } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import * as mutations from "../../../../graphql/mutations";
 import * as queries from "../../../../graphql/queries";
@@ -178,6 +178,12 @@ export default function EditProfile() {
       if (!user) {
         return;
       }
+
+      const user2 = await Auth.currentAuthenticatedUser();
+
+      const { attributes } = user2;
+
+      console.log("useraasfafas: ", attributes);
       setLoading(true);
       const getTa = await API.graphql<GraphQLQuery<GetTenagaAhliQuery>>(
         graphqlOperation(queries.getTenagaAhli, {
@@ -195,7 +201,7 @@ export default function EditProfile() {
         setValue("res_status_id", getTa.data.getTenagaAhli.taResidentStatus);
         setValue("deskripsi_diri", getTa.data.getTenagaAhli.taSelfDescription);
         setValue("address", getTa.data.getTenagaAhli.taAddress);
-        setValue("email", getTa.data.getTenagaAhli.taEmail);
+        setValue("email", attributes.email);
         setValue("phone_number", getTa.data.getTenagaAhli.taPhoneNumber);
         setValue(
           "portfolio_link",

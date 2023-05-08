@@ -29,6 +29,7 @@ import ExploreSectionLayout from "../../../page_components/explore/layouts/Explo
 import ProjectCard from "../../../page_components/explore/cards/ProjectCard";
 import Checkbox from "../../../components/forms/Checkbox";
 import { keahlianDbToValue, keahlianValueToDb } from "@utils/StringUtils";
+import Typography from "../../../components/typography/Typography";
 
 interface IProjectFilter {
   projectCategories: string[];
@@ -410,13 +411,22 @@ export default function ListProjects() {
             ) : filteredProjects.length < 1 ? (
               <p className="text-gray-900">Belum ada proyek available</p>
             ) : (
-              filteredProjects.map((project) => {
-                return (
-                  <section className="pb-4" key={project.projectId}>
-                    <ProjectCard project={project} taId={userId} isTa={false} />
-                  </section>
-                );
-              })
+              <>
+                <Typography variant="h2" color="primary" className="mb-4">
+                  {`Daftar Proyek ${project_status}`}
+                </Typography>
+                {filteredProjects.map((project) => {
+                  return (
+                    <section className="pb-4" key={project.projectId}>
+                      <ProjectCard
+                        project={project}
+                        taId={userId}
+                        isTa={false}
+                      />
+                    </section>
+                  );
+                })}
+              </>
             )}
           </ExploreSectionLayout>
         </div>

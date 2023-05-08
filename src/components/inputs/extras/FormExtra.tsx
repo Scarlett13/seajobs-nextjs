@@ -14,7 +14,7 @@ export default function FormExtra({ isTa }: IFormExtra) {
           type="checkbox"
           className={`h-4 w-4  rounded ${
             isTa
-              ? "text-white hover:text-gray-100 border-gray-300"
+              ? "text-gray-900 hover:text-gray-500 border-gray-300"
               : "text-gray-900 hover:text-gray-500 border-gray-600"
           }`}
         />

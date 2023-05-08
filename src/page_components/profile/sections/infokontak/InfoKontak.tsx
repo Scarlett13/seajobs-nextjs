@@ -27,7 +27,7 @@ const InfoKontak: React.FC<IInfoKontak> = ({ infoKontakFields, disabled }) => {
                 id={field.id}
                 type={field.type}
                 label={null}
-                disabled={disabled}
+                disabled={true}
                 validation={{
                   required: {
                     value: field.isRequired,
