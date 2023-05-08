@@ -6,180 +6,11 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Badge,
-  Button,
-  Divider,
-  Flex,
-  Grid,
-  Icon,
-  ScrollView,
-  Text,
-  TextField,
-  useTheme,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Konsultan } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-function ArrayField({
-  items = [],
-  onChange,
-  label,
-  inputFieldRef,
-  children,
-  hasError,
-  setFieldValue,
-  currentFieldValue,
-  defaultFieldValue,
-  lengthLimit,
-  getBadgeText,
-  errorMessage,
-}) {
-  const labelElement = <Text>{label}</Text>;
-  const {
-    tokens: {
-      components: {
-        fieldmessages: { error: errorStyles },
-      },
-    },
-  } = useTheme();
-  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
-  const [isEditing, setIsEditing] = React.useState();
-  React.useEffect(() => {
-    if (isEditing) {
-      inputFieldRef?.current?.focus();
-    }
-  }, [isEditing]);
-  const removeItem = async (removeIndex) => {
-    const newItems = items.filter((value, index) => index !== removeIndex);
-    await onChange(newItems);
-    setSelectedBadgeIndex(undefined);
-  };
-  const addItem = async () => {
-    if (
-      currentFieldValue !== undefined &&
-      currentFieldValue !== null &&
-      currentFieldValue !== "" &&
-      !hasError
-    ) {
-      const newItems = [...items];
-      if (selectedBadgeIndex !== undefined) {
-        newItems[selectedBadgeIndex] = currentFieldValue;
-        setSelectedBadgeIndex(undefined);
-      } else {
-        newItems.push(currentFieldValue);
-      }
-      await onChange(newItems);
-      setIsEditing(false);
-    }
-  };
-  const arraySection = (
-    <React.Fragment>
-      {!!items?.length && (
-        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
-          {items.map((value, index) => {
-            return (
-              <Badge
-                key={index}
-                style={{
-                  cursor: "pointer",
-                  alignItems: "center",
-                  marginRight: 3,
-                  marginTop: 3,
-                  backgroundColor:
-                    index === selectedBadgeIndex ? "#B8CEF9" : "",
-                }}
-                onClick={() => {
-                  setSelectedBadgeIndex(index);
-                  setFieldValue(items[index]);
-                  setIsEditing(true);
-                }}
-              >
-                {getBadgeText ? getBadgeText(value) : value.toString()}
-                <Icon
-                  style={{
-                    cursor: "pointer",
-                    paddingLeft: 3,
-                    width: 20,
-                    height: 20,
-                  }}
-                  viewBox={{ width: 20, height: 20 }}
-                  paths={[
-                    {
-                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
-                      stroke: "black",
-                    },
-                  ]}
-                  ariaLabel="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeItem(index);
-                  }}
-                />
-              </Badge>
-            );
-          })}
-        </ScrollView>
-      )}
-      <Divider orientation="horizontal" marginTop={5} />
-    </React.Fragment>
-  );
-  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
-    return (
-      <React.Fragment>
-        {labelElement}
-        {arraySection}
-      </React.Fragment>
-    );
-  }
-  return (
-    <React.Fragment>
-      {labelElement}
-      {isEditing && children}
-      {!isEditing ? (
-        <>
-          <Button
-            onClick={() => {
-              setIsEditing(true);
-            }}
-          >
-            Add item
-          </Button>
-          {errorMessage && hasError && (
-            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
-              {errorMessage}
-            </Text>
-          )}
-        </>
-      ) : (
-        <Flex justifyContent="flex-end">
-          {(currentFieldValue || isEditing) && (
-            <Button
-              children="Cancel"
-              type="button"
-              size="small"
-              onClick={() => {
-                setFieldValue(defaultFieldValue);
-                setIsEditing(false);
-                setSelectedBadgeIndex(undefined);
-              }}
-            ></Button>
-          )}
-          <Button
-            size="small"
-            variation="link"
-            isDisabled={hasError}
-            onClick={addItem}
-          >
-            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
-          </Button>
-        </Flex>
-      )}
-      {arraySection}
-    </React.Fragment>
-  );
-}
 export default function KonsultanCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -196,10 +27,11 @@ export default function KonsultanCreateForm(props) {
     konsultanName: "",
     konsultanLocation: "",
     konsultanAddress: "",
-    konsultanEmail: [],
-    konsultanPhoneNumber: [],
+    konsultanEmail: "",
+    konsultanPhoneNumber: "",
     konsultanRangeTotalEmployees: "",
     konsultanPIC: "",
+    konsultanDescription: "",
     createdOn: "",
     updatedOn: "",
   };
@@ -226,6 +58,9 @@ export default function KonsultanCreateForm(props) {
   const [konsultanPIC, setKonsultanPIC] = React.useState(
     initialValues.konsultanPIC
   );
+  const [konsultanDescription, setKonsultanDescription] = React.useState(
+    initialValues.konsultanDescription
+  );
   const [createdOn, setCreatedOn] = React.useState(initialValues.createdOn);
   const [updatedOn, setUpdatedOn] = React.useState(initialValues.updatedOn);
   const [errors, setErrors] = React.useState({});
@@ -235,32 +70,24 @@ export default function KonsultanCreateForm(props) {
     setKonsultanLocation(initialValues.konsultanLocation);
     setKonsultanAddress(initialValues.konsultanAddress);
     setKonsultanEmail(initialValues.konsultanEmail);
-    setCurrentKonsultanEmailValue("");
     setKonsultanPhoneNumber(initialValues.konsultanPhoneNumber);
-    setCurrentKonsultanPhoneNumberValue("");
     setKonsultanRangeTotalEmployees(initialValues.konsultanRangeTotalEmployees);
     setKonsultanPIC(initialValues.konsultanPIC);
+    setKonsultanDescription(initialValues.konsultanDescription);
     setCreatedOn(initialValues.createdOn);
     setUpdatedOn(initialValues.updatedOn);
     setErrors({});
   };
-  const [currentKonsultanEmailValue, setCurrentKonsultanEmailValue] =
-    React.useState("");
-  const konsultanEmailRef = React.createRef();
-  const [
-    currentKonsultanPhoneNumberValue,
-    setCurrentKonsultanPhoneNumberValue,
-  ] = React.useState("");
-  const konsultanPhoneNumberRef = React.createRef();
   const validations = {
     konsultanId: [{ type: "Required" }],
     konsultanName: [{ type: "Required" }],
-    konsultanLocation: [{ type: "Required" }],
+    konsultanLocation: [],
     konsultanAddress: [{ type: "Required" }],
     konsultanEmail: [{ type: "Required" }],
     konsultanPhoneNumber: [{ type: "Required" }],
     konsultanRangeTotalEmployees: [{ type: "Required" }],
     konsultanPIC: [{ type: "Required" }],
+    konsultanDescription: [{ type: "Required" }],
     createdOn: [{ type: "Required" }],
     updatedOn: [{ type: "Required" }],
   };
@@ -315,6 +142,7 @@ export default function KonsultanCreateForm(props) {
           konsultanPhoneNumber,
           konsultanRangeTotalEmployees,
           konsultanPIC,
+          konsultanDescription,
           createdOn,
           updatedOn,
         };
@@ -379,6 +207,7 @@ export default function KonsultanCreateForm(props) {
               konsultanPhoneNumber,
               konsultanRangeTotalEmployees,
               konsultanPIC,
+              konsultanDescription,
               createdOn,
               updatedOn,
             };
@@ -412,6 +241,7 @@ export default function KonsultanCreateForm(props) {
               konsultanPhoneNumber,
               konsultanRangeTotalEmployees,
               konsultanPIC,
+              konsultanDescription,
               createdOn,
               updatedOn,
             };
@@ -430,7 +260,7 @@ export default function KonsultanCreateForm(props) {
       ></TextField>
       <TextField
         label="Konsultan location"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={konsultanLocation}
         onChange={(e) => {
@@ -445,6 +275,7 @@ export default function KonsultanCreateForm(props) {
               konsultanPhoneNumber,
               konsultanRangeTotalEmployees,
               konsultanPIC,
+              konsultanDescription,
               createdOn,
               updatedOn,
             };
@@ -480,6 +311,7 @@ export default function KonsultanCreateForm(props) {
               konsultanPhoneNumber,
               konsultanRangeTotalEmployees,
               konsultanPIC,
+              konsultanDescription,
               createdOn,
               updatedOn,
             };
@@ -496,62 +328,47 @@ export default function KonsultanCreateForm(props) {
         hasError={errors.konsultanAddress?.hasError}
         {...getOverrideProps(overrides, "konsultanAddress")}
       ></TextField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
+      <TextField
+        label="Konsultan email"
+        isRequired={true}
+        isReadOnly={false}
+        value={konsultanEmail}
+        onChange={(e) => {
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
               konsultanId,
               konsultanName,
               konsultanLocation,
               konsultanAddress,
-              konsultanEmail: values,
+              konsultanEmail: value,
               konsultanPhoneNumber,
               konsultanRangeTotalEmployees,
               konsultanPIC,
+              konsultanDescription,
               createdOn,
               updatedOn,
             };
             const result = onChange(modelFields);
-            values = result?.konsultanEmail ?? values;
+            value = result?.konsultanEmail ?? value;
           }
-          setKonsultanEmail(values);
-          setCurrentKonsultanEmailValue("");
+          if (errors.konsultanEmail?.hasError) {
+            runValidationTasks("konsultanEmail", value);
+          }
+          setKonsultanEmail(value);
         }}
-        currentFieldValue={currentKonsultanEmailValue}
-        label={"Konsultan email"}
-        items={konsultanEmail}
-        hasError={errors?.konsultanEmail?.hasError}
-        errorMessage={errors?.konsultanEmail?.errorMessage}
-        setFieldValue={setCurrentKonsultanEmailValue}
-        inputFieldRef={konsultanEmailRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Konsultan email"
-          isRequired={true}
-          isReadOnly={false}
-          value={currentKonsultanEmailValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.konsultanEmail?.hasError) {
-              runValidationTasks("konsultanEmail", value);
-            }
-            setCurrentKonsultanEmailValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks("konsultanEmail", currentKonsultanEmailValue)
-          }
-          errorMessage={errors.konsultanEmail?.errorMessage}
-          hasError={errors.konsultanEmail?.hasError}
-          ref={konsultanEmailRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "konsultanEmail")}
-        ></TextField>
-      </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
+        onBlur={() => runValidationTasks("konsultanEmail", konsultanEmail)}
+        errorMessage={errors.konsultanEmail?.errorMessage}
+        hasError={errors.konsultanEmail?.hasError}
+        {...getOverrideProps(overrides, "konsultanEmail")}
+      ></TextField>
+      <TextField
+        label="Konsultan phone number"
+        isRequired={true}
+        isReadOnly={false}
+        value={konsultanPhoneNumber}
+        onChange={(e) => {
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
               konsultanId,
@@ -559,52 +376,28 @@ export default function KonsultanCreateForm(props) {
               konsultanLocation,
               konsultanAddress,
               konsultanEmail,
-              konsultanPhoneNumber: values,
+              konsultanPhoneNumber: value,
               konsultanRangeTotalEmployees,
               konsultanPIC,
+              konsultanDescription,
               createdOn,
               updatedOn,
             };
             const result = onChange(modelFields);
-            values = result?.konsultanPhoneNumber ?? values;
+            value = result?.konsultanPhoneNumber ?? value;
           }
-          setKonsultanPhoneNumber(values);
-          setCurrentKonsultanPhoneNumberValue("");
+          if (errors.konsultanPhoneNumber?.hasError) {
+            runValidationTasks("konsultanPhoneNumber", value);
+          }
+          setKonsultanPhoneNumber(value);
         }}
-        currentFieldValue={currentKonsultanPhoneNumberValue}
-        label={"Konsultan phone number"}
-        items={konsultanPhoneNumber}
-        hasError={errors?.konsultanPhoneNumber?.hasError}
-        errorMessage={errors?.konsultanPhoneNumber?.errorMessage}
-        setFieldValue={setCurrentKonsultanPhoneNumberValue}
-        inputFieldRef={konsultanPhoneNumberRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Konsultan phone number"
-          isRequired={true}
-          isReadOnly={false}
-          value={currentKonsultanPhoneNumberValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.konsultanPhoneNumber?.hasError) {
-              runValidationTasks("konsultanPhoneNumber", value);
-            }
-            setCurrentKonsultanPhoneNumberValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks(
-              "konsultanPhoneNumber",
-              currentKonsultanPhoneNumberValue
-            )
-          }
-          errorMessage={errors.konsultanPhoneNumber?.errorMessage}
-          hasError={errors.konsultanPhoneNumber?.hasError}
-          ref={konsultanPhoneNumberRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "konsultanPhoneNumber")}
-        ></TextField>
-      </ArrayField>
+        onBlur={() =>
+          runValidationTasks("konsultanPhoneNumber", konsultanPhoneNumber)
+        }
+        errorMessage={errors.konsultanPhoneNumber?.errorMessage}
+        hasError={errors.konsultanPhoneNumber?.hasError}
+        {...getOverrideProps(overrides, "konsultanPhoneNumber")}
+      ></TextField>
       <TextField
         label="Konsultan range total employees"
         isRequired={true}
@@ -622,6 +415,7 @@ export default function KonsultanCreateForm(props) {
               konsultanPhoneNumber,
               konsultanRangeTotalEmployees: value,
               konsultanPIC,
+              konsultanDescription,
               createdOn,
               updatedOn,
             };
@@ -660,6 +454,7 @@ export default function KonsultanCreateForm(props) {
               konsultanPhoneNumber,
               konsultanRangeTotalEmployees,
               konsultanPIC: value,
+              konsultanDescription,
               createdOn,
               updatedOn,
             };
@@ -675,6 +470,42 @@ export default function KonsultanCreateForm(props) {
         errorMessage={errors.konsultanPIC?.errorMessage}
         hasError={errors.konsultanPIC?.hasError}
         {...getOverrideProps(overrides, "konsultanPIC")}
+      ></TextField>
+      <TextField
+        label="Konsultan description"
+        isRequired={true}
+        isReadOnly={false}
+        value={konsultanDescription}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              konsultanId,
+              konsultanName,
+              konsultanLocation,
+              konsultanAddress,
+              konsultanEmail,
+              konsultanPhoneNumber,
+              konsultanRangeTotalEmployees,
+              konsultanPIC,
+              konsultanDescription: value,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.konsultanDescription ?? value;
+          }
+          if (errors.konsultanDescription?.hasError) {
+            runValidationTasks("konsultanDescription", value);
+          }
+          setKonsultanDescription(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("konsultanDescription", konsultanDescription)
+        }
+        errorMessage={errors.konsultanDescription?.errorMessage}
+        hasError={errors.konsultanDescription?.hasError}
+        {...getOverrideProps(overrides, "konsultanDescription")}
       ></TextField>
       <TextField
         label="Created on"
@@ -695,6 +526,7 @@ export default function KonsultanCreateForm(props) {
               konsultanPhoneNumber,
               konsultanRangeTotalEmployees,
               konsultanPIC,
+              konsultanDescription,
               createdOn: value,
               updatedOn,
             };
@@ -730,6 +562,7 @@ export default function KonsultanCreateForm(props) {
               konsultanPhoneNumber,
               konsultanRangeTotalEmployees,
               konsultanPIC,
+              konsultanDescription,
               createdOn,
               updatedOn: value,
             };

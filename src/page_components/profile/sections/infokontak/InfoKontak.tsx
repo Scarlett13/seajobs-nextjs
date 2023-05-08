@@ -23,6 +23,7 @@ const InfoKontak: React.FC<IInfoKontak> = ({ infoKontakFields, disabled }) => {
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <Input
+                isTa={true}
                 id={field.id}
                 type={field.type}
                 label={null}
@@ -48,6 +49,7 @@ const InfoKontak: React.FC<IInfoKontak> = ({ infoKontakFields, disabled }) => {
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <Input
+                isTa={true}
                 id={field.id}
                 type={field.type}
                 disabled={disabled}
@@ -68,6 +70,7 @@ const InfoKontak: React.FC<IInfoKontak> = ({ infoKontakFields, disabled }) => {
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <Input
+                isTa={true}
                 id={field.id}
                 type={field.type}
                 label={null}

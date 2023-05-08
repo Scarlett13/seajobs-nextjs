@@ -395,6 +395,7 @@ export default function ExampleModal({
                         {field.labelText}
                       </p>
                       <Input
+                        isTa={true}
                         id={field.id}
                         label={null}
                         validation={
@@ -414,6 +415,7 @@ export default function ExampleModal({
                         {field.labelText}
                       </p>
                       <TextArea
+                        isTa={true}
                         id={field.id}
                         label={null}
                         validation={
@@ -479,6 +481,7 @@ export default function ExampleModal({
                             : undefined
                         }
                         label={null}
+                        isTa={true}
                       />
                     </section>
                   );

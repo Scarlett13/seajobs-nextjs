@@ -11,7 +11,7 @@ const MainCtaButton: React.FC<IMainCtaButton> = ({
   ...buttonProps
 }) => {
   return (
-    <button className={buttonProps.className} {...buttonProps}>
+    <button className={buttonProps.className} {...buttonProps} type="button">
       {isLoading === null || isLoading === undefined
         ? buttonName
         : isLoading

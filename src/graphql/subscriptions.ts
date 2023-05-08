@@ -15,6 +15,7 @@ export const onCreateKonsultan = /* GraphQL */ `
       konsultanPhoneNumber
       konsultanRangeTotalEmployees
       konsultanPIC
+      konsultanDescription
       projectBidders {
         nextToken
       }
@@ -39,6 +40,7 @@ export const onUpdateKonsultan = /* GraphQL */ `
       konsultanPhoneNumber
       konsultanRangeTotalEmployees
       konsultanPIC
+      konsultanDescription
       projectBidders {
         nextToken
       }
@@ -63,6 +65,7 @@ export const onDeleteKonsultan = /* GraphQL */ `
       konsultanPhoneNumber
       konsultanRangeTotalEmployees
       konsultanPIC
+      konsultanDescription
       projectBidders {
         nextToken
       }
@@ -350,6 +353,7 @@ export const onCreateProject = /* GraphQL */ `
         konsultanPhoneNumber
         konsultanRangeTotalEmployees
         konsultanPIC
+        konsultanDescription
         createdOn
         updatedOn
       }
@@ -388,6 +392,7 @@ export const onUpdateProject = /* GraphQL */ `
         konsultanPhoneNumber
         konsultanRangeTotalEmployees
         konsultanPIC
+        konsultanDescription
         createdOn
         updatedOn
       }
@@ -426,6 +431,7 @@ export const onDeleteProject = /* GraphQL */ `
         konsultanPhoneNumber
         konsultanRangeTotalEmployees
         konsultanPIC
+        konsultanDescription
         createdOn
         updatedOn
       }
@@ -444,14 +450,41 @@ export const onCreateCompanyProjectBidder = /* GraphQL */ `
     onCreateCompanyProjectBidder(filter: $filter) {
       projectId
       taId
+      taDetail {
+        taId
+        taFullName
+        taNikPassport
+        taDob
+        taCitizenship
+        taResidentStatus
+        taExpertise
+        taAddress
+        taEmail
+        taPhoneNumber
+        taPortfolioLink
+        taSelfDescription
+        createdOn
+        updatedOn
+      }
       konsultanId
+      konsultanDetail {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        konsultanDescription
+        createdOn
+        updatedOn
+      }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
-      projectBiddersProjectOwner
-      projectBiddersIsActive
     }
   }
 `;
@@ -462,14 +495,41 @@ export const onUpdateCompanyProjectBidder = /* GraphQL */ `
     onUpdateCompanyProjectBidder(filter: $filter) {
       projectId
       taId
+      taDetail {
+        taId
+        taFullName
+        taNikPassport
+        taDob
+        taCitizenship
+        taResidentStatus
+        taExpertise
+        taAddress
+        taEmail
+        taPhoneNumber
+        taPortfolioLink
+        taSelfDescription
+        createdOn
+        updatedOn
+      }
       konsultanId
+      konsultanDetail {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        konsultanDescription
+        createdOn
+        updatedOn
+      }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
-      projectBiddersProjectOwner
-      projectBiddersIsActive
     }
   }
 `;
@@ -480,14 +540,41 @@ export const onDeleteCompanyProjectBidder = /* GraphQL */ `
     onDeleteCompanyProjectBidder(filter: $filter) {
       projectId
       taId
+      taDetail {
+        taId
+        taFullName
+        taNikPassport
+        taDob
+        taCitizenship
+        taResidentStatus
+        taExpertise
+        taAddress
+        taEmail
+        taPhoneNumber
+        taPortfolioLink
+        taSelfDescription
+        createdOn
+        updatedOn
+      }
       konsultanId
+      konsultanDetail {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        konsultanDescription
+        createdOn
+        updatedOn
+      }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
-      projectBiddersProjectOwner
-      projectBiddersIsActive
     }
   }
 `;

@@ -17,6 +17,7 @@
   isDeleted: boolean,
 	createdOn?: string;
 	updatedOn?: string;
+	companyOwner?: any;
 	arrayProjectAreas?: string[];
 	arrayProjectategories?: string[];
 }
