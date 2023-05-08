@@ -29,6 +29,7 @@ export type PasswordInputProps = {
   /** Manual validation using RHF, it is encouraged to use yup resolver instead */
   validation?: RegisterOptions;
   containerClassName?: string;
+  isTa?: boolean;
 } & React.ComponentPropsWithoutRef<"input">;
 
 export default function PasswordInput({
@@ -41,6 +42,7 @@ export default function PasswordInput({
   validation,
   disabled,
   containerClassName,
+  isTa,
   ...rest
 }: PasswordInputProps) {
   const {
@@ -74,9 +76,17 @@ export default function PasswordInput({
             "flex w-full rounded-none shadow-sm text-white",
             "min-h-[2.25rem] py-0 md:min-h-[2.5rem]",
             "pr-10",
-            "border-gray-300 bg-black focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg",
+            `${
+              isTa
+                ? "border-gray-300 bg-black focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg text-white"
+                : "border-gray-300 bg-white focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg text-gray-900"
+            }`,
             (readOnly || disabled) &&
-              "cursor-not-allowed border-form-bg bg-form-bg focus:border-form-bg focus:ring-0",
+              `${
+                isTa
+                  ? "cursor-not-allowed border-form-bg bg-form-bg focus:border-form-bg focus:ring-0"
+                  : "cursor-not-allowed border-gray-300 bg-gray-300 focus:border-gray-300 focus:ring-0"
+              }`,
             error && "border-red-500 focus:border-red-500 focus:ring-red-500"
           )}
           placeholder={placeholder}
@@ -89,9 +99,17 @@ export default function PasswordInput({
           className="absolute top-1/2 right-0 mr-3 flex -translate-y-1/2 items-center rounded-lg p-1 focus:outline-none focus:ring focus:ring-primary-500"
         >
           {showPassword ? (
-            <HiEyeOff className="cursor-pointer text-xl text-white text-typo-icons hover:text-typo-secondary" />
+            <HiEyeOff
+              className={`cursor-pointer text-xl  text-typo-icons hover:text-typo-secondary ${
+                isTa ? "text-white" : "text-gray-900"
+              }`}
+            />
           ) : (
-            <HiEye className="cursor-pointer text-xl text-white text-typo-icons hover:text-typo-secondary" />
+            <HiEye
+              className={`cursor-pointer text-xl text-typo-icons hover:text-typo-secondary ${
+                isTa ? "text-white" : "text-gray-900"
+              }`}
+            />
           )}
         </button>
       </div>

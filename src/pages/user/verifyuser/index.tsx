@@ -58,7 +58,11 @@ export default function VerifyUser() {
 
   return (
     <PrimaryLayout user={user}>
-      <main className="h-screen bg-black items-center justify-center flex flex-col ">
+      <section
+        className={`h-screen items-center justify-center flex flex-col ${
+          isTa ? "bg-black" : "bg-white"
+        }`}
+      >
         {success ? (
           <div>
             <Typography variant="h2" color="custom_success">
@@ -92,9 +96,9 @@ export default function VerifyUser() {
             </Typography>
           </div>
         )}
-      </main>
+      </section>
     </PrimaryLayout>
   );
 }
 
-VerifyUser.authenticate = false;
+VerifyUser.authenticate = true;

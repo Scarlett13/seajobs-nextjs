@@ -17,6 +17,7 @@ import * as queries from "../../../graphql/queries";
 import usePush from "@utils/UsePush";
 import { DateTime } from "luxon";
 import { filter } from "smart-array-filter";
+import { keahlianDbToValue } from "@utils/StringUtils";
 
 interface IProjectFilter {
   projectCategories: string[];
@@ -98,7 +99,7 @@ export default function Explore() {
       );
 
       if (!getTa.data || !getTa.data.getTenagaAhli) {
-        push(`/profile/editprofile/${user.getUsername}`);
+        push(`/ta/profile/editprofile/${user.getUsername()}`);
       }
 
       const filter: ListProjectsQueryVariables = {
@@ -142,10 +143,7 @@ export default function Explore() {
         let tempListAllAreaString: string[] = [];
 
         tempListAllKeahlian.forEach((item) => {
-          tempListAllKeahlianString = [
-            ...tempListAllKeahlianString,
-            ...item.split(", "),
-          ];
+          tempListAllKeahlianString = keahlianDbToValue(item) as string[];
         });
 
         tempListAllArea.forEach((item) => {
@@ -332,7 +330,7 @@ export default function Explore() {
         </div>
 
         <div className="mx-4 mt-4 mb-24 w-2/3 lg:w-3/4 xl:w-6/12 xl:pr-12 lg:pr-12 md:pr-8">
-          <ExploreSectionLayout>
+          <ExploreSectionLayout isTa={true}>
             {loading ? (
               <p className="text-white">Sedang mencari proyek...</p>
             ) : filteredProjects.length < 1 ? (
@@ -341,7 +339,7 @@ export default function Explore() {
               filteredProjects.map((project) => {
                 return (
                   <section className="pb-4" key={project.projectId}>
-                    <ProjectCard project={project} taId={userId} />
+                    <ProjectCard project={project} taId={userId} isTa={true} />
                   </section>
                 );
               })

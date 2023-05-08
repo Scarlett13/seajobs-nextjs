@@ -21,7 +21,8 @@ const dummyProject: IAmplifyProjectCard =
 
 	const base: IProjectCard={
 		project: dummyProject,
-		taId: "ta id"
+		taId: "ta id",
+		isTa: false
 	}
 
 

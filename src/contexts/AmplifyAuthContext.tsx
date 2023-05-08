@@ -39,6 +39,7 @@ export default function AuthContext(
   const [isTa, setIsTa] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
   const push = usePush();
   const router = useRouter();
 
@@ -50,6 +51,7 @@ export default function AuthContext(
       setUser(amplifyUser);
       setAuthenticated(true);
       setLoading(false);
+      setUsername(amplifyUser.getUsername());
       if (
         router.pathname.includes("login") ||
         router.pathname.includes("signup") ||
@@ -81,6 +83,7 @@ export default function AuthContext(
 
   async function checkRole() {
     const role = JSON.parse(localStorage.getItem("isTa") as string);
+
     if (role === undefined || role === null || role === "") {
       localStorage.setItem("isTa", JSON.stringify(true));
       setIsTa(true);
@@ -98,6 +101,7 @@ export default function AuthContext(
   useEffect(() => {
     console.log("isTa update: ", isTa);
     localStorage.setItem("isTa", JSON.stringify(isTa));
+    console.log("routernya: ", router.query);
   }, [isTa]);
 
   useEffect(() => {
@@ -151,9 +155,26 @@ interface IProtectRoute {
 }
 
 export const ProtectRoute = ({ children }: IProtectRoute) => {
-  const { authenticated, loading, user } = useUser();
+  const { authenticated, loading, user, isTa } = useUser();
   const push = usePush();
   const router = useRouter();
+
+  console.log(
+    "wubbalubba1: ",
+    router.pathname.includes("login") ||
+      router.pathname.includes("signup") ||
+      router.pathname.includes("verifyuser") ||
+      router.pathname.includes("forgotpassword")
+  );
+
+  console.log(
+    "wubbalubba2: ",
+    !router.pathname.includes("login") &&
+      !router.pathname.includes("signup") &&
+      !router.pathname.includes("verifyuser") &&
+      !router.pathname.includes("forgotpassword") &&
+      router.pathname !== "/"
+  );
 
   if (!authenticated) {
     if (
@@ -165,6 +186,12 @@ export const ProtectRoute = ({ children }: IProtectRoute) => {
     ) {
       return <PrivateRoute user={user} success={authenticated} />;
     } else {
+      if (
+        (router.pathname.includes("/ta/") && !isTa) ||
+        (router.pathname.includes("/com/") && isTa)
+      ) {
+        return <PrivateRoute user={user} success={authenticated} />;
+      }
       return children;
     }
   } else {
@@ -176,6 +203,12 @@ export const ProtectRoute = ({ children }: IProtectRoute) => {
     ) {
       return <PrivateRoute user={user} success={authenticated} />;
     } else {
+      if (
+        (router.pathname.includes("/ta/") && !isTa) ||
+        (router.pathname.includes("/com/") && isTa)
+      ) {
+        return <PrivateRoute user={user} success={authenticated} />;
+      }
       return children;
     }
   }

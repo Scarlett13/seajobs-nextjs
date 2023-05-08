@@ -17,10 +17,11 @@ export declare type KonsultanCreateFormInputValues = {
     konsultanName?: string;
     konsultanLocation?: string;
     konsultanAddress?: string;
-    konsultanEmail?: string[];
-    konsultanPhoneNumber?: string[];
+    konsultanEmail?: string;
+    konsultanPhoneNumber?: string;
     konsultanRangeTotalEmployees?: string;
     konsultanPIC?: string;
+    konsultanDescription?: string;
     createdOn?: string;
     updatedOn?: string;
 };
@@ -33,6 +34,7 @@ export declare type KonsultanCreateFormValidationValues = {
     konsultanPhoneNumber?: ValidationFunction<string>;
     konsultanRangeTotalEmployees?: ValidationFunction<string>;
     konsultanPIC?: ValidationFunction<string>;
+    konsultanDescription?: ValidationFunction<string>;
     createdOn?: ValidationFunction<string>;
     updatedOn?: ValidationFunction<string>;
 };
@@ -47,6 +49,7 @@ export declare type KonsultanCreateFormOverridesProps = {
     konsultanPhoneNumber?: PrimitiveOverrideProps<TextFieldProps>;
     konsultanRangeTotalEmployees?: PrimitiveOverrideProps<TextFieldProps>;
     konsultanPIC?: PrimitiveOverrideProps<TextFieldProps>;
+    konsultanDescription?: PrimitiveOverrideProps<TextFieldProps>;
     createdOn?: PrimitiveOverrideProps<TextFieldProps>;
     updatedOn?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

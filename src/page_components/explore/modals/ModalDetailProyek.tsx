@@ -31,6 +31,8 @@ import { useUser } from "../../../contexts/AmplifyAuthContext";
 import { IAmplifyProjectCard } from "../../../constants/exploreformconstants/ProjectCard";
 import Typography from "../../../components/typography/Typography";
 import * as queries from "../../../graphql/queries";
+import usePush from "@utils/UsePush";
+import { keahlianDbToValue } from "@utils/StringUtils";
 
 type ModalReturnType = {
   openModal: () => void;
@@ -41,10 +43,12 @@ export default function ModalDetailProyek({
   children,
   project,
   taId,
+  isTa,
 }: {
   children: (props: ModalReturnType) => JSX.Element;
   project: IAmplifyProjectCard;
   taId: string;
+  isTa: boolean;
 }) {
   const { loading, setLoading } = useUser();
 
@@ -57,8 +61,10 @@ export default function ModalDetailProyek({
     title: project.projectTitle,
   };
 
+  const push = usePush();
+
   React.useEffect(() => {
-    if (open) {
+    if (open && isTa) {
       // setLoading(true);
 
       const getProjectBidded = async () => {
@@ -151,6 +157,8 @@ export default function ModalDetailProyek({
     }
   };
 
+  console.log("project owner: ", project.companyOwner);
+
   return (
     <>
       {children(modalReturn)}
@@ -158,11 +166,13 @@ export default function ModalDetailProyek({
         open={open}
         setOpen={setOpen}
         title={project.projectTitle}
-        modalContainerClassName={"bg-form-bg text-white"}
+        modalContainerClassName={
+          isTa ? "bg-form-bg text-white" : "bg-gray-100 text-gray-900"
+        }
       >
         <Modal.Section>
           <div className="flex flex-col">
-            <Typography variant="h3" color={"custom_white"}>
+            <Typography variant="h3" color={isTa ? "custom_white" : "primary"}>
               {`${project.projectDescription}`}
             </Typography>
           </div>
@@ -170,24 +180,36 @@ export default function ModalDetailProyek({
             <tbody>
               <tr className="sm:mb-4">
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     Pemilik proyek
                   </Typography>
                 </td>
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     {`: ${project.projectOwner}`}
                   </Typography>
                 </td>
               </tr>
               <tr className="sm:mb-4">
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     Klien
                   </Typography>
                 </td>
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     {`: ${
                       project.projectClient
                         ? project.projectClient
@@ -198,73 +220,115 @@ export default function ModalDetailProyek({
               </tr>
               <tr className="sm:mb-4">
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     Area proyek
                   </Typography>
                 </td>
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     {`: ${project.projectLocation}`}
                   </Typography>
                 </td>
               </tr>
               <tr className="sm:mb-4">
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     Nilai proyek
                   </Typography>
                 </td>
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     {`: IDR ${project.projectValue}`}
                   </Typography>
                 </td>
               </tr>
               <tr className="sm:mb-4">
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     Durasi proyek
                   </Typography>
                 </td>
                 <td>
-                  <Typography variant="h3" color="custom_white">
-                    {`: ${project.projectDuration}`}
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
+                    {`: ${project.projectDuration} bulan`}
                   </Typography>
                 </td>
               </tr>
               <tr className="sm:mb-4">
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     Waktu mulai
                   </Typography>
                 </td>
                 <td>
-                  <Typography variant="h3" color="custom_white">
-                    {`: ${project.projectStart}`}
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
+                    {`: ${DateTime.fromISO(
+                      new Date(project.projectStart).toISOString()
+                    ).toFormat("dd MMMM yyyy", { locale: "id" })}`}
                   </Typography>
                 </td>
               </tr>
               <tr className="sm:mb-4">
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     Bidang keahlian diperlukan
                   </Typography>
                 </td>
                 <td>
-                  <Typography variant="h3" color="custom_white">
-                    {`: ${project.projectCategories}`}
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
+                    {`: ${keahlianDbToValue(project.projectCategories)
+                      .toString()
+                      .replaceAll(",", ", ")}`}
                   </Typography>
                 </td>
               </tr>
               <tr className="sm:mb-4">
                 <td>
-                  <Typography variant="h3" color="custom_white">
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
                     Daftar sebelum
                   </Typography>
                 </td>
                 <td>
-                  <Typography variant="h3" color="custom_white">
-                    {`: ${project.projectDeadline}`}
+                  <Typography
+                    variant="h3"
+                    color={isTa ? "custom_white" : "primary"}
+                  >
+                    {`: ${DateTime.fromISO(
+                      new Date(project.projectDeadline).toISOString()
+                    ).toFormat("dd MMMM yyyy", { locale: "id" })}`}
                   </Typography>
                 </td>
               </tr>
@@ -274,20 +338,26 @@ export default function ModalDetailProyek({
         <Modal.Section>
           <div className="flex justify-end gap-2 mb-4">
             <Button
-              variant={"primary"}
+              variant={isTa ? "primary" : "outline"}
               disabled={isBid}
-              type="submit"
+              type={isTa ? "submit" : "button"}
               onClick={async () => {
-                await bidProject();
+                isTa
+                  ? await bidProject()
+                  : push(`/com/projects/projectdetail/${project.projectId}`);
               }}
             >
-              {isBid ? "Kamu telah memilih proyek ini" : "Pilih proyek"}
+              {isTa
+                ? isBid
+                  ? "Kamu telah memilih proyek ini"
+                  : "Pilih proyek"
+                : "Detail proyek"}
             </Button>
           </div>
           <Typography
             variant="c2"
             color="danger"
-            className={isBid ? "block" : "hidden"}
+            className={isTa && isBid ? "block" : "hidden"}
           >
             {errorMessage}
           </Typography>

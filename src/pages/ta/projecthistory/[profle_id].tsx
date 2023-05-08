@@ -61,7 +61,7 @@ export default function ProjectHistory() {
       );
 
       if (!getTa.data || !getTa.data.getTenagaAhli) {
-        push(`/profile/editprofile/${user.getUsername()}`);
+        push(`/ta/profile/editprofile/${user.getUsername()}`);
       }
 
       const result = await API.graphql<

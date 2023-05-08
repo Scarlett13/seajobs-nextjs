@@ -9,3 +9,21 @@ export interface IAmplifyCompanyProjectBidder {
   projectBiddersProjectOwner?: string | null;
   projectBiddersIsActive?: string | null;
 }
+
+export interface IAmplifyProjectByOwner {
+  projectId: string;
+  projectTitle: string;
+  projectLocation: string;
+  projectValue: string;
+  projectDuration: string;
+  projectStart: string;
+  projectCategories: string;
+  projectDescription: string;
+  projectClient: string;
+  projectDeadline: string;
+  projecImageUrl: (string | null)[] | null | undefined;
+  projectOwner: string;
+  isActive: string;
+  projectStatus: string;
+  isDeleted: Boolean;
+}

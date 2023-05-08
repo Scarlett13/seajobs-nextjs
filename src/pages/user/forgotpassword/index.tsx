@@ -119,23 +119,33 @@ export default function ForgotPassword() {
 
   return (
     <PrimaryLayout user={user}>
-      <main className="h-screen bg-black items-center">
+      <main
+        className={`h-screen  items-center ${isTa ? "bg-black" : "bg-white"}`}
+      >
         <Typography
           variant="h1"
-          color="custom_white"
+          color={isTa ? "custom_white" : "primary"}
           className="text-center py-8"
         >
           {requestSent ? "Konfirmasi Lupa Password" : "Lupa Password"}
         </Typography>
         {!requestSent ? (
-          <div className="bg-form-bg shadow-md px-8 pt-6 mb-4 pb-4 text-left max-w-xl mx-auto">
+          <div
+            className={`shadow-md px-8 pt-6 mb-4 pb-4 text-left max-w-xl mx-auto ${
+              isTa ? "bg-form-bg" : "bg-gray-200"
+            }`}
+          >
             <FormProvider {...methods}>
               <form onSubmit={handleSubmit(onSubmitResetPassword)}>
                 {resetPasswordFieldsComp.map((field: FormFields) => {
                   if (field.type === "email") {
                     return (
                       <section key={field.titelKey} className={"mb-4"}>
-                        <p className="mb-2 font-light text-gray-400">
+                        <p
+                          className={`mb-2 font-light ${
+                            isTa ? "text-gray-400" : "text-gray-700"
+                          }`}
+                        >
                           {field.labelText}
                         </p>
                         <Input
@@ -179,7 +189,11 @@ export default function ForgotPassword() {
             </button>
           </div>
         ) : (
-          <div className="bg-form-bg shadow-md px-8 pt-6 mb-4 pb-4 text-left max-w-xl mx-auto">
+          <div
+            className={` shadow-md px-8 pt-6 mb-4 pb-4 text-left max-w-xl mx-auto ${
+              isTa ? "bg-form-bg" : "bg-white"
+            }`}
+          >
             <Typography
               variant="h4"
               color={success ? `custom_success` : `danger`}
@@ -195,10 +209,15 @@ export default function ForgotPassword() {
                   if (field.type === "email") {
                     return (
                       <section key={field.titelKey} className={"mb-4"}>
-                        <p className="mb-2 font-light text-gray-400">
+                        <p
+                          className={`mb-2 font-light ${
+                            isTa ? "text-gray-400" : "text-gray-700"
+                          }`}
+                        >
                           {field.labelText}
                         </p>
                         <Input
+                          isTa={isTa}
                           id={field.id}
                           type={field.type}
                           label={null}
@@ -229,10 +248,15 @@ export default function ForgotPassword() {
                   } else if (field.type === "text") {
                     return (
                       <section key={field.titelKey} className={"mb-4"}>
-                        <p className="mb-2 font-light text-gray-400">
+                        <p
+                          className={`mb-2 font-light ${
+                            isTa ? "text-gray-400" : "text-gray-700"
+                          }`}
+                        >
                           {field.labelText}
                         </p>
                         <Input
+                          isTa={isTa}
                           id={field.id}
                           type={field.type}
                           label={null}
@@ -261,10 +285,15 @@ export default function ForgotPassword() {
                   } else {
                     return (
                       <section key={field.titelKey} className={"mb-4"}>
-                        <p className="mb-2 font-light text-gray-400">
+                        <p
+                          className={`mb-2 font-light ${
+                            isTa ? "text-gray-400" : "text-gray-700"
+                          }`}
+                        >
                           {field.labelText}
                         </p>
                         <PasswordInput
+                          isTa={isTa}
                           id={field.id}
                           type={field.type}
                           label={null}
@@ -334,4 +363,4 @@ export default function ForgotPassword() {
   );
 }
 
-ForgotPassword.authenticate = false;
+ForgotPassword.authenticate = true;

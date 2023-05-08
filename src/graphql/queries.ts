@@ -13,6 +13,7 @@ export const getKonsultan = /* GraphQL */ `
       konsultanPhoneNumber
       konsultanRangeTotalEmployees
       konsultanPIC
+      konsultanDescription
       projectBidders {
         nextToken
       }
@@ -48,6 +49,7 @@ export const listKonsultans = /* GraphQL */ `
         konsultanPhoneNumber
         konsultanRangeTotalEmployees
         konsultanPIC
+        konsultanDescription
         createdOn
         updatedOn
       }
@@ -266,16 +268,8 @@ export const listPendidikanSertifikasis = /* GraphQL */ `
   }
 `;
 export const getProject = /* GraphQL */ `
-  query GetProject(
-    $projectId: String!
-    $projectOwner: String!
-    $isActive: String!
-  ) {
-    getProject(
-      projectId: $projectId
-      projectOwner: $projectOwner
-      isActive: $isActive
-    ) {
+  query GetProject($projectId: String!) {
+    getProject(projectId: $projectId) {
       projectId
       projectTitle
       projectLocation
@@ -300,6 +294,7 @@ export const getProject = /* GraphQL */ `
         konsultanPhoneNumber
         konsultanRangeTotalEmployees
         konsultanPIC
+        konsultanDescription
         createdOn
         updatedOn
       }
@@ -314,7 +309,6 @@ export const getProject = /* GraphQL */ `
 export const listProjects = /* GraphQL */ `
   query ListProjects(
     $projectId: String
-    $projectOwnerIsActive: ModelProjectPrimaryCompositeKeyConditionInput
     $filter: ModelProjectFilterInput
     $limit: Int
     $nextToken: String
@@ -322,7 +316,6 @@ export const listProjects = /* GraphQL */ `
   ) {
     listProjects(
       projectId: $projectId
-      projectOwnerIsActive: $projectOwnerIsActive
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -364,14 +357,41 @@ export const getCompanyProjectBidder = /* GraphQL */ `
     ) {
       projectId
       taId
+      taDetail {
+        taId
+        taFullName
+        taNikPassport
+        taDob
+        taCitizenship
+        taResidentStatus
+        taExpertise
+        taAddress
+        taEmail
+        taPhoneNumber
+        taPortfolioLink
+        taSelfDescription
+        createdOn
+        updatedOn
+      }
       konsultanId
+      konsultanDetail {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        konsultanDescription
+        createdOn
+        updatedOn
+      }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
-      projectBiddersProjectOwner
-      projectBiddersIsActive
     }
   }
 `;
@@ -401,8 +421,6 @@ export const listCompanyProjectBidders = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
-        projectBiddersProjectOwner
-        projectBiddersIsActive
       }
       nextToken
     }
@@ -600,8 +618,6 @@ export const companyProjectBidderByTa = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
-        projectBiddersProjectOwner
-        projectBiddersIsActive
       }
       nextToken
     }
@@ -633,8 +649,22 @@ export const companyProjectBidderByKonsultan = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
-        projectBiddersProjectOwner
-        projectBiddersIsActive
+				taDetail {
+        taId
+        taFullName
+        taNikPassport
+        taDob
+        taCitizenship
+        taResidentStatus
+        taExpertise
+        taAddress
+        taEmail
+        taPhoneNumber
+        taPortfolioLink
+        taSelfDescription
+        createdOn
+        updatedOn
+      }
       }
       nextToken
     }

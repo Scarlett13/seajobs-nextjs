@@ -8,6 +8,7 @@ import SearchableSelectInput from "../../../../components/forms/SearchableSelect
 import DatePicker from "../../../../components/forms/DatePicker";
 import Input from "../../../../components/forms/Input";
 import TextArea from "../../../../components/forms/TextArea";
+import { useUser } from "../../../../contexts/AmplifyAuthContext";
 // import styles from "./IdentitasDiri.module.css";
 
 export interface IIdentitasDiri {
@@ -21,6 +22,8 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
 }) => {
   const dataKeahlian = require("../../../../constants/profileformconstants/bidang_keahlian.json");
   const residentStatus = require("../../../../constants/profileformconstants/resident_status.json");
+
+  const { isTa } = useUser();
 
   return (
     <ProfileSectionLayout
@@ -46,6 +49,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
                 }
                 label={null}
                 isMulti={true}
+                isTa={true}
               />
             </section>
           );
@@ -54,6 +58,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <DatePicker
+                isTa={true}
                 id={field.id}
                 label={null}
                 disabled={disabled}
@@ -70,6 +75,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <TextArea
+                isTa={true}
                 id={field.id}
                 label={null}
                 disabled={disabled}
@@ -99,6 +105,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
                 }
                 label={null}
                 isMulti={false}
+                isTa={true}
               />
             </section>
           );
@@ -107,6 +114,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <Input
+                isTa={true}
                 id={field.id}
                 type={field.type}
                 label={null}

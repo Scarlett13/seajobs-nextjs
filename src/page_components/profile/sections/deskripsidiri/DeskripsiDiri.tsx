@@ -27,6 +27,7 @@ const DeskripsiDiri: React.FC<IDeskripsiDiri> = ({
         <section key={field.titelKey}>
           <p className="mb-4 font-light text-gray-400">{field.labelText}</p>
           <TextArea
+            isTa={true}
             id={field.id}
             label={null}
             disabled={disabled}
