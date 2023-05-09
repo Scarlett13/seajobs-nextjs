@@ -109,6 +109,7 @@ export default function Explore() {
               isActive: { eq: "true" },
               isDeleted: { ne: true },
               projectStart: { gt: today },
+              projectStatus: { eq: "Aktif" },
             },
           ],
         },
@@ -139,11 +140,24 @@ export default function Explore() {
           return el.projectLocation;
         });
 
+        console.log(tempListAllKeahlian);
+
         let tempListAllKeahlianString: string[] = [];
         let tempListAllAreaString: string[] = [];
 
         tempListAllKeahlian.forEach((item) => {
-          tempListAllKeahlianString = keahlianDbToValue(item) as string[];
+          const listitems = keahlianDbToValue(item);
+
+          if (!listitems || listitems.length === 0) {
+            return;
+          }
+
+          listitems.forEach((keahlian) => {
+            tempListAllKeahlianString = [
+              ...tempListAllKeahlianString,
+              keahlian,
+            ];
+          });
         });
 
         tempListAllArea.forEach((item) => {
