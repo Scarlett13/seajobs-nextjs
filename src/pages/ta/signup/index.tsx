@@ -70,7 +70,7 @@ export default function Signup() {
         );
         setOpen(true);
         setLoading(false);
-        // push("/login");
+        push("/ta/login");
       } else {
         setSignUpError(retdata.data.message);
         setSignUpSuccess("");
