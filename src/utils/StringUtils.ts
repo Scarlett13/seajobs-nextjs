@@ -25,6 +25,7 @@ export function keahlianDbToValue(value: string){
 	}
 	let tempValue = value.replaceAll("_", " ");
 	let tempArrayValue = tempValue.split(",");
+	// console.log("wkwkwkwk", tempArrayValue)
 
 	if(tempArrayValue.length<1){
 		return false;
