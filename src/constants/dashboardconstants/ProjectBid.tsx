@@ -24,6 +24,7 @@ export interface IAmplifyProjectByOwner {
   projecImageUrl: (string | null)[] | null | undefined;
   projectOwner: string;
   isActive: string;
+  companyOwner?: any;
   projectStatus: string;
   isDeleted: Boolean;
 }

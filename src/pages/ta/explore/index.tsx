@@ -119,7 +119,7 @@ export default function Explore() {
         GraphQLQuery<ListProjectsQuery>
       >({ query: queries.listProjects, variables: filter });
 
-      // console.log(listProjectsResults);
+      // console.log("listProjectsResults: ", listProjectsResults);
 
       if (
         listProjectsResults.data &&

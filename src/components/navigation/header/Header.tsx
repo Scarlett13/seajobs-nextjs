@@ -41,6 +41,25 @@ IHeader) => {
     },
   ];
 
+  const navigationTa = [
+    {
+      path: "/",
+      label: "Home",
+    },
+    {
+      path: "/ta/explore",
+      label: "Explore",
+    },
+    {
+      path: "/ta/dashboard",
+      label: "Dashboard",
+    },
+    {
+      path: "/",
+      label: "Contact",
+    },
+  ];
+
   const [navbar, setNavbar] = useState(false);
 
   async function logoutHeader() {
@@ -140,6 +159,8 @@ IHeader) => {
                     } px-3 py-2 rounded-md text-sm font-medium ${
                       !user &&
                       (nav.label === "Dashboard" || nav.label === "Explore")
+                        ? "hidden"
+                        : !isTa && nav.label === "Explore"
                         ? "hidden"
                         : "block"
                     }`}
