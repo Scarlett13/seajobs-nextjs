@@ -650,21 +650,21 @@ export const companyProjectBidderByKonsultan = /* GraphQL */ `
         updatedOn
         projectBiddersId
 				taDetail {
-        taId
-        taFullName
-        taNikPassport
-        taDob
-        taCitizenship
-        taResidentStatus
-        taExpertise
-        taAddress
-        taEmail
-        taPhoneNumber
-        taPortfolioLink
-        taSelfDescription
-        createdOn
-        updatedOn
-      }
+					taId
+					taFullName
+					taNikPassport
+					taDob
+					taCitizenship
+					taResidentStatus
+					taExpertise
+					taAddress
+					taEmail
+					taPhoneNumber
+					taPortfolioLink
+					taSelfDescription
+					createdOn
+					updatedOn
+				}
       }
       nextToken
     }
