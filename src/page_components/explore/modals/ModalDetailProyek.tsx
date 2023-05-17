@@ -192,7 +192,7 @@ export default function ModalDetailProyek({
                     variant="h3"
                     color={isTa ? "custom_white" : "primary"}
                   >
-                    {`: ${project.projectOwner}`}
+                    {`: ${project.companyOwner.konsultanName}`}
                   </Typography>
                 </td>
               </tr>

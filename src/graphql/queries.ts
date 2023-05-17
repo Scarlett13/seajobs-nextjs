@@ -339,6 +339,19 @@ export const listProjects = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
+				companyOwner {
+					konsultanId
+					konsultanName
+					konsultanLocation
+					konsultanAddress
+					konsultanEmail
+					konsultanPhoneNumber
+					konsultanRangeTotalEmployees
+					konsultanPIC
+					konsultanDescription
+					createdOn
+					updatedOn
+				}
       }
       nextToken
     }
@@ -587,6 +600,10 @@ export const projectByOwner = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
+				companyOwner {
+					konsultanId
+					konsultanName
+				}
       }
       nextToken
     }

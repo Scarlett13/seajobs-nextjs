@@ -4,7 +4,11 @@ import { useUser } from "../../../contexts/AmplifyAuthContext";
 import usePush from "@utils/UsePush";
 import PrimaryLayout from "../../../components/layouts/primary/PrimaryLayout";
 import { Auth } from "aws-amplify";
-import { GetKonsultanQuery, ProjectByOwnerQuery } from "../../../API";
+import {
+  GetKonsultanQuery,
+  ProjectByOwnerQuery,
+  UpdateProjectMutation,
+} from "../../../API";
 import { DateTime } from "luxon";
 import { API, graphqlOperation } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
@@ -15,6 +19,7 @@ import {
 } from "../../../constants/dashboardconstants/ProjectBid";
 import StatisticsCard from "../../../components/cards/StatisticsCard";
 import { Files, FolderPlusIcon } from "lucide-react";
+import * as mutations from "../../../graphql/mutations";
 
 export default function Dashboard() {
   const [listProyekBid, setListProyekBid] = useState<
@@ -84,6 +89,16 @@ export default function Dashboard() {
               DateTime.fromISO(new Date().toISOString()).toFormat("yyyy-MM-dd")
             ) {
               counterActive++;
+            } else {
+              counterDone++;
+              item.projectStatus = "Selesai";
+              item.isActive = "false";
+              let newTa;
+
+              newTa = API.graphql<GraphQLQuery<UpdateProjectMutation>>({
+                query: mutations.updateProject,
+                variables: { input: item },
+              });
             }
           } else if (item.projectStatus === "Selesai") {
             counterDone++;
