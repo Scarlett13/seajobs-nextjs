@@ -183,7 +183,8 @@ export default function EditProfile() {
 
       const { attributes } = user2;
 
-      console.log("useraasfafas: ", attributes);
+      console.log("useraasfafas: ", attributes.email);
+      setValue("email", attributes.email);
       setLoading(true);
       const getTa = await API.graphql<GraphQLQuery<GetTenagaAhliQuery>>(
         graphqlOperation(queries.getTenagaAhli, {
@@ -201,7 +202,7 @@ export default function EditProfile() {
         setValue("res_status_id", getTa.data.getTenagaAhli.taResidentStatus);
         setValue("deskripsi_diri", getTa.data.getTenagaAhli.taSelfDescription);
         setValue("address", getTa.data.getTenagaAhli.taAddress);
-        setValue("email", attributes.email);
+
         setValue("phone_number", getTa.data.getTenagaAhli.taPhoneNumber);
         setValue(
           "portfolio_link",
