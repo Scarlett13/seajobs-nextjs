@@ -22,3 +22,9 @@ function isNonEmptyArrayOfStrings(value: unknown): value is string[] {
 const isStringArray = (test: string|string[]): boolean => {
 	return Array.isArray(test) && !test.some((value) => typeof value !== 'string')
  }
+
+ export const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
+  arr.reduce((groups, item) => {
+    (groups[key(item)] ||= []).push(item);
+    return groups;
+  }, {} as Record<K, T[]>);

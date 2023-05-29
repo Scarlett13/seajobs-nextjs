@@ -36,7 +36,7 @@ const loginFields = [
 
 const signupFields = [
   {
-    labelText: "Nama lengkap",
+    labelText: "Nama lengkap PIC perusahaan",
     labelFor: "fullname",
     id: "fullname",
     name: "fullname",

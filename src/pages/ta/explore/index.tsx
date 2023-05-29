@@ -17,7 +17,7 @@ import * as queries from "../../../graphql/queries";
 import usePush from "@utils/UsePush";
 import { DateTime } from "luxon";
 import { filter } from "smart-array-filter";
-import { keahlianDbToValue } from "@utils/StringUtils";
+import { keahlianDbToValue } from "../../../libs/StringUtils";
 
 interface IProjectFilter {
   projectCategories: string[];

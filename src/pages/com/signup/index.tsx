@@ -10,7 +10,7 @@ import usePush from "@utils/UsePush";
 import { useUser } from "../../../contexts/AmplifyAuthContext";
 import { Alert, Snackbar, SnackbarCloseReason } from "@mui/material";
 import { signup } from "@utils/AuthUtils";
-import { isEmpty } from "@utils/StringUtils";
+import { isEmpty } from "../../../libs/StringUtils";
 
 export default function Signup() {
   const fields = signupFields;

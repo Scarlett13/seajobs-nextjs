@@ -3,7 +3,7 @@ import MainCtaButton from "../../../components/buttons/mainctabutton/MainCtaButt
 import { IAmplifyProjectCard } from "../../../constants/exploreformconstants/ProjectCard";
 import ModalDetailProyek from "../modals/ModalDetailProyek";
 import styles from "./ProjectCard.module.css";
-import { keahlianDbToValue } from "@utils/StringUtils";
+import { keahlianDbToValue } from "../../../libs/StringUtils";
 import { DateTime } from "luxon";
 
 export interface IProjectCard {

@@ -86,6 +86,69 @@ export const getTenagaAhli = /* GraphQL */ `
     }
   }
 `;
+
+export const getTenagaAhliCard = /* GraphQL */ `
+  query GetTenagaAhli($taId: String!) {
+    getTenagaAhli(taId: $taId) {
+      taId
+      taFullName
+      taNikPassport
+      taDob
+      taCitizenship
+      taResidentStatus
+      taExpertise
+      taAddress
+      taEmail
+      taPhoneNumber
+      taPortfolioLink
+      taSelfDescription
+      pengalamanKerja {
+				items{
+					companyName
+					companyaddress
+					projectName
+					sanitisedCompanyName
+					sanitisedProjectName
+					employmentType
+					projectClient
+					position
+					contractStart
+					projectStartMonth
+					projectStartYear
+					projectEndMonth
+					projectEndYear
+					isFinished
+					projectLocation
+					projectDescription
+				}
+        nextToken
+      }
+      projectBidded {
+        nextToken
+      }
+      pendidikanSertifikasi {
+				items{
+					pendidikanId
+					pendidikanType
+					institutionName
+					sanitisedInstitutionName
+					courseName
+					pendidikanDescription
+					institutionAddress
+					institutionUrl
+					entryMonth
+					entryYear
+					endMonth
+					endYear
+				}
+        nextToken
+      }
+      createdOn
+      updatedOn
+    }
+  }
+`;
+
 export const listTenagaAhlis = /* GraphQL */ `
   query ListTenagaAhlis(
     $taId: String

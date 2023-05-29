@@ -28,7 +28,10 @@ import ExploreMainLayout from "../../../page_components/explore/layouts/ExploreM
 import ExploreSectionLayout from "../../../page_components/explore/layouts/ExploreSectionLayout";
 import ProjectCard from "../../../page_components/explore/cards/ProjectCard";
 import Checkbox from "../../../components/forms/Checkbox";
-import { keahlianDbToValue, keahlianValueToDb } from "@utils/StringUtils";
+import {
+  keahlianDbToValue,
+  keahlianValueToDb,
+} from "../../../libs/StringUtils";
 import Typography from "../../../components/typography/Typography";
 
 interface IProjectFilter {

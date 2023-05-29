@@ -80,7 +80,7 @@ const companyProfileFormFields = [
     titelKey: "title_keahlian",
   },
 	{
-    labelText: "Nama penuh PIC",
+    labelText: "Nama lengkap PIC perusahaan",
     labelFor: "pic_fullname",
     id: "pic_fullname",
     name: "pic_fullname",
