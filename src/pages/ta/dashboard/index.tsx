@@ -117,36 +117,42 @@ export default function Dashboard() {
       <main className="bg-black h-screen flex flex-col justify-center items-center">
         <div className="flex flex-col justify-center items-center space-y-4">
           <div className="flex flex-row space-x-4">
-            <StatisticsCard
-              variant="primary"
-              icon={Files}
-              label="Project bid disubmit"
-              value={totalSubmitted}
-              isLoading={loading}
-              onClick={() => {
-                push(`/ta/project/projectdetail/SUBMITTED`);
-              }}
-            />
-            <StatisticsCard
-              variant="secondary"
-              icon={Files}
-              label="Project bid diterima"
-              value={totalApproved}
-              isLoading={loading}
-              onClick={() => {
-                push(`/ta/project/projectdetail/APPROVED`);
-              }}
-            />
-            <StatisticsCard
-              variant="danger"
-              icon={Files}
-              label="Project bid ditolak"
-              value={totalRejected}
-              isLoading={loading}
-              onClick={() => {
-                push(`/ta/project/projectdetail/REJECTED`);
-              }}
-            />
+            <button>
+              <StatisticsCard
+                variant="primary"
+                icon={Files}
+                label="Project bid disubmit"
+                value={totalSubmitted}
+                isLoading={loading}
+                onClick={() => {
+                  push(`/ta/project/projectdetail/SUBMITTED`);
+                }}
+              />
+            </button>
+            <button>
+              <StatisticsCard
+                variant="secondary"
+                icon={Files}
+                label="Project bid diterima"
+                value={totalApproved}
+                isLoading={loading}
+                onClick={() => {
+                  push(`/ta/project/projectdetail/APPROVED`);
+                }}
+              />
+            </button>
+            <button>
+              <StatisticsCard
+                variant="danger"
+                icon={Files}
+                label="Project bid ditolak"
+                value={totalRejected}
+                isLoading={loading}
+                onClick={() => {
+                  push(`/ta/project/projectdetail/REJECTED`);
+                }}
+              />
+            </button>
           </div>
           <button
             className="mt-2 text-lg text-white font-semibold bg-green-500 py-3 px-6 rounded-md"
