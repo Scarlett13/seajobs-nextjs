@@ -502,6 +502,25 @@ export const createCompanyProjectBidder = /* GraphQL */ `
         createdOn
         updatedOn
       }
+      projectDetail {
+        projectId
+        projectTitle
+        projectLocation
+        projectValue
+        projectDuration
+        projectStart
+        projectCategories
+        projectDescription
+        projectClient
+        projectDeadline
+        projecImageUrl
+        projectOwner
+        isActive
+        projectStatus
+        isDeleted
+        createdOn
+        updatedOn
+      }
       biddingStatus
       comments
       createdOn
@@ -548,6 +567,25 @@ export const updateCompanyProjectBidder = /* GraphQL */ `
         createdOn
         updatedOn
       }
+      projectDetail {
+        projectId
+        projectTitle
+        projectLocation
+        projectValue
+        projectDuration
+        projectStart
+        projectCategories
+        projectDescription
+        projectClient
+        projectDeadline
+        projecImageUrl
+        projectOwner
+        isActive
+        projectStatus
+        isDeleted
+        createdOn
+        updatedOn
+      }
       biddingStatus
       comments
       createdOn
@@ -591,6 +629,25 @@ export const deleteCompanyProjectBidder = /* GraphQL */ `
         konsultanRangeTotalEmployees
         konsultanPIC
         konsultanDescription
+        createdOn
+        updatedOn
+      }
+      projectDetail {
+        projectId
+        projectTitle
+        projectLocation
+        projectValue
+        projectDuration
+        projectStart
+        projectCategories
+        projectDescription
+        projectClient
+        projectDeadline
+        projecImageUrl
+        projectOwner
+        isActive
+        projectStatus
+        isDeleted
         createdOn
         updatedOn
       }

@@ -31,6 +31,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
       title="data diri"
       id="id_diri"
       disabled={disabled}
+      isTa={isTa}
     >
       {identitasDiriFields.map((field) => {
         if (field.type === "bidang_keahlian") {
@@ -49,7 +50,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
                 }
                 label={null}
                 isMulti={true}
-                isTa={true}
+                isTa={isTa}
               />
             </section>
           );
@@ -58,7 +59,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <DatePicker
-                isTa={true}
+                isTa={isTa}
                 id={field.id}
                 label={null}
                 disabled={disabled}
@@ -75,7 +76,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <TextArea
-                isTa={true}
+                isTa={isTa}
                 id={field.id}
                 label={null}
                 disabled={disabled}
@@ -105,7 +106,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
                 }
                 label={null}
                 isMulti={false}
-                isTa={true}
+                isTa={isTa}
               />
             </section>
           );
@@ -114,7 +115,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <Input
-                isTa={true}
+                isTa={isTa}
                 id={field.id}
                 type={field.type}
                 label={null}

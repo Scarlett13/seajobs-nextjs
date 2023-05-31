@@ -339,19 +339,6 @@ export const listProjects = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
-				companyOwner {
-					konsultanId
-					konsultanName
-					konsultanLocation
-					konsultanAddress
-					konsultanEmail
-					konsultanPhoneNumber
-					konsultanRangeTotalEmployees
-					konsultanPIC
-					konsultanDescription
-					createdOn
-					updatedOn
-				}
       }
       nextToken
     }
@@ -397,6 +384,25 @@ export const getCompanyProjectBidder = /* GraphQL */ `
         konsultanRangeTotalEmployees
         konsultanPIC
         konsultanDescription
+        createdOn
+        updatedOn
+      }
+      projectDetail {
+        projectId
+        projectTitle
+        projectLocation
+        projectValue
+        projectDuration
+        projectStart
+        projectCategories
+        projectDescription
+        projectClient
+        projectDeadline
+        projecImageUrl
+        projectOwner
+        isActive
+        projectStatus
+        isDeleted
         createdOn
         updatedOn
       }
@@ -600,10 +606,6 @@ export const projectByOwner = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
-				companyOwner {
-					konsultanId
-					konsultanName
-				}
       }
       nextToken
     }
@@ -666,22 +668,6 @@ export const companyProjectBidderByKonsultan = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
-				taDetail {
-					taId
-					taFullName
-					taNikPassport
-					taDob
-					taCitizenship
-					taResidentStatus
-					taExpertise
-					taAddress
-					taEmail
-					taPhoneNumber
-					taPortfolioLink
-					taSelfDescription
-					createdOn
-					updatedOn
-				}
       }
       nextToken
     }

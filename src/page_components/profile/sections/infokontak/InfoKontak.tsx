@@ -2,6 +2,7 @@ import { Listbox } from "@headlessui/react";
 import Input from "../../../../components/forms/Input";
 import { infoKontakFields } from "../../../../constants/profileformconstants/ProfileFormConstants";
 import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
+import { useUser } from "../../../../contexts/AmplifyAuthContext";
 // import styles from "./InfoKontak.module.css";
 
 export interface IInfoKontak {
@@ -10,12 +11,15 @@ export interface IInfoKontak {
 }
 
 const InfoKontak: React.FC<IInfoKontak> = ({ infoKontakFields, disabled }) => {
+  const { isTa } = useUser();
+
   return (
     <ProfileSectionLayout
       isRequired={true}
       title="info kontak"
       id="info_kontak"
       disabled={disabled}
+      isTa={isTa}
     >
       {infoKontakFields.map((field) => {
         if (field.type === "email") {
@@ -23,7 +27,7 @@ const InfoKontak: React.FC<IInfoKontak> = ({ infoKontakFields, disabled }) => {
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <Input
-                isTa={true}
+                isTa={isTa}
                 id={field.id}
                 type={field.type}
                 label={null}
@@ -49,7 +53,7 @@ const InfoKontak: React.FC<IInfoKontak> = ({ infoKontakFields, disabled }) => {
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <Input
-                isTa={true}
+                isTa={isTa}
                 id={field.id}
                 type={field.type}
                 disabled={disabled}
@@ -70,7 +74,7 @@ const InfoKontak: React.FC<IInfoKontak> = ({ infoKontakFields, disabled }) => {
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <Input
-                isTa={true}
+                isTa={isTa}
                 id={field.id}
                 type={field.type}
                 label={null}

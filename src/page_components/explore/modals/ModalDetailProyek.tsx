@@ -32,7 +32,7 @@ import { IAmplifyProjectCard } from "../../../constants/exploreformconstants/Pro
 import Typography from "../../../components/typography/Typography";
 import * as queries from "../../../graphql/queries";
 import usePush from "@utils/UsePush";
-import { keahlianDbToValue } from "@utils/StringUtils";
+import { keahlianDbToValue } from "../../../libs/StringUtils";
 
 type ModalReturnType = {
   openModal: () => void;

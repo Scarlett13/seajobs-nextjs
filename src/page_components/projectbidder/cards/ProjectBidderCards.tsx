@@ -1,14 +1,19 @@
-import { keahlianDbToValue } from "@utils/StringUtils";
+import { keahlianDbToValue } from "../../../libs/StringUtils";
 import { IAmplifyProjectCard } from "../../../constants/exploreformconstants/ProjectCard";
 import { DateTime } from "luxon";
 import MainCtaButton from "../../../components/buttons/mainctabutton/MainCtaButton";
 import Button from "../../../components/buttons/custombuttons/Button";
 import React from "react";
 import { API, GraphQLQuery } from "@aws-amplify/api";
-import { UpdateCompanyProjectBidderMutation } from "../../../API";
+import {
+  GetTenagaAhliQuery,
+  UpdateCompanyProjectBidderMutation,
+} from "../../../API";
 import * as mutations from "../../../graphql/mutations";
 import * as queries from "../../../graphql/queries";
 import { Toaster, toast } from "react-hot-toast";
+import ProjectBidderModal from "../modal/ProjectBidderModal";
+import usePush from "@utils/UsePush";
 
 export interface IProjectCard {
   tenagaAhli: any;
@@ -31,6 +36,8 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
 }) => {
   const [biddingStatusState, setBiddingStatusState] =
     React.useState<string>(biddingStatus);
+
+  const push = usePush();
 
   async function updateBiddingStatus(status: string) {
     const input = {
@@ -60,6 +67,7 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
 
     console.log("input: ", input);
   }
+
   return (
     <div
       className={`${
@@ -80,9 +88,20 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
             .toString()
             .replaceAll(",", ", ")}
         </p>
-        <p className={`${isTa ? "text-white" : "text-gray-900"} text-sm pb-16`}>
+        <p className={`${isTa ? "text-white" : "text-gray-900"} text-sm `}>
           {`Status penerimaan: ${biddingStatusState}`}
         </p>
+        <Button
+          variant="primary"
+          className={` w-48 text-center xl:w-48 group relative flex justify-center py-2 border border-transparent text-sm font-medium rounded-md bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 
+									text-white focus:ring-white disabled:bg-gray-500 mb-8 mt-4
+								`}
+          onClick={() => {
+            push(`/com/explore/tadetail/${tenagaAhli.taId}`);
+          }}
+        >
+          Detail Tenaga ahli
+        </Button>
         <span
           className={`h-1 w-full mb-4 ${isTa ? "bg-white" : "bg-gray-900"}`}
         ></span>

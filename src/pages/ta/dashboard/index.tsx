@@ -57,6 +57,8 @@ export default function Dashboard() {
         })
       );
 
+      console.log("getTa: ", getTa);
+
       if (!getTa.data || !getTa.data.getTenagaAhli) {
         push(`/ta/profile/editprofile/${user.getUsername()}`);
       }
@@ -68,6 +70,8 @@ export default function Dashboard() {
           taId: user.getUsername(),
         })
       );
+
+      console.log("result: ", result);
 
       let tempProjectList;
 
@@ -119,6 +123,9 @@ export default function Dashboard() {
               label="Project bid disubmit"
               value={totalSubmitted}
               isLoading={loading}
+              onClick={() => {
+                push(`/ta/project/projectdetail/SUBMITTED`);
+              }}
             />
             <StatisticsCard
               variant="secondary"
@@ -126,6 +133,9 @@ export default function Dashboard() {
               label="Project bid diterima"
               value={totalApproved}
               isLoading={loading}
+              onClick={() => {
+                push(`/ta/project/projectdetail/APPROVED`);
+              }}
             />
             <StatisticsCard
               variant="danger"
@@ -133,6 +143,9 @@ export default function Dashboard() {
               label="Project bid ditolak"
               value={totalRejected}
               isLoading={loading}
+              onClick={() => {
+                push(`/ta/project/projectdetail/REJECTED`);
+              }}
             />
           </div>
           <button

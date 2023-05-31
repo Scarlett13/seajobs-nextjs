@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import TextArea from "../../../../components/forms/TextArea";
 import { deskripsiDiriFields } from "../../../../constants/profileformconstants/ProfileFormConstants";
 import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
+import { useUser } from "../../../../contexts/AmplifyAuthContext";
 // import styles from "./DeskripsiDiri.module.css";
 
 export interface IDeskripsiDiri {
@@ -16,18 +17,21 @@ const DeskripsiDiri: React.FC<IDeskripsiDiri> = ({
   maxChar,
   disabled,
 }) => {
+  const { isTa } = useUser();
+
   return (
     <ProfileSectionLayout
       disabled={disabled}
       isRequired={true}
       title="deskripsi diri"
       id="deskripsi_diri"
+      isTa={isTa}
     >
       {deskripsiDiriFields.map((field) => (
         <section key={field.titelKey}>
           <p className="mb-4 font-light text-gray-400">{field.labelText}</p>
           <TextArea
-            isTa={true}
+            isTa={isTa}
             id={field.id}
             label={null}
             disabled={disabled}

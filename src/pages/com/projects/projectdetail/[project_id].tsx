@@ -11,7 +11,10 @@ import TextArea from "../../../../components/forms/TextArea";
 import DatePicker from "../../../../components/forms/DatePicker";
 import Input from "../../../../components/forms/Input";
 import MainCtaButton from "../../../../components/buttons/mainctabutton/MainCtaButton";
-import { keahlianDbToValue, keahlianValueToDb } from "@utils/StringUtils";
+import {
+  keahlianDbToValue,
+  keahlianValueToDb,
+} from "../../../../libs/StringUtils";
 import v4 from "uuid-browser/v4";
 import { DateTime } from "luxon";
 import { API, graphqlOperation } from "aws-amplify";
@@ -332,6 +335,7 @@ export default function ProjectDetail() {
                       className="pb-4"
                       key={`${bidder.projectId}-${bidder.konsultanId}-${bidder.taId}`}
                     >
+                      {/* ditambah modal untuk show TA detail onclick */}
                       <ProjectBidderCards
                         tenagaAhli={bidder.taDetail}
                         isTa={false}

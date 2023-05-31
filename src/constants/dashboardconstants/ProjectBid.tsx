@@ -28,3 +28,15 @@ export interface IAmplifyProjectByOwner {
   projectStatus: string;
   isDeleted: Boolean;
 }
+
+export interface IAmplifyProjectBidderByTa {
+  projectId: string;
+  taId: string;
+  konsultanId: string;
+  biddingStatus: string;
+  comments?: Array<string> | null;
+  createdOn: string;
+  updatedOn: string;
+  projectBiddersId?: string | null;
+  projectDetail?: any | null;
+}

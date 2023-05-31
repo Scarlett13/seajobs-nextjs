@@ -1,4 +1,4 @@
-import { IAmplifyProjectCard } from '../../../constants/exploreformconstants/ProjectCard';
+import { IAmplifyProjectCard } from '../../../../constants/exploreformconstants/ProjectCard';
 import { IProjectCard } from './ProjectCard';
 
 const dummyProject: IAmplifyProjectCard = 

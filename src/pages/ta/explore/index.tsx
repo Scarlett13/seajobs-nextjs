@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import Checkbox from "../../../components/forms/Checkbox";
 import { IAmplifyProjectCard } from "../../../constants/exploreformconstants/ProjectCard";
 import { useUser } from "../../../contexts/AmplifyAuthContext";
-import ProjectCard from "../../../page_components/explore/cards/ProjectCard";
+import ProjectCard from "../../../page_components/explore/cards/projectcards/ProjectCard";
 import ExploreMainLayout from "../../../page_components/explore/layouts/ExploreMainLayout";
 import ExploreSectionLayout from "../../../page_components/explore/layouts/ExploreSectionLayout";
 import { API, Auth, graphqlOperation } from "aws-amplify";
@@ -17,7 +17,7 @@ import * as queries from "../../../graphql/queries";
 import usePush from "@utils/UsePush";
 import { DateTime } from "luxon";
 import { filter } from "smart-array-filter";
-import { keahlianDbToValue } from "@utils/StringUtils";
+import { keahlianDbToValue } from "../../../libs/StringUtils";
 
 interface IProjectFilter {
   projectCategories: string[];

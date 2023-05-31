@@ -28,6 +28,7 @@ export interface IPengalamanKerjaProyek {
   setListKerja: React.Dispatch<React.SetStateAction<IAmplifyPengalamanKerja[]>>;
   listKerja: IAmplifyPengalamanKerja[];
   disabled: boolean;
+  isTa?: boolean;
 }
 
 interface IDiffTime {
@@ -40,12 +41,6 @@ interface IFormattedListKerja {
   companyId: String;
   projects: IAmplifyPengalamanKerja[];
 }
-
-const fixedTimelineLocationClassName =
-  "mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500";
-
-const fixedTimelineClientClassName =
-  "mb-1 mt-1 text-md font-normal leading-none text-gray-400 dark:text-gray-500";
 
 const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
   listPengalaman,
@@ -66,7 +61,19 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
     IFormattedListKerja[]
   >([]);
 
-  const { loading, setLoading } = useUser();
+  const { loading, setLoading, isTa } = useUser();
+
+  const fixedTimelineLocationClassName = isTa
+    ? "mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
+    : "mb-1 text-sm font-normal leading-none text-gray-900 dark:text-gray-900";
+
+  const fixedTimelineClientClassName = isTa
+    ? "mb-1 mt-1 text-md font-normal leading-none text-gray-400 dark:text-gray-500"
+    : "mb-1 mt-1 text-md font-normal leading-none text-gray-900 dark:text-gray-900";
+
+  const fixedTimelineTitleClassName = isTa
+    ? "text-lg font-semibold text-white"
+    : "text-lg font-semibold text-gray-900 ";
 
   useEffect(() => {
     // if (!loading) {
@@ -189,13 +196,25 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
         >
           <div className="flow-root">
             <div className="float-left">
-              <p className="text-white text-xl font-medium capitalize ml-6">
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-xl font-medium capitalize ml-6`}
+              >
                 {pengalaman.projects[0].companyName}
               </p>
-              <p className="text-white text-md capitalize ml-6">
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-md capitalize ml-6`}
+              >
                 {pengalaman.projects[0].companyaddress}
               </p>
-              <p className="text-white text-md capitalize ml-6 pb-4">
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-md capitalize ml-6 pb-4`}
+              >
                 {`${
                   arrayDiff.length > 0 && arrayDiff[index]
                     ? arrayDiff[index].isPengalaman
@@ -212,10 +231,18 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
               </p>
             </div>
             <div className={`float-right ${disabled ? "hidden" : "visible"}`}>
-              <p className="text-white text-xl font-medium capitalize ml-6">
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-xl font-medium capitalize ml-6`}
+              >
                 &nbsp;
               </p>
-              <div className="text-white text-md capitalize ml-6">
+              <div
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-md capitalize ml-6`}
+              >
                 <ModalInputProyek
                   title={"Tambahkan proyek"}
                   companyid={pengalaman.companyId as string}
@@ -239,7 +266,13 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
                   )}
                 </ModalInputProyek>
               </div>
-              <p className="text-white text-md capitalize ml-6 pb-4">&nbsp;</p>
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-md capitalize ml-6 pb-4`}
+              >
+                &nbsp;
+              </p>
             </div>
           </div>
 
@@ -249,28 +282,30 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
                 <Timeline.Item key={project.projectId}>
                   <Timeline.Point />
                   <Timeline.Content>
-                    <Timeline.Title>{project.projectName}</Timeline.Title>
+                    <p className={fixedTimelineTitleClassName}>
+                      {project.projectName}
+                    </p>
                     <p className={fixedTimelineClientClassName}>
                       {`${project.projectClient}`}
                     </p>
                     <p className={fixedTimelineClientClassName}>
                       {`${project.position}`}
                     </p>
-                    <Timeline.Time>{`${project.projectStartMonth} / ${
-                      project.projectStartYear
-                    } - ${
+                    <p className={fixedTimelineLocationClassName}>{`${
+                      project.projectStartMonth
+                    } / ${project.projectStartYear} - ${
                       !project.isFinished
                         ? "current"
                         : project.projectEndMonth +
                           " / " +
                           project.projectEndYear
-                    }`}</Timeline.Time>
+                    }`}</p>
                     <p className={fixedTimelineLocationClassName}>
                       {`${project.projectLocation}`}
                     </p>
-                    <Timeline.Body>
+                    <p className={fixedTimelineLocationClassName}>
                       {`${project.projectDescription}`}
-                    </Timeline.Body>
+                    </p>
                     <ModalInputProyek
                       title={"Edit proyek"}
                       companyid={pengalaman.companyId as string}
@@ -312,21 +347,41 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
         >
           <div className="flow-root">
             <div className="float-left">
-              <p className="text-white text-xl font-medium capitalize ml-6">
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-xl font-medium capitalize ml-6`}
+              >
                 {pengalaman.companyName}
               </p>
-              <p className="text-white text-md capitalize ml-6">
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-md capitalize ml-6`}
+              >
                 {pengalaman.companyAddress}
               </p>
-              <p className="text-white text-md capitalize ml-6 pb-4">
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-md capitalize ml-6 pb-4`}
+              >
                 {`Belum ada pengalaman`}
               </p>
             </div>
             <div className="float-right">
-              <p className="text-white text-xl font-medium capitalize ml-6">
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-xl font-medium capitalize ml-6`}
+              >
                 &nbsp;
               </p>
-              <div className="text-white text-md capitalize ml-6">
+              <div
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-md capitalize ml-6`}
+              >
                 <ModalInputProyek
                   title={"Tambahkan proyek"}
                   companyid={pengalaman.companyId as string}
@@ -350,7 +405,13 @@ const PengalamanKerjaProyek: React.FC<IPengalamanKerjaProyek> = ({
                   )}
                 </ModalInputProyek>
               </div>
-              <p className="text-white text-md capitalize ml-6 pb-4">&nbsp;</p>
+              <p
+                className={`${
+                  isTa ? "text-white" : "text-gray-900"
+                } text-md capitalize ml-6 pb-4`}
+              >
+                &nbsp;
+              </p>
             </div>
           </div>
         </div>
