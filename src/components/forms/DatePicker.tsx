@@ -97,7 +97,7 @@ export default function DatePicker({
                       `cursor-not-allowed ${
                         isTa
                           ? "border-form-bg bg-form-bg"
-                          : "border-gray-900 bg-white"
+                          : "border-none bg-gray-300"
                       } focus:border-form-bgfocus:ring-0`,
                     error &&
                       "border-red-500 focus:border-red-500 focus:ring-red-500 text-red-500"

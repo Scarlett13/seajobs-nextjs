@@ -4,6 +4,7 @@ import Typography from "../../../components/typography/Typography";
 import Button from "../../../components/buttons/custombuttons/Button";
 
 import * as queries from "../../../graphql/queries";
+import * as custom_queries from "../../../customgraphql/queries";
 
 import { API, GraphQLQuery } from "@aws-amplify/api";
 import { GetTenagaAhliQuery } from "../../../API";
@@ -44,7 +45,7 @@ export default function ExampleModal({
   React.useEffect(() => {
     async function getTaDetail() {
       const taDetail = await API.graphql<GraphQLQuery<GetTenagaAhliQuery>>({
-        query: queries.getTenagaAhliCard,
+        query: custom_queries.getTenagaAhliCard,
         variables: { taId: taId },
       });
 
@@ -55,6 +56,8 @@ export default function ExampleModal({
 
       setTaDetail(taDetail.data.getTenagaAhli);
     }
+
+    console.log(taId);
 
     if (open) getTaDetail();
     else setTaDetail(null);

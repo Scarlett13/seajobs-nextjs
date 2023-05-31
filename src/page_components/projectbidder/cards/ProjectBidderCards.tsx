@@ -13,10 +13,8 @@ import * as mutations from "../../../graphql/mutations";
 import * as queries from "../../../graphql/queries";
 import { Toaster, toast } from "react-hot-toast";
 import ProjectBidderModal from "../modal/ProjectBidderModal";
+import usePush from "@utils/UsePush";
 
-type ModalReturnType = {
-  openModal: () => void;
-};
 export interface IProjectCard {
   tenagaAhli: any;
   konsultanId: string;
@@ -39,10 +37,7 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
   const [biddingStatusState, setBiddingStatusState] =
     React.useState<string>(biddingStatus);
 
-  const [open, setOpen] = React.useState(false);
-  const modalReturn: ModalReturnType = {
-    openModal: () => setOpen(true),
-  };
+  const push = usePush();
 
   async function updateBiddingStatus(status: string) {
     const input = {
@@ -96,30 +91,17 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
         <p className={`${isTa ? "text-white" : "text-gray-900"} text-sm `}>
           {`Status penerimaan: ${biddingStatusState}`}
         </p>
-        {/* <Button
+        <Button
           variant="primary"
           className={` w-48 text-center xl:w-48 group relative flex justify-center py-2 border border-transparent text-sm font-medium rounded-md bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 
 									text-white focus:ring-white disabled:bg-gray-500 mb-8 mt-4
 								`}
           onClick={() => {
-            getTaDetail();
+            push(`/com/explore/tadetail/${tenagaAhli.taId}`);
           }}
         >
           Detail Tenaga ahli
-        </Button> */}
-
-        <ProjectBidderModal taId={tenagaAhli.taId}>
-          {({ openModal }) => (
-            <Button
-              onClick={openModal}
-              className={` w-48 text-center xl:w-48 group relative flex justify-center py-2 border border-transparent text-sm font-medium rounded-md bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 
-									text-white focus:ring-white disabled:bg-gray-500 mb-8 mt-4
-								`}
-            >
-              Detail tenaga ahli
-            </Button>
-          )}
-        </ProjectBidderModal>
+        </Button>
         <span
           className={`h-1 w-full mb-4 ${isTa ? "bg-white" : "bg-gray-900"}`}
         ></span>

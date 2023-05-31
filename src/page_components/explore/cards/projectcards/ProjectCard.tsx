@@ -1,9 +1,9 @@
 import { useState } from "react";
-import MainCtaButton from "../../../components/buttons/mainctabutton/MainCtaButton";
-import { IAmplifyProjectCard } from "../../../constants/exploreformconstants/ProjectCard";
-import ModalDetailProyek from "../modals/ModalDetailProyek";
+import MainCtaButton from "../../../../components/buttons/mainctabutton/MainCtaButton";
+import { IAmplifyProjectCard } from "../../../../constants/exploreformconstants/ProjectCard";
+import ModalDetailProyek from "../../modals/ModalDetailProyek";
 import styles from "./ProjectCard.module.css";
-import { keahlianDbToValue } from "../../../libs/StringUtils";
+import { keahlianDbToValue } from "../../../../libs/StringUtils";
 import { DateTime } from "luxon";
 
 export interface IProjectCard {

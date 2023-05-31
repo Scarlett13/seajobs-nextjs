@@ -160,8 +160,6 @@ IHeader) => {
                       !user &&
                       (nav.label === "Dashboard" || nav.label === "Explore")
                         ? "hidden"
-                        : !isTa && nav.label === "Explore"
-                        ? "hidden"
                         : "block"
                     }`}
                   >

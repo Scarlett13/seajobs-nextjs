@@ -1,5 +1,5 @@
 import { SyntheticEvent, useEffect, useState } from "react";
-import { signupFields } from "../../../constants/authformconstants/AuthFormConstants";
+import { signupComFields } from "../../../constants/authformconstants/AuthFormConstants";
 import Input from "../../../components/inputs/reguler/InputTemplate";
 import { NextPageWithLayout } from "../../page";
 import FormAction from "../../../components/inputs/actions/FormAction";
@@ -13,7 +13,7 @@ import { signup } from "@utils/AuthUtils";
 import { isEmpty } from "../../../libs/StringUtils";
 
 export default function Signup() {
-  const fields = signupFields;
+  const fields = signupComFields;
   let fieldsState: any = {};
 
   fields.forEach((field) => (fieldsState[field.id] = ""));

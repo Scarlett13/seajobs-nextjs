@@ -7,6 +7,7 @@ import {
   tambahPerusahaanFields,
   tambahProyekFields,
 } from "../../../../constants/profileformconstants/ProfileFormConstants";
+import { useUser } from "../../../../contexts/AmplifyAuthContext";
 import PengalamanKerjaProyek from "../../inputs/timeline/PengalamanKerjaProyek";
 import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
 
@@ -38,6 +39,8 @@ const TimelinePengalaman: React.FC<ITimelinePengalaman> = ({
   listKerja,
   disabled,
 }) => {
+  const { isTa } = useUser();
+
   return (
     <ProfileSectionLayout
       isRequired={false}
@@ -49,6 +52,7 @@ const TimelinePengalaman: React.FC<ITimelinePengalaman> = ({
       listPerusahaanFieldsState={listPengalamanFieldsState}
       setListPerusahaanFieldsState={setListPengalamanFieldsState}
       setListPengalaman={setListPengalaman}
+      isTa={isTa}
     >
       <PengalamanKerjaProyek
         disabled={disabled}
