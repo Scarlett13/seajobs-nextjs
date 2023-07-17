@@ -33,6 +33,10 @@ import {
   keahlianValueToDb,
 } from "../../../libs/StringUtils";
 import Typography from "../../../components/typography/Typography";
+import {
+  CustomProjectByOwnerQuery,
+  customProjectByOwner,
+} from "../../../CustomAPI";
 
 interface IProjectFilter {
   projectCategories: string[];
@@ -166,13 +170,17 @@ export default function ListProjects() {
 
       console.log("variablenya: ", variablesResult);
 
-      const result = await API.graphql<GraphQLQuery<ProjectByOwnerQuery>>({
-        query: queries.projectByOwner,
-        variables:
-          project_status === "Aktif" ? activeVariablesResult : variablesResult,
-      });
+      const result = await API.graphql<GraphQLQuery<CustomProjectByOwnerQuery>>(
+        {
+          query: customProjectByOwner,
+          variables:
+            project_status === "Aktif"
+              ? activeVariablesResult
+              : variablesResult,
+        }
+      );
 
-      console.log("get data: ", result);
+      console.log("get data 2: ", result);
 
       let tempProjectList;
 

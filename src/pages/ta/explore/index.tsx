@@ -108,8 +108,8 @@ export default function Explore() {
             {
               isActive: { eq: "true" },
               isDeleted: { ne: true },
-              projectDeadline: { gt: today },
-              projectStatus: { eq: "Aktif" },
+              // projectDeadline: { gt: today },
+              // projectStatus: { eq: "Aktif" },
             },
           ],
         },

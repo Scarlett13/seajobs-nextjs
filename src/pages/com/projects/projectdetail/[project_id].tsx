@@ -40,6 +40,10 @@ import ExploreMainLayout from "../../../../page_components/explore/layouts/Explo
 import ExploreSectionLayout from "../../../../page_components/explore/layouts/ExploreSectionLayout";
 import Button from "../../../../components/buttons/custombuttons/Button";
 import ProjectBidderCards from "../../../../page_components/projectbidder/cards/ProjectBidderCards";
+import {
+  CustomCompanyProjectBidderByKonsultanQuery,
+  customCompanyProjectBidderByKonsultan,
+} from "../../../../CustomAPI";
 
 interface IProjectFilter {
   biddingStatus: string[];
@@ -162,9 +166,9 @@ export default function ProjectDetail() {
 
     setLoading(true);
     const getTa = await API.graphql<
-      GraphQLQuery<CompanyProjectBidderByKonsultanQuery>
+      GraphQLQuery<CustomCompanyProjectBidderByKonsultanQuery>
     >({
-      query: queries.companyProjectBidderByKonsultan,
+      query: customCompanyProjectBidderByKonsultan,
       variables: variableResult,
     });
     if (
@@ -268,11 +272,15 @@ export default function ProjectDetail() {
             <div className="ml-1 text-gray-900 text-left mb-2">
               Project:
               <div className="flex flex-col ps-5 text-gray-900 bg-gray-200">
-                <Typography variant="h2" color="primary" className="mx-4 mt-4">
+                <Typography
+                  variant="h2"
+                  color="primary"
+                  className="mx-4 mt-4 mb-4"
+                >
                   {" "}
                   {project?.projectTitle}
                 </Typography>
-                <Button
+                {/* <Button
                   variant="primary"
                   className="mt-8 mx-4 bg-yellow-500 mb-8"
                   onClick={() => {
@@ -280,7 +288,7 @@ export default function ProjectDetail() {
                   }}
                 >
                   Edit proyek
-                </Button>
+                </Button> */}
               </div>
             </div>
             <h1 className="ml-1 text-gray-900 text-left mb-2">Filter</h1>
@@ -320,9 +328,9 @@ export default function ProjectDetail() {
         <div className="mx-4 mt-4 mb-24 w-2/3 lg:w-3/4 xl:w-6/12 xl:pr-12 lg:pr-12 md:pr-8">
           <ExploreSectionLayout isTa={false}>
             {loading ? (
-              <p className="text-white">Sedang mencari proyek...</p>
+              <p className="text-gray-600">Sedang mencari proyek...</p>
             ) : filteredBidder.length < 1 ? (
-              <p className="text-white">Belum ada proyek available</p>
+              <p className="text-gray-600">Belum ada bidder untuk proyek ini</p>
             ) : (
               <>
                 <Typography variant="h2" color="primary" className="mb-4">
@@ -337,7 +345,7 @@ export default function ProjectDetail() {
                     >
                       {/* ditambah modal untuk show TA detail onclick */}
                       <ProjectBidderCards
-                        tenagaAhli={bidder.taDetail}
+                        taDetail={bidder.taDetail}
                         isTa={false}
                         biddingStatus={bidder.biddingStatus}
                         konsultanId={userId}

@@ -157,7 +157,7 @@ export default function ModalDetailProyek({
     }
   };
 
-  console.log("project owner: ", project.companyOwner);
+  // console.log("project owner: ", project.companyOwner);
 
   return (
     <>
@@ -192,7 +192,11 @@ export default function ModalDetailProyek({
                     variant="h3"
                     color={isTa ? "custom_white" : "primary"}
                   >
-                    {`: ${project.companyOwner.konsultanName}`}
+                    {`: ${
+                      project.companyOwner
+                        ? project.companyOwner.konsultanName
+                        : ""
+                    }`}
                   </Typography>
                 </td>
               </tr>
@@ -352,6 +356,16 @@ export default function ModalDetailProyek({
                   ? "Kamu telah memilih proyek ini"
                   : "Pilih proyek"
                 : "Detail proyek"}
+            </Button>
+            <Button
+              variant="primary"
+              type={isTa ? "submit" : "button"}
+              className={`mx-4 bg-yellow-500 ${isTa ? "invisible" : "visible"}`}
+              onClick={() => {
+                push(`/com/projects/editproject/${project.projectId}`);
+              }}
+            >
+              Edit proyek
             </Button>
           </div>
           <Typography

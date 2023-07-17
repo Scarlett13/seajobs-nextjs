@@ -5,10 +5,7 @@ import MainCtaButton from "../../../components/buttons/mainctabutton/MainCtaButt
 import Button from "../../../components/buttons/custombuttons/Button";
 import React from "react";
 import { API, GraphQLQuery } from "@aws-amplify/api";
-import {
-  GetTenagaAhliQuery,
-  UpdateCompanyProjectBidderMutation,
-} from "../../../API";
+import { UpdateCompanyProjectBidderMutation } from "../../../API";
 import * as mutations from "../../../graphql/mutations";
 import * as queries from "../../../graphql/queries";
 import { Toaster, toast } from "react-hot-toast";
@@ -16,7 +13,7 @@ import ProjectBidderModal from "../modal/ProjectBidderModal";
 import usePush from "@utils/UsePush";
 
 export interface IProjectCard {
-  tenagaAhli: any;
+  taDetail: any;
   konsultanId: string;
   biddingStatus: string;
   projectId: string;
@@ -26,7 +23,7 @@ export interface IProjectCard {
 }
 
 const ProjectBidderCards: React.FC<IProjectCard> = ({
-  tenagaAhli,
+  taDetail,
   isTa,
   biddingStatus,
   konsultanId,
@@ -42,7 +39,7 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
   async function updateBiddingStatus(status: string) {
     const input = {
       konsultanId: konsultanId,
-      taId: tenagaAhli.taId,
+      taId: taDetail.taId,
       projectId: projectId,
       biddingStatus: status,
     };
@@ -81,10 +78,10 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
             isTa ? "text-white" : "text-gray-900"
           } text-lg text-bold pb-4`}
         >
-          {tenagaAhli.taFullName}
+          {taDetail.taFullName}
         </h2>
         <p className={`${isTa ? "text-white" : "text-gray-900"} text-sm pb-4`}>
-          {keahlianDbToValue(tenagaAhli.taExpertise)
+          {keahlianDbToValue(taDetail.taExpertise)
             .toString()
             .replaceAll(",", ", ")}
         </p>
@@ -97,7 +94,7 @@ const ProjectBidderCards: React.FC<IProjectCard> = ({
 									text-white focus:ring-white disabled:bg-gray-500 mb-8 mt-4
 								`}
           onClick={() => {
-            push(`/com/explore/tadetail/${tenagaAhli.taId}`);
+            push(`/com/explore/tadetail/${taDetail.taId}`);
           }}
         >
           Detail Tenaga ahli
