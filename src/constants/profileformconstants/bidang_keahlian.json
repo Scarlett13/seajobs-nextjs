@@ -109,6 +109,15 @@
 	},
 	{
 		"id": 13,
+		"categoryname": "Manajemen Rumah Sakit",
+		"label": "Manajemen Rumah Sakit",
+		"value": "manajemen_rumah_sakit",
+		"subcategoryname": "-",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
+		"id": 99,
 		"categoryname": "Pendukung",
 		"label": "Pendukung",
 		"value": "pendukung",
