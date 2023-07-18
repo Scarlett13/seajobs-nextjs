@@ -21,6 +21,7 @@ import {
 } from "../../../../../API";
 import { useRouter } from "next/router";
 import { useUser } from "../../../../../contexts/AmplifyAuthContext";
+import { isValidDate } from "../../../../../libs/StringUtils";
 
 type ModalReturnType = {
   openModal: () => void;
@@ -113,14 +114,21 @@ export default function ExampleModal({
         defaultEndDate.setMonth(defaultValue.endMonth);
         defaultEndDate.setMonth(defaultEndDate.getMonth() - 1);
       }
+      console.log("defaultstartdate: " + defaultStartDate);
       setValue("nama_institusi", defaultValue.institutionName);
       setValue("tipe_pendidikan", defaultValue.pendidikanType);
       setValue("jurusan_keahlian", defaultValue.courseName);
       setValue("deskripsi_pendidikan", defaultValue.pendidikanDescription);
       setValue("alamat_institusi", defaultValue.institutionAddress);
       setValue("url_institusi", defaultValue.institutionUrl);
-      setValue("pendidikan_masuk", defaultStartDate.toISOString());
-      setValue("pendidikan_selesai", defaultEndDate.toISOString());
+      setValue(
+        "pendidikan_masuk",
+        isValidDate(defaultStartDate) ? defaultStartDate.toISOString() : ""
+      );
+      setValue(
+        "pendidikan_selesai",
+        isValidDate(defaultEndDate) ? defaultEndDate.toISOString() : ""
+      );
     }
   }, [defaultValue, indexEdit, setValue]);
 
