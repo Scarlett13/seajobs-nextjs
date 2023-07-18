@@ -51,7 +51,6 @@ export default function ModalDetailProyek({
   isTa: boolean;
 }) {
   const { loading, setLoading } = useUser();
-
   const [disabled, setDisabled] = React.useState<boolean>(false);
   const [isBid, setIsBid] = React.useState<boolean>(false);
   const [errorMessage, setErrorMessage] = React.useState<string>("");
@@ -120,7 +119,6 @@ export default function ModalDetailProyek({
       getProjectBidded();
     }
   }, [open]);
-
   //#endregion  //*======== Delete Item ===========
 
   const onClose = (setOpen: {
