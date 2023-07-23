@@ -7,19 +7,19 @@ export type FormFields = {
   autoComplete: string;
   isRequired: boolean;
   placeholder: string;
-	maxChar?: number;
+  maxChar?: number;
 };
 
 export interface IBidangKeahlian {
-	id: number;
-	categoryname: string;
-	subcategoryname: string;
-	descripton: string;
-	iscollapsible: boolean;
+  id: number;
+  categoryname: string;
+  subcategoryname: string;
+  descripton: string;
+  iscollapsible: boolean;
 }
 
 const identitasDiriFields = [
-	{
+  {
     labelText: "Nama lengkap",
     labelFor: "fullname",
     id: "fullname",
@@ -30,7 +30,7 @@ const identitasDiriFields = [
     placeholder: "Nama lengkap",
     titelKey: "title_name",
   },
-	{
+  {
     labelText: "NIK / No passport",
     labelFor: "ic_number",
     id: "ic_number",
@@ -41,7 +41,7 @@ const identitasDiriFields = [
     placeholder: "NIK / No Passport",
     titelKey: "ic_number",
   },
-	{
+  {
     labelText: "Tanggal lahir",
     labelFor: "dob",
     id: "dob",
@@ -52,7 +52,7 @@ const identitasDiriFields = [
     placeholder: "Tanggal lahir",
     titelKey: "dob",
   },
-	{
+  {
     labelText: "Alamat domisili",
     labelFor: "address",
     id: "address",
@@ -63,7 +63,7 @@ const identitasDiriFields = [
     placeholder: "Alamat domisili",
     titelKey: "title_address",
   },
-	{
+  {
     labelText: "Warga negara",
     labelFor: "nationality",
     id: "nationality",
@@ -74,7 +74,7 @@ const identitasDiriFields = [
     placeholder: "Warga negara",
     titelKey: "nationality",
   },
-	{
+  {
     labelText: "Residen status",
     labelFor: "resident_status",
     id: "res_status_id",
@@ -85,7 +85,7 @@ const identitasDiriFields = [
     placeholder: "Residen status",
     titelKey: "resident_status",
   },
-	{
+  {
     labelText: "Bidang keahlian",
     labelFor: "bidang_keahlian",
     id: "keahlian_id",
@@ -95,8 +95,8 @@ const identitasDiriFields = [
     isRequired: true,
     placeholder: "Silahkan pilih bidang keahlian terlebih dahulu",
     titelKey: "title_keahlian",
-  }
-]
+  },
+];
 
 const infoKontakFields = [
   {
@@ -121,7 +121,7 @@ const infoKontakFields = [
     placeholder: "0811******",
     titelKey: "title_phone_num",
   },
-	{
+  {
     labelText: "Link portofolio",
     labelFor: "portfolio_link",
     id: "portfolio_link",
@@ -129,7 +129,8 @@ const infoKontakFields = [
     type: "text",
     autoComplete: "link_portfolio",
     isRequired: true,
-    placeholder: "https://linkedin.com/example-profile, https://behance.net/...",
+    placeholder:
+      "https://linkedin.com/example-profile, https://behance.net/...",
     titelKey: "title_portfolio_url",
   },
 ];
@@ -145,8 +146,8 @@ const deskripsiDiriFields = [
     isRequired: true,
     placeholder: "Tuliskan deskripsi singkat diri kamu dalam 150 karakter",
     titelKey: "title_deskripsi_diri",
-		maxChar: 150
-  }
+    maxChar: 150,
+  },
 ];
 
 const tambahPerusahaanFields = [
@@ -159,9 +160,9 @@ const tambahPerusahaanFields = [
     autoComplete: "company_name",
     isRequired: true,
     placeholder: "cth: PT Industri Arsitek Indonesia",
-    titelKey: "nama_perusahaan"
+    titelKey: "nama_perusahaan",
   },
-	{
+  {
     labelText: "Lokasi perusahaan",
     labelFor: "lokasi_perusahaan",
     id: "lokasi_perusahaan",
@@ -170,8 +171,8 @@ const tambahPerusahaanFields = [
     autoComplete: "company_location",
     isRequired: true,
     placeholder: "cth: Jakarta, Indonesia",
-    titelKey: "lokasi_perusahaan"
-  }
+    titelKey: "lokasi_perusahaan",
+  },
 ];
 
 const tambahProyekFields = [
@@ -184,9 +185,9 @@ const tambahProyekFields = [
     autoComplete: "project_name",
     isRequired: true,
     placeholder: "cth: Pengerjaan Jembatan Gemah Ripah",
-    titelKey: "nama_proyek"
+    titelKey: "nama_proyek",
   },
-	{
+  {
     labelText: "Nama klien",
     labelFor: "nama_klien",
     id: "nama_klien",
@@ -195,9 +196,9 @@ const tambahProyekFields = [
     autoComplete: "client_name",
     isRequired: true,
     placeholder: "cth: PT Client Jembatan Sejahtera",
-    titelKey: "nama_klien"
+    titelKey: "nama_klien",
   },
-	{
+  {
     labelText: "Posisi kerja",
     labelFor: "posisi_kerja",
     id: "posisi_kerja",
@@ -206,9 +207,9 @@ const tambahProyekFields = [
     autoComplete: "posisition",
     isRequired: true,
     placeholder: "cth: Supervisor",
-    titelKey: "posisi_kerja"
+    titelKey: "posisi_kerja",
   },
-	{
+  {
     labelText: "Deskripsi proyek",
     labelFor: "deskripsi_proyek",
     id: "deskripsi_proyek",
@@ -218,9 +219,9 @@ const tambahProyekFields = [
     isRequired: true,
     placeholder: "Masukkan deskripsi proyek kamu",
     titelKey: "deskripsi_proyek",
-		maxChar: 150
+    maxChar: 150,
   },
-	{
+  {
     labelText: "Lokasi proyek",
     labelFor: "lokasi_proyek",
     id: "lokasi_proyek",
@@ -229,9 +230,9 @@ const tambahProyekFields = [
     autoComplete: "project_location",
     isRequired: true,
     placeholder: "cth: Jakarta, Indonesia",
-    titelKey: "lokasi_proyek"
+    titelKey: "lokasi_proyek",
   },
-	{
+  {
     labelText: "Jenis pekerjaan",
     labelFor: "jenis_pekerjaan",
     id: "jenis_pekerjaan",
@@ -240,9 +241,9 @@ const tambahProyekFields = [
     autoComplete: "jenis_pekerjaan",
     isRequired: true,
     placeholder: "pilih salah satu jenis pekerjaan",
-    titelKey: "jenis_pekerjaan"
+    titelKey: "jenis_pekerjaan",
   },
-	{
+  {
     labelText: "Proyek dimulai",
     labelFor: "proyek_dimulai",
     id: "proyek_dimulai",
@@ -251,23 +252,24 @@ const tambahProyekFields = [
     autoComplete: "proyek_dimulai",
     isRequired: true,
     placeholder: "Bulan dan tahun proyek dimulai",
-    titelKey: "proyek_dimulai"
+    titelKey: "proyek_dimulai",
   },
-	{
+  {
     labelText: "Proyek selesai",
     labelFor: "proyek_selesai",
     id: "proyek_selesai",
     name: "proyek_selesai",
     type: "month_year",
     autoComplete: "proyek_selesai",
-    isRequired: true,
-    placeholder: "Bulan dan tahun proyek selesai (kosongkan jika masih berjalan)",
-    titelKey: "proyek_selesai"
+    isRequired: false,
+    placeholder:
+      "Bulan dan tahun proyek selesai (kosongkan jika masih berjalan)",
+    titelKey: "proyek_selesai",
   },
 ];
 
 const tambahPendidikanSertifikasiFileds = [
-	{
+  {
     labelText: "Tipe pendidikan",
     labelFor: "tipe_pendidikan",
     id: "tipe_pendidikan",
@@ -276,9 +278,9 @@ const tambahPendidikanSertifikasiFileds = [
     autoComplete: "tipe_pendidikan",
     isRequired: true,
     placeholder: "Pilih Lainnya jika tidak ditemukan",
-    titelKey: "tipe_pendidikan"
+    titelKey: "tipe_pendidikan",
   },
-	{
+  {
     labelText: "Nama institusi",
     labelFor: "nama_institusi",
     id: "nama_institusi",
@@ -287,9 +289,9 @@ const tambahPendidikanSertifikasiFileds = [
     autoComplete: "nama_institusi",
     isRequired: true,
     placeholder: "cth: Universitas Arsitek Indonesia",
-    titelKey: "nama_institusi"
+    titelKey: "nama_institusi",
   },
-	{
+  {
     labelText: "Nama jurusan / kursus",
     labelFor: "jurusan_keahlian",
     id: "jurusan_keahlian",
@@ -298,9 +300,9 @@ const tambahPendidikanSertifikasiFileds = [
     autoComplete: "jurusan_keahlian",
     isRequired: true,
     placeholder: "cth: Arsitektur / Kursus AutoCAD",
-    titelKey: "jurusan_keahlian"
+    titelKey: "jurusan_keahlian",
   },
-	{
+  {
     labelText: "Deskripsi pendidikan",
     labelFor: "deskripsi_pendidikan",
     id: "deskripsi_pendidikan",
@@ -310,9 +312,9 @@ const tambahPendidikanSertifikasiFileds = [
     isRequired: true,
     placeholder: "Masukkan deskripsi pendidikan yang kamu tempuh",
     titelKey: "deskripsi_pendidikan",
-		maxChar: 150
+    maxChar: 150,
   },
-	{
+  {
     labelText: "Alamat institusi",
     labelFor: "alamat_institusi",
     id: "alamat_institusi",
@@ -321,9 +323,9 @@ const tambahPendidikanSertifikasiFileds = [
     autoComplete: "alamat_institusi",
     isRequired: false,
     placeholder: "Kosongkan jika online",
-    titelKey: "alamat_institusi"
+    titelKey: "alamat_institusi",
   },
-	{
+  {
     labelText: "Alamat URL institusi",
     labelFor: "url_institusi",
     id: "url_institusi",
@@ -332,9 +334,9 @@ const tambahPendidikanSertifikasiFileds = [
     autoComplete: "url_institusi",
     isRequired: false,
     placeholder: "masukkan URL institusi jika ada",
-    titelKey: "url_institusi"
+    titelKey: "url_institusi",
   },
-	{
+  {
     labelText: "Tanggal masuk",
     labelFor: "pendidikan_masuk",
     id: "pendidikan_masuk",
@@ -343,9 +345,9 @@ const tambahPendidikanSertifikasiFileds = [
     autoComplete: "pendidikan_masuk",
     isRequired: true,
     placeholder: "Bulan dan tahun mulai belajar",
-    titelKey: "pendidikan_masuk"
+    titelKey: "pendidikan_masuk",
   },
-	{
+  {
     labelText: "Tanggal selesai",
     labelFor: "pendidikan_selesai",
     id: "pendidikan_selesai",
@@ -354,8 +356,15 @@ const tambahPendidikanSertifikasiFileds = [
     autoComplete: "pendidikan_selesai",
     isRequired: true,
     placeholder: "Bulan dan tahun selesai belajar",
-    titelKey: "pendidikan_selesai"
+    titelKey: "pendidikan_selesai",
   },
-]
+];
 
-export { identitasDiriFields, infoKontakFields, deskripsiDiriFields, tambahPerusahaanFields, tambahProyekFields, tambahPendidikanSertifikasiFileds };
+export {
+  identitasDiriFields,
+  infoKontakFields,
+  deskripsiDiriFields,
+  tambahPerusahaanFields,
+  tambahProyekFields,
+  tambahPendidikanSertifikasiFileds,
+};
