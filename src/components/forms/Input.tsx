@@ -31,6 +31,7 @@ export type InputProps = {
   leftIcon?: IconType | string;
   rightNode?: React.ReactNode;
   containerClassName?: string;
+  isTa?: boolean;
 } & React.ComponentPropsWithoutRef<"input">;
 
 const fixedInputClass =
@@ -49,6 +50,7 @@ export default function Input({
   leftIcon: LeftIcon,
   rightNode,
   containerClassName,
+  isTa,
   ...rest
 }: InputProps) {
   const {
@@ -84,11 +86,19 @@ export default function Input({
           readOnly={readOnly}
           disabled={disabled}
           className={clsx(
-            "flex w-full rounded-none shadow-sm text-white pl-3",
+            "flex w-full rounded-none shadow-sm  pl-3",
             "min-h-[2.25rem] py-0 md:min-h-[2.5rem]",
-            "border-gray-300 bg-black focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg",
+            `${
+              isTa
+                ? "border-gray-300 bg-black focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg text-white"
+                : "border-gray-300 bg-white focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg text-gray-900"
+            }`,
             (readOnly || disabled) &&
-              "cursor-not-allowed border-form-bg bg-form-bg focus:border-form-bg focus:ring-0",
+              `${
+                isTa
+                  ? "cursor-not-allowed border-form-bg bg-form-bg focus:border-form-bg focus:ring-0"
+                  : "cursor-not-allowed border-gray-300 bg-gray-300 focus:border-gray-300 focus:ring-0"
+              }`,
             error && "border-red-500 focus:border-red-500 focus:ring-red-500",
             LeftIcon && "pl-9",
             rightNode && "pr-10"

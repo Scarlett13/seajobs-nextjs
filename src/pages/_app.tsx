@@ -7,9 +7,10 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import React, { useEffect } from "react";
 // import { AuthProvider } from "../state/auth/AuthContext";
 import { NextPage } from "next";
-import AuthContext, { useUser } from "../contexts/AmplifyAuthContext";
-import { useRouter } from "next/router";
-import Login from "./login";
+import AuthContext, {
+  useUser,
+  ProtectRoute,
+} from "../contexts/AmplifyAuthContext";
 config.autoAddCss = false;
 
 Amplify.configure({ ...awsExports, ssr: true });
@@ -29,11 +30,14 @@ export function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // eslint-disable-next-line no-extra-boolean-cast
   return Boolean(authProps) ? (
     <AuthContext>
-      <Component {...pageProps} />
+      <ProtectRoute>
+        <Component {...pageProps} />
+      </ProtectRoute>
     </AuthContext>
   ) : (
-    // </PrimaryLayout>
-    <Component {...pageProps} />
+    <AuthContext>
+      <Component {...pageProps} />
+    </AuthContext>
   );
 }
 

@@ -2,6 +2,7 @@
 
 import { IPendidikanSertifikasi } from "../../../../constants/profileformconstants/PendidikanSertifikasiConstants";
 import { tambahPendidikanSertifikasiFileds } from "../../../../constants/profileformconstants/ProfileFormConstants";
+import { useUser } from "../../../../contexts/AmplifyAuthContext";
 import PendidikanSertifikasi from "../../inputs/PendidikanSertifikasi";
 import ProfileSectionLayout from "../../layouts/profilesectionlayout/ProfileSectionLayout";
 
@@ -29,6 +30,7 @@ const RiwayatPendidikan: React.FC<IRiwayatPendidikan> = ({
   disabled,
 }) => {
   console.log("waiit, ", tambahPendidikanFields);
+  const { isTa } = useUser();
   return (
     <ProfileSectionLayout
       disabled={disabled}
@@ -40,6 +42,7 @@ const RiwayatPendidikan: React.FC<IRiwayatPendidikan> = ({
       listPerusahaanFieldsState={listPendidikanFieldsState}
       setListPerusahaanFieldsState={setListPendidikanFieldsState}
       setListPengalaman={setListPendidikan}
+      isTa={isTa}
     >
       <PendidikanSertifikasi
         disabled={disabled}

@@ -14,6 +14,7 @@ export type TextAreaProps = {
   validation?: RegisterOptions;
   containerClassName?: string;
   maxLength?: number;
+  isTa?: boolean;
 } & React.ComponentPropsWithoutRef<"textarea">;
 
 export default function TextArea({
@@ -27,6 +28,7 @@ export default function TextArea({
   disabled,
   containerClassName,
   maxLength,
+  isTa,
   ...rest
 }: TextAreaProps) {
   const {
@@ -56,9 +58,17 @@ export default function TextArea({
           disabled={disabled}
           className={clsx(
             "block w-full rounded-none shadow-sm resize-none text-white pl-3",
-            "border-gray-300 bg-black focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg",
+            `${
+              isTa
+                ? "border-gray-300 bg-black focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg text-white"
+                : "border-gray-300 bg-white focus:outline-none focus:ring-main-cta-button-bg focus:border-main-cta-button-bg text-gray-900"
+            }`,
             (readOnly || disabled) &&
-              "cursor-not-allowed border-form-bg bg-form-bg focus:border-form-bg focus:ring-0",
+              `${
+                isTa
+                  ? "cursor-not-allowed border-form-bg bg-form-bg focus:border-form-bg focus:ring-0"
+                  : "cursor-not-allowed border-gray-300 bg-gray-300 focus:border-gray-300 focus:ring-0"
+              }`,
             error && "border-red-500 focus:border-red-500 focus:ring-red-500"
           )}
           placeholder={placeholder}

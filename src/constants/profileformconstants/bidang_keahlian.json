@@ -40,7 +40,7 @@
 		"categoryname": "General",
 		"subcategoryname": "Ahli Sosial dan LARAP",
 		"label": "Ahli Sosial dan LARAP",
-		"value": "ahli_sosial_larap",
+		"value": "ahli_sosial_dan_larap",
 		"description": "Ahli sosial dan LARAP",
 		"iscollapsible": true
 	},
@@ -109,6 +109,15 @@
 	},
 	{
 		"id": 13,
+		"categoryname": "Manajemen Rumah Sakit",
+		"label": "Manajemen Rumah Sakit",
+		"value": "manajemen_rumah_sakit",
+		"subcategoryname": "-",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
+		"id": 99,
 		"categoryname": "Pendukung",
 		"label": "Pendukung",
 		"value": "pendukung",

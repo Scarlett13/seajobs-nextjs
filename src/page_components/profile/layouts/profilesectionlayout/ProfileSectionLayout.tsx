@@ -17,6 +17,7 @@ export interface IProfileSectionLayout {
   tambahPerusahaanFields?: typeof tambahPerusahaanFields;
   setListPengalaman?: React.Dispatch<React.SetStateAction<any[]>>;
   disabled: boolean;
+  isTa?: boolean;
 }
 
 const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
@@ -30,10 +31,17 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
   tambahPerusahaanFields,
   setListPengalaman,
   disabled,
+  isTa,
 }) => {
+  const testIsTa = isTa === null || isTa === undefined ? true : isTa;
+
   return (
     <section id={id}>
-      <div className="bg-form-bg shadow-md px-8 pt-6 mb-4 pb-4 text-left">
+      <div
+        className={`${
+          testIsTa ? "bg-form-bg" : "bg-gray-100"
+        } shadow-md px-8 pt-6 mb-4 pb-4 text-left`}
+      >
         <div className="mb-4 pb-4">
           <div className="float-left">
             <label className="text-form-section-blue font-medium uppercase">
@@ -62,6 +70,7 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
               >
                 {({ openModal }) => (
                   <button
+                    type="button"
                     className={`text-form-section-blue text-md -mt-2 font-medium ml-2`}
                     onClick={openModal}
                     title={"Tambahkan perusahaan"}
@@ -81,6 +90,7 @@ const ProfileSectionLayout: React.FC<IProfileSectionLayout> = ({
               >
                 {({ openModal }) => (
                   <button
+                    type="button"
                     className={`text-form-section-blue text-md -mt-2 font-medium ml-2`}
                     onClick={openModal}
                   >

@@ -4,7 +4,11 @@ import React, { useState } from "react";
 import { CognitoUser } from "@aws-amplify/auth";
 import { logout } from "@utils/AuthUtils";
 import Image from "next/image";
-import logo_full from "@assets/logo/svg/logo_2.svg";
+import logo_full_ta from "@assets/logo/svg/logo_2.svg";
+import logo_full_perusahaan from "@assets/logo/svg/logo_1.svg";
+import { useRouter } from "next/router";
+import usePush from "@utils/UsePush";
+import { useUser } from "../../../contexts/AmplifyAuthContext";
 
 export interface IHeader {
   user?: CognitoUser | null;
@@ -14,42 +18,86 @@ export const Header = ({
   user,
 }: // onCreateAccount,
 IHeader) => {
-  console.log("headrprops: ", user);
+  const router = useRouter();
+  const push = usePush();
+  const { setAuthenticated, setUser, isTa, setIsTa, authenticated } = useUser();
+
   const navigations = [
     {
-      path: "./",
+      path: "/",
       label: "Home",
     },
     {
-      path: "/explore",
+      path: isTa ? "/ta/explore" : "/com/explore",
       label: "Explore",
     },
     {
-      path: "/dashboard",
+      path: isTa ? "/ta/dashboard" : "/com/dashboard",
       label: "Dashboard",
     },
     {
-      path: "./",
+      path: "/",
+      label: "Contact",
+    },
+  ];
+
+  const navigationTa = [
+    {
+      path: "/",
+      label: "Home",
+    },
+    {
+      path: "/ta/explore",
+      label: "Explore",
+    },
+    {
+      path: "/ta/dashboard",
+      label: "Dashboard",
+    },
+    {
+      path: "/",
       label: "Contact",
     },
   ];
 
   const [navbar, setNavbar] = useState(false);
 
+  async function logoutHeader() {
+    const logoutdata = await logout();
+    console.log("wubbalubba: ", logoutdata);
+    if (logoutdata) {
+      // setUser(null);
+      // setAuthenticated(false);
+    }
+  }
+
   return (
     <div>
-      <nav className="top-0 left-0 right-0 bg-hero-bg shadow">
+      <nav
+        className={`top-0 left-0 right-0 ${
+          isTa ? "bg-hero-bg" : "bg-white"
+        } shadow`}
+      >
         <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
           <div>
             <div className="flex items-center justify-between py-3 md:py-5 md:block">
               <Link href="/">
                 {/* <h2 className="text-2xl text-white font-medium">Seajobs</h2> */}
-                <Image
-                  src={logo_full}
-                  alt="logo seajobs"
-                  height={64}
-                  width={86}
-                />
+                {isTa ? (
+                  <Image
+                    src={logo_full_ta}
+                    alt="logo seajobs"
+                    height={64}
+                    width={86}
+                  />
+                ) : (
+                  <Image
+                    src={logo_full_perusahaan}
+                    alt="logo seajobs"
+                    height={64}
+                    width={86}
+                  />
+                )}
               </Link>
               <div className="md:hidden">
                 <button
@@ -59,7 +107,9 @@ IHeader) => {
                   {navbar ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-white"
+                      className={`w-6 h-6 ${
+                        isTa ? "text-white" : "text-gray-900"
+                      }`}
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -72,7 +122,9 @@ IHeader) => {
                   ) : (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-white"
+                      className={`w-6 h-6 ${
+                        isTa ? "text-white" : "text-gray-900"
+                      }`}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -89,21 +141,35 @@ IHeader) => {
               </div>
             </div>
           </div>
+
           <div>
             <div
               className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
                 navbar ? "block" : "hidden"
-              }`}
+              } `}
             >
               <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                 {navigations.map((nav) => (
                   <li
                     key={nav.label}
-                    className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className={`${
+                      isTa
+                        ? "text-white hover:text-white hover-bg-gray-700"
+                        : "text-gray-900 hover:text-gray-900 hover:bg-gray-300"
+                    } px-3 py-2 rounded-md text-sm font-medium ${
+                      !user &&
+                      (nav.label === "Dashboard" || nav.label === "Explore")
+                        ? "hidden"
+                        : "block"
+                    }`}
                   >
                     <Link
                       href={nav.path}
-                      className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      className={`${
+                        isTa
+                          ? "text-white hover:text-white hover-bg-gray-700"
+                          : "text-gray-900 hover:text-gray-90 hover:bg-gray-300"
+                      } px-3 py-2 rounded-md text-sm font-medium`}
                     >
                       {nav.label}
                     </Link>
@@ -112,56 +178,175 @@ IHeader) => {
                 {user ? (
                   <li
                     key="login"
-                    className="visible md:invisible text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className={`visible md:invisible  px-3 py-2 rounded-md text-sm font-medium ${
+                      isTa
+                        ? "text-white hover:bg-gray-700 hover:text-white"
+                        : "text-gray-900 hover:text-gray-900 hover:bg-gray-300"
+                    }`}
                   >
-                    <p
-                      onClick={logout}
-                      className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    <button
+                      onClick={async () => {
+                        await logoutHeader();
+                      }}
+                      className={`px-3 py-2 rounded-md text-sm font-medium ${
+                        isTa
+                          ? "text-white hover:bg-gray-700 hover:text-white"
+                          : "text-gray-900 hover:text-gray-900 hover:bg-gray-300"
+                      }`}
                     >
                       Keluar
-                    </p>
+                    </button>
                   </li>
                 ) : (
                   <li
                     key="login"
-                    className="visible md:invisible text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className={`visible md:invisible  px-3 py-2 rounded-md text-sm font-medium ${
+                      isTa
+                        ? "text-white hover:bg-gray-700 hover:text-white"
+                        : "text-gray-900 hover:text-gray-900 hover:bg-gray-300"
+                    }`}
                   >
                     <Link
-                      href="/login"
-                      className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      href={isTa ? "/ta/login" : "/com/login"}
+                      className={`px-3 py-2 rounded-md text-sm font-medium ${
+                        isTa
+                          ? "text-white hover:bg-gray-700 hover:text-white"
+                          : "text-gray-900 hover:text-gray-900 hover:bg-gray-300"
+                      }`}
                     >
                       Masuk
                     </Link>
                   </li>
                 )}
               </ul>
+              {/* START TOGGLE BETWEEN TA AND COMPANY */}
+              <div className="visible md:hidden">
+                <label
+                  htmlFor="isTaToggleMobile"
+                  className={`inline-flex items-center p-2 rounded-md cursor-pointer text-white`}
+                >
+                  <input
+                    id="isTaToggleMobile"
+                    type="checkbox"
+                    className={`hidden peer ${
+                      authenticated ? "cursor-not-allowed" : ""
+                    }`}
+                    onChange={(e) => {
+                      console.log(e.target.checked);
+                      setIsTa(e.target.checked);
+                    }}
+                    onClick={(e) => {
+                      setIsTa(!isTa);
+                    }}
+                    defaultChecked={isTa}
+                    disabled={authenticated || router.pathname !== "/"}
+                  />
+                  <span
+                    className={`px-4 py-2 rounded-l-md bg-main-cta-button-bg peer-checked:bg-form-bg ${
+                      authenticated || router.pathname !== "/"
+                        ? "cursor-not-allowed"
+                        : ""
+                    }`}
+                  >
+                    Perusahaan
+                  </span>
+                  <span
+                    className={`px-4 py-2 rounded-r-md bg-gray-500 peer-checked:bg-main-cta-button-bg ${
+                      authenticated || router.pathname !== "/"
+                        ? "cursor-not-allowed"
+                        : ""
+                    }`}
+                  >
+                    TA
+                  </span>
+                </label>
+              </div>
+              {/* END TOGGLE BETWEEN TA AND COMPANY */}
             </div>
           </div>
+
+          {/* START TOGGLE BETWEEN TA AND COMPANY */}
+          <div className="hidden md:block">
+            <label
+              htmlFor="isTaToggle"
+              className={`inline-flex items-center p-2 rounded-md cursor-pointer text-white`}
+            >
+              <input
+                id="isTaToggle"
+                type="checkbox"
+                className={`hidden peer ${
+                  authenticated ? "cursor-not-allowed" : ""
+                }`}
+                onChange={(e) => {
+                  console.log(e.target.checked);
+                  setIsTa(e.target.checked);
+                }}
+                defaultChecked={isTa}
+                disabled={authenticated || router.pathname !== "/"}
+                onClick={(e) => {
+                  setIsTa(!isTa);
+                }}
+              />
+              <span
+                className={`px-4 py-2 rounded-l-md bg-main-cta-button-bg peer-checked:bg-form-bg ${
+                  authenticated || router.pathname !== "/"
+                    ? "cursor-not-allowed"
+                    : ""
+                }`}
+              >
+                Perusahaan
+              </span>
+              <span
+                className={`px-4 py-2 rounded-r-md bg-gray-500 peer-checked:bg-main-cta-button-bg ${
+                  authenticated || router.pathname !== "/"
+                    ? "cursor-not-allowed"
+                    : ""
+                }`}
+              >
+                TA
+              </span>
+            </label>
+          </div>
+          {/* END TOGGLE BETWEEN TA AND COMPANY */}
 
           {user ? (
             <div
               className={`invisible md:visible items-end justify-end gap-2 md:gap-8 place-it`}
             >
-              <p
-                onClick={logout}
-                className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
+              <button
+                onClick={async () => {
+                  await logoutHeader();
+                }}
+                className={`font-bold px-3 py-2 rounded-md text-sm ${
+                  isTa
+                    ? "text-white hover:bg-gray-700 hover:text-white"
+                    : "text-gray-900 hover:text-gray-900 hover:bg-gray-300"
+                }`}
               >
                 Keluar
-              </p>
+              </button>
             </div>
           ) : (
             <div
               className={`invisible md:visible items-end justify-end gap-2 md:gap-8 place-it`}
             >
               <Link
-                href="/login"
-                className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
+                href={isTa ? "/ta/login" : "/com/login"}
+                className={`font-bold px-3 py-2 rounded-md text-sm ${
+                  isTa
+                    ? "text-white hover:bg-gray-700 hover:text-white"
+                    : "text-gray-900 hover:text-gray-900 hover:bg-gray-300"
+                }`}
               >
                 Masuk
               </Link>
               <Link
-                href="/signup"
-                className="font-bold text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm"
+                href={isTa ? "/ta/signup" : "/com/signup"}
+                className={`font-bold px-3 py-2 rounded-md text-sm ${
+                  isTa
+                    ? "text-white hover:bg-gray-700 hover:text-white"
+                    : "text-gray-900 hover:text-gray-900 hover:bg-gray-300"
+                }`}
               >
                 Daftar
               </Link>

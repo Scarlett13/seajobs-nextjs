@@ -8,6 +8,7 @@ import SearchableSelectInput from "../../../../components/forms/SearchableSelect
 import DatePicker from "../../../../components/forms/DatePicker";
 import Input from "../../../../components/forms/Input";
 import TextArea from "../../../../components/forms/TextArea";
+import { useUser } from "../../../../contexts/AmplifyAuthContext";
 // import styles from "./IdentitasDiri.module.css";
 
 export interface IIdentitasDiri {
@@ -22,12 +23,15 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
   const dataKeahlian = require("../../../../constants/profileformconstants/bidang_keahlian.json");
   const residentStatus = require("../../../../constants/profileformconstants/resident_status.json");
 
+  const { isTa } = useUser();
+
   return (
     <ProfileSectionLayout
       isRequired={true}
       title="data diri"
       id="id_diri"
       disabled={disabled}
+      isTa={isTa}
     >
       {identitasDiriFields.map((field) => {
         if (field.type === "bidang_keahlian") {
@@ -46,6 +50,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
                 }
                 label={null}
                 isMulti={true}
+                isTa={isTa}
               />
             </section>
           );
@@ -54,6 +59,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <DatePicker
+                isTa={isTa}
                 id={field.id}
                 label={null}
                 disabled={disabled}
@@ -70,6 +76,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <TextArea
+                isTa={isTa}
                 id={field.id}
                 label={null}
                 disabled={disabled}
@@ -99,6 +106,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
                 }
                 label={null}
                 isMulti={false}
+                isTa={isTa}
               />
             </section>
           );
@@ -107,6 +115,7 @@ const IdentitasDiri: React.FC<IIdentitasDiri> = ({
             <section key={field.titelKey} className={"mb-4"}>
               <p className="mb-2 font-light text-gray-400">{field.labelText}</p>
               <Input
+                isTa={isTa}
                 id={field.id}
                 type={field.type}
                 label={null}

@@ -16,6 +16,7 @@ export const createKonsultan = /* GraphQL */ `
       konsultanPhoneNumber
       konsultanRangeTotalEmployees
       konsultanPIC
+      konsultanDescription
       projectBidders {
         nextToken
       }
@@ -41,6 +42,7 @@ export const updateKonsultan = /* GraphQL */ `
       konsultanPhoneNumber
       konsultanRangeTotalEmployees
       konsultanPIC
+      konsultanDescription
       projectBidders {
         nextToken
       }
@@ -66,6 +68,7 @@ export const deleteKonsultan = /* GraphQL */ `
       konsultanPhoneNumber
       konsultanRangeTotalEmployees
       konsultanPIC
+      konsultanDescription
       projectBidders {
         nextToken
       }
@@ -365,6 +368,7 @@ export const createProject = /* GraphQL */ `
         konsultanPhoneNumber
         konsultanRangeTotalEmployees
         konsultanPIC
+        konsultanDescription
         createdOn
         updatedOn
       }
@@ -406,6 +410,7 @@ export const updateProject = /* GraphQL */ `
         konsultanPhoneNumber
         konsultanRangeTotalEmployees
         konsultanPIC
+        konsultanDescription
         createdOn
         updatedOn
       }
@@ -447,6 +452,7 @@ export const deleteProject = /* GraphQL */ `
         konsultanPhoneNumber
         konsultanRangeTotalEmployees
         konsultanPIC
+        konsultanDescription
         createdOn
         updatedOn
       }
@@ -466,14 +472,60 @@ export const createCompanyProjectBidder = /* GraphQL */ `
     createCompanyProjectBidder(input: $input, condition: $condition) {
       projectId
       taId
+      taDetail {
+        taId
+        taFullName
+        taNikPassport
+        taDob
+        taCitizenship
+        taResidentStatus
+        taExpertise
+        taAddress
+        taEmail
+        taPhoneNumber
+        taPortfolioLink
+        taSelfDescription
+        createdOn
+        updatedOn
+      }
       konsultanId
+      konsultanDetail {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        konsultanDescription
+        createdOn
+        updatedOn
+      }
+      projectDetail {
+        projectId
+        projectTitle
+        projectLocation
+        projectValue
+        projectDuration
+        projectStart
+        projectCategories
+        projectDescription
+        projectClient
+        projectDeadline
+        projecImageUrl
+        projectOwner
+        isActive
+        projectStatus
+        isDeleted
+        createdOn
+        updatedOn
+      }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
-      projectBiddersProjectOwner
-      projectBiddersIsActive
     }
   }
 `;
@@ -485,14 +537,60 @@ export const updateCompanyProjectBidder = /* GraphQL */ `
     updateCompanyProjectBidder(input: $input, condition: $condition) {
       projectId
       taId
+      taDetail {
+        taId
+        taFullName
+        taNikPassport
+        taDob
+        taCitizenship
+        taResidentStatus
+        taExpertise
+        taAddress
+        taEmail
+        taPhoneNumber
+        taPortfolioLink
+        taSelfDescription
+        createdOn
+        updatedOn
+      }
       konsultanId
+      konsultanDetail {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        konsultanDescription
+        createdOn
+        updatedOn
+      }
+      projectDetail {
+        projectId
+        projectTitle
+        projectLocation
+        projectValue
+        projectDuration
+        projectStart
+        projectCategories
+        projectDescription
+        projectClient
+        projectDeadline
+        projecImageUrl
+        projectOwner
+        isActive
+        projectStatus
+        isDeleted
+        createdOn
+        updatedOn
+      }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
-      projectBiddersProjectOwner
-      projectBiddersIsActive
     }
   }
 `;
@@ -504,14 +602,60 @@ export const deleteCompanyProjectBidder = /* GraphQL */ `
     deleteCompanyProjectBidder(input: $input, condition: $condition) {
       projectId
       taId
+      taDetail {
+        taId
+        taFullName
+        taNikPassport
+        taDob
+        taCitizenship
+        taResidentStatus
+        taExpertise
+        taAddress
+        taEmail
+        taPhoneNumber
+        taPortfolioLink
+        taSelfDescription
+        createdOn
+        updatedOn
+      }
       konsultanId
+      konsultanDetail {
+        konsultanId
+        konsultanName
+        konsultanLocation
+        konsultanAddress
+        konsultanEmail
+        konsultanPhoneNumber
+        konsultanRangeTotalEmployees
+        konsultanPIC
+        konsultanDescription
+        createdOn
+        updatedOn
+      }
+      projectDetail {
+        projectId
+        projectTitle
+        projectLocation
+        projectValue
+        projectDuration
+        projectStart
+        projectCategories
+        projectDescription
+        projectClient
+        projectDeadline
+        projecImageUrl
+        projectOwner
+        isActive
+        projectStatus
+        isDeleted
+        createdOn
+        updatedOn
+      }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
-      projectBiddersProjectOwner
-      projectBiddersIsActive
     }
   }
 `;

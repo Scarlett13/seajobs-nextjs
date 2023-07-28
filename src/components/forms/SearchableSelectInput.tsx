@@ -23,6 +23,7 @@ export type SearchableSelectInputProps = {
   validation?: RegisterOptions;
   options: { value: string; label: string }[];
   containerClassName?: string;
+  isTa?: boolean;
 } & React.ComponentPropsWithoutRef<"select"> &
   ExtractProps<Select>;
 
@@ -38,6 +39,7 @@ export default function SearchableSelectInput({
   options,
   hideError = false,
   containerClassName,
+  isTa,
   ...rest
 }: SearchableSelectInputProps) {
   const {
@@ -74,7 +76,14 @@ export default function SearchableSelectInput({
       },
       borderRadius: "0px",
       padding: "0 0.75rem",
-      background: disabled || readOnly ? "#212121" : "#000000",
+      background:
+        disabled || readOnly
+          ? isTa
+            ? "#212121"
+            : "#D1D5DB"
+          : isTa
+          ? "#000000"
+          : "#ffffff",
       cursor: "pointer",
     }),
 
@@ -88,9 +97,9 @@ export default function SearchableSelectInput({
       padding: 0,
       margin: 0,
       caretColor: "var(--color-primary-500)",
-      color: "#ffffff",
+      color: isTa ? "#000000" : "#ffffff",
       "::placeholder": {
-        color: "#ffffff",
+        color: isTa ? "#000000" : "#ffffff",
       },
     }),
     indicatorsContainer: (styles) => ({
@@ -109,16 +118,22 @@ export default function SearchableSelectInput({
     //mainin disini untuk list opsi
     option: (styles, state) => ({
       ...styles,
-      color: "#ffffff",
-      background: state.isSelected ? "var(form-section-blue)" : "#000000",
+      //warna tulisannya disini
+      color: isTa ? "#ffffff" : "#000000",
+      background: state.isSelected
+        ? "var(form-section-blue)"
+        : isTa
+        ? "#000000"
+        : "#ffffff",
       ":hover": {
-        background: "#212121",
+        background: isTa ? "#212121" : "#e6e6e6",
       },
       cursor: "pointer",
     }),
     multiValue: (styles) => ({
       ...styles,
-      color: "#ffffff",
+      //warna tulisan opsi yang udah kepilih disini
+      color: isTa ? "#ffffff" : "#000000",
       display: "flex",
       alignItems: "center",
       gap: "0.25rem",
@@ -147,10 +162,13 @@ export default function SearchableSelectInput({
       ...styles,
       borderRadius: "0px",
       overflow: "hidden",
-      background: "#000000",
-      color: "#ffffff",
+      background: isTa ? "#000000" : "#ffffff",
+      color: isTa ? "#000000" : "#ffffff",
     }),
-    singleValue: (styles) => ({ ...styles, color: "#fff" }),
+    singleValue: (styles) => ({
+      ...styles,
+      color: isTa ? "#ffffff" : "#000000",
+    }),
   };
 
   //#endregion  //*======== Styles ===========

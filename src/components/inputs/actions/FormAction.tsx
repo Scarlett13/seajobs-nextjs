@@ -6,6 +6,7 @@ export interface IInputTemplate {
   text?: string;
   type?: string;
   isLoading: boolean;
+  isTa: boolean;
 }
 
 const FormAction: React.FC<IInputTemplate> = ({
@@ -14,6 +15,7 @@ const FormAction: React.FC<IInputTemplate> = ({
   action = "submit",
   isLoading,
   text,
+  isTa,
 }) => {
   const disabled =
     isLoading !== null || isLoading !== undefined ? isLoading : false;
@@ -24,7 +26,11 @@ const FormAction: React.FC<IInputTemplate> = ({
       {type === "Button" ? (
         <button
           type={action}
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-main-cta-button-bg hover:bg-main-cta-button-bg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black mt-10"
+          className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2  mt-10 ${
+            isTa
+              ? "text-white bg-main-cta-button-bg hover:bg-main-cta-button-bg focus:ring-black"
+              : "text-gray-900 bg-main-cta-button-bg hover:bg-main-cta-button-bg focus:ring-white"
+          }`}
           onSubmit={handleSubmit}
           disabled={disabled}
         >

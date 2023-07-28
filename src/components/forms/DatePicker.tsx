@@ -26,6 +26,8 @@ type DatePickerProps = {
   /** Disable error style (not disabling error validation) */
   hideError?: boolean;
   containerClassName?: string;
+  isTa: boolean;
+  customState?: any;
 } & Omit<ReactDatePickerProps, "onChange">;
 
 export default function DatePicker({
@@ -41,6 +43,8 @@ export default function DatePicker({
   hideError = false,
   disabled,
   containerClassName,
+  isTa,
+  customState,
   ...rest
 }: DatePickerProps) {
   const {
@@ -78,13 +82,23 @@ export default function DatePicker({
                   name={id}
                   onChange={onChange}
                   onBlur={onBlur}
+                  onSelect={(data) => {
+                    console.log(data);
+                    customState ? customState(data) : false;
+                  }}
                   selected={value ? new Date(value) : undefined}
                   className={clsx(
-                    "flex w-full rounded-none shadow-sm bg-black text-white",
+                    `flex w-full rounded-none shadow-sm ${
+                      isTa ? "bg-black text-white" : "bg-white text-gray-900"
+                    }`,
                     "min-h-[2.25rem] py-0 md:min-h-[2.5rem]",
                     "border-gray-300 focus:border-primary-500 focus:ring-primary-500",
                     (readOnly || disabled) &&
-                      "cursor-not-allowed border-form-bg bg-form-bg focus:border-form-bgfocus:ring-0",
+                      `cursor-not-allowed ${
+                        isTa
+                          ? "border-form-bg bg-form-bg"
+                          : "border-none bg-gray-300"
+                      } focus:border-form-bgfocus:ring-0`,
                     error &&
                       "border-red-500 focus:border-red-500 focus:ring-red-500 text-red-500"
                   )}
