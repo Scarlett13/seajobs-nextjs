@@ -7,7 +7,7 @@
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { TenagaAhli } from "../models";
+import { TenagaAhli } from "../API.ts";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -26,6 +26,7 @@ export declare type TenagaAhliUpdateFormInputValues = {
     taPhoneNumber?: string;
     taPortfolioLink?: string[];
     taSelfDescription?: string;
+    taSkaFilename?: string;
     createdOn?: string;
     updatedOn?: string;
 };
@@ -42,6 +43,7 @@ export declare type TenagaAhliUpdateFormValidationValues = {
     taPhoneNumber?: ValidationFunction<string>;
     taPortfolioLink?: ValidationFunction<string>;
     taSelfDescription?: ValidationFunction<string>;
+    taSkaFilename?: ValidationFunction<string>;
     createdOn?: ValidationFunction<string>;
     updatedOn?: ValidationFunction<string>;
 };
@@ -60,6 +62,7 @@ export declare type TenagaAhliUpdateFormOverridesProps = {
     taPhoneNumber?: PrimitiveOverrideProps<TextFieldProps>;
     taPortfolioLink?: PrimitiveOverrideProps<TextFieldProps>;
     taSelfDescription?: PrimitiveOverrideProps<TextFieldProps>;
+    taSkaFilename?: PrimitiveOverrideProps<TextFieldProps>;
     createdOn?: PrimitiveOverrideProps<TextFieldProps>;
     updatedOn?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

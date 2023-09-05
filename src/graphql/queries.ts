@@ -16,12 +16,15 @@ export const getKonsultan = /* GraphQL */ `
       konsultanDescription
       projectBidders {
         nextToken
+        __typename
       }
       projects {
         nextToken
+        __typename
       }
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -52,8 +55,10 @@ export const listKonsultans = /* GraphQL */ `
         konsultanDescription
         createdOn
         updatedOn
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -72,17 +77,22 @@ export const getTenagaAhli = /* GraphQL */ `
       taPhoneNumber
       taPortfolioLink
       taSelfDescription
+      taSkaFilename
       pengalamanKerja {
         nextToken
+        __typename
       }
       projectBidded {
         nextToken
+        __typename
       }
       pendidikanSertifikasi {
         nextToken
+        __typename
       }
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -114,10 +124,13 @@ export const listTenagaAhlis = /* GraphQL */ `
         taPhoneNumber
         taPortfolioLink
         taSelfDescription
+        taSkaFilename
         createdOn
         updatedOn
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -153,6 +166,7 @@ export const getPengalamanKerja = /* GraphQL */ `
       projectDescription
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -195,8 +209,10 @@ export const listPengalamanKerjas = /* GraphQL */ `
         projectDescription
         createdOn
         updatedOn
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -226,6 +242,7 @@ export const getPendidikanSertifikasi = /* GraphQL */ `
       endYear
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -262,8 +279,10 @@ export const listPendidikanSertifikasis = /* GraphQL */ `
         endYear
         createdOn
         updatedOn
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -283,6 +302,7 @@ export const getProject = /* GraphQL */ `
       projecImageUrl
       bidders {
         nextToken
+        __typename
       }
       projectOwner
       companyOwner {
@@ -297,12 +317,14 @@ export const getProject = /* GraphQL */ `
         konsultanDescription
         createdOn
         updatedOn
+        __typename
       }
       isActive
       projectStatus
       isDeleted
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -339,8 +361,10 @@ export const listProjects = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -370,8 +394,10 @@ export const getCompanyProjectBidder = /* GraphQL */ `
         taPhoneNumber
         taPortfolioLink
         taSelfDescription
+        taSkaFilename
         createdOn
         updatedOn
+        __typename
       }
       konsultanId
       konsultanDetail {
@@ -386,6 +412,7 @@ export const getCompanyProjectBidder = /* GraphQL */ `
         konsultanDescription
         createdOn
         updatedOn
+        __typename
       }
       projectDetail {
         projectId
@@ -405,12 +432,14 @@ export const getCompanyProjectBidder = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
+        __typename
       }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
+      __typename
     }
   }
 `;
@@ -440,8 +469,10 @@ export const listCompanyProjectBidders = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -484,8 +515,10 @@ export const pengalamanKerjaByTenagaAhliByTimeline = /* GraphQL */ `
         projectDescription
         createdOn
         updatedOn
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -528,8 +561,10 @@ export const pengalamanKerjaByTenagaAhliByPerusahaan = /* GraphQL */ `
         projectDescription
         createdOn
         updatedOn
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -566,8 +601,10 @@ export const pendidikanByTenagaAhliByCourse = /* GraphQL */ `
         endYear
         createdOn
         updatedOn
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -606,8 +643,10 @@ export const projectByOwner = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -637,8 +676,10 @@ export const companyProjectBidderByTa = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -668,8 +709,10 @@ export const companyProjectBidderByKonsultan = /* GraphQL */ `
         createdOn
         updatedOn
         projectBiddersId
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;

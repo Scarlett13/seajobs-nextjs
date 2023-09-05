@@ -25,6 +25,7 @@ export declare type TenagaAhliCreateFormInputValues = {
     taPhoneNumber?: string;
     taPortfolioLink?: string[];
     taSelfDescription?: string;
+    taSkaFilename?: string;
     createdOn?: string;
     updatedOn?: string;
 };
@@ -41,6 +42,7 @@ export declare type TenagaAhliCreateFormValidationValues = {
     taPhoneNumber?: ValidationFunction<string>;
     taPortfolioLink?: ValidationFunction<string>;
     taSelfDescription?: ValidationFunction<string>;
+    taSkaFilename?: ValidationFunction<string>;
     createdOn?: ValidationFunction<string>;
     updatedOn?: ValidationFunction<string>;
 };
@@ -59,6 +61,7 @@ export declare type TenagaAhliCreateFormOverridesProps = {
     taPhoneNumber?: PrimitiveOverrideProps<TextFieldProps>;
     taPortfolioLink?: PrimitiveOverrideProps<TextFieldProps>;
     taSelfDescription?: PrimitiveOverrideProps<TextFieldProps>;
+    taSkaFilename?: PrimitiveOverrideProps<TextFieldProps>;
     createdOn?: PrimitiveOverrideProps<TextFieldProps>;
     updatedOn?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

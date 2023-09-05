@@ -18,12 +18,15 @@ export const onCreateKonsultan = /* GraphQL */ `
       konsultanDescription
       projectBidders {
         nextToken
+        __typename
       }
       projects {
         nextToken
+        __typename
       }
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -43,12 +46,15 @@ export const onUpdateKonsultan = /* GraphQL */ `
       konsultanDescription
       projectBidders {
         nextToken
+        __typename
       }
       projects {
         nextToken
+        __typename
       }
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -68,12 +74,15 @@ export const onDeleteKonsultan = /* GraphQL */ `
       konsultanDescription
       projectBidders {
         nextToken
+        __typename
       }
       projects {
         nextToken
+        __typename
       }
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -94,17 +103,22 @@ export const onCreateTenagaAhli = /* GraphQL */ `
       taPhoneNumber
       taPortfolioLink
       taSelfDescription
+      taSkaFilename
       pengalamanKerja {
         nextToken
+        __typename
       }
       projectBidded {
         nextToken
+        __typename
       }
       pendidikanSertifikasi {
         nextToken
+        __typename
       }
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -125,17 +139,22 @@ export const onUpdateTenagaAhli = /* GraphQL */ `
       taPhoneNumber
       taPortfolioLink
       taSelfDescription
+      taSkaFilename
       pengalamanKerja {
         nextToken
+        __typename
       }
       projectBidded {
         nextToken
+        __typename
       }
       pendidikanSertifikasi {
         nextToken
+        __typename
       }
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -156,17 +175,22 @@ export const onDeleteTenagaAhli = /* GraphQL */ `
       taPhoneNumber
       taPortfolioLink
       taSelfDescription
+      taSkaFilename
       pengalamanKerja {
         nextToken
+        __typename
       }
       projectBidded {
         nextToken
+        __typename
       }
       pendidikanSertifikasi {
         nextToken
+        __typename
       }
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -196,6 +220,7 @@ export const onCreatePengalamanKerja = /* GraphQL */ `
       projectDescription
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -225,6 +250,7 @@ export const onUpdatePengalamanKerja = /* GraphQL */ `
       projectDescription
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -254,6 +280,7 @@ export const onDeletePengalamanKerja = /* GraphQL */ `
       projectDescription
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -277,6 +304,7 @@ export const onCreatePendidikanSertifikasi = /* GraphQL */ `
       endYear
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -300,6 +328,7 @@ export const onUpdatePendidikanSertifikasi = /* GraphQL */ `
       endYear
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -323,6 +352,7 @@ export const onDeletePendidikanSertifikasi = /* GraphQL */ `
       endYear
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -342,6 +372,7 @@ export const onCreateProject = /* GraphQL */ `
       projecImageUrl
       bidders {
         nextToken
+        __typename
       }
       projectOwner
       companyOwner {
@@ -356,12 +387,14 @@ export const onCreateProject = /* GraphQL */ `
         konsultanDescription
         createdOn
         updatedOn
+        __typename
       }
       isActive
       projectStatus
       isDeleted
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -381,6 +414,7 @@ export const onUpdateProject = /* GraphQL */ `
       projecImageUrl
       bidders {
         nextToken
+        __typename
       }
       projectOwner
       companyOwner {
@@ -395,12 +429,14 @@ export const onUpdateProject = /* GraphQL */ `
         konsultanDescription
         createdOn
         updatedOn
+        __typename
       }
       isActive
       projectStatus
       isDeleted
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -420,6 +456,7 @@ export const onDeleteProject = /* GraphQL */ `
       projecImageUrl
       bidders {
         nextToken
+        __typename
       }
       projectOwner
       companyOwner {
@@ -434,12 +471,14 @@ export const onDeleteProject = /* GraphQL */ `
         konsultanDescription
         createdOn
         updatedOn
+        __typename
       }
       isActive
       projectStatus
       isDeleted
       createdOn
       updatedOn
+      __typename
     }
   }
 `;
@@ -463,8 +502,10 @@ export const onCreateCompanyProjectBidder = /* GraphQL */ `
         taPhoneNumber
         taPortfolioLink
         taSelfDescription
+        taSkaFilename
         createdOn
         updatedOn
+        __typename
       }
       konsultanId
       konsultanDetail {
@@ -479,6 +520,7 @@ export const onCreateCompanyProjectBidder = /* GraphQL */ `
         konsultanDescription
         createdOn
         updatedOn
+        __typename
       }
       projectDetail {
         projectId
@@ -498,12 +540,14 @@ export const onCreateCompanyProjectBidder = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
+        __typename
       }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
+      __typename
     }
   }
 `;
@@ -527,8 +571,10 @@ export const onUpdateCompanyProjectBidder = /* GraphQL */ `
         taPhoneNumber
         taPortfolioLink
         taSelfDescription
+        taSkaFilename
         createdOn
         updatedOn
+        __typename
       }
       konsultanId
       konsultanDetail {
@@ -543,6 +589,7 @@ export const onUpdateCompanyProjectBidder = /* GraphQL */ `
         konsultanDescription
         createdOn
         updatedOn
+        __typename
       }
       projectDetail {
         projectId
@@ -562,12 +609,14 @@ export const onUpdateCompanyProjectBidder = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
+        __typename
       }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
+      __typename
     }
   }
 `;
@@ -591,8 +640,10 @@ export const onDeleteCompanyProjectBidder = /* GraphQL */ `
         taPhoneNumber
         taPortfolioLink
         taSelfDescription
+        taSkaFilename
         createdOn
         updatedOn
+        __typename
       }
       konsultanId
       konsultanDetail {
@@ -607,6 +658,7 @@ export const onDeleteCompanyProjectBidder = /* GraphQL */ `
         konsultanDescription
         createdOn
         updatedOn
+        __typename
       }
       projectDetail {
         projectId
@@ -626,12 +678,14 @@ export const onDeleteCompanyProjectBidder = /* GraphQL */ `
         isDeleted
         createdOn
         updatedOn
+        __typename
       }
       biddingStatus
       comments
       createdOn
       updatedOn
       projectBiddersId
+      __typename
     }
   }
 `;

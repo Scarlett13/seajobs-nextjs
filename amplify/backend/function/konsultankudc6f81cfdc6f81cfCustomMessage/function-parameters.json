@@ -1,0 +1,26 @@
+{
+  "trigger": true,
+  "modules": [
+    "verification-link"
+  ],
+  "parentResource": "konsultankudc6f81cfdc6f81cf",
+  "functionName": "konsultankudc6f81cfdc6f81cfCustomMessage",
+  "resourceName": "konsultankudc6f81cfdc6f81cfCustomMessage",
+  "parentStack": "auth",
+  "triggerEnvs": [
+    {
+      "key": "RESOURCENAME",
+      "value": "resourceName"
+    }
+  ],
+  "triggerDir": "/snapshot/repo/build/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/CustomMessage",
+  "triggerTemplate": "CustomMessage.json.ejs",
+  "triggerEventPath": "CustomMessage.event.json",
+  "roleName": "konsultankudc6f81cfdc6f81cfCustomMessage",
+  "skipEdit": true,
+  "REDIRECTURL": "https://seajobs.co",
+  "EMAILSUBJECT": "Konfirmasi pendaftaran kamu di seajobs",
+  "EMAILMESSAGE": "Selesaikan pendaftaran kamu di seajobs.co dengan klik link dibawah:",
+  "RESOURCENAME": "resourceName",
+  "enableCors": false
+}

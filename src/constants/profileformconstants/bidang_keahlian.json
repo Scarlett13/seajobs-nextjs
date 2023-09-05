@@ -117,6 +117,24 @@
 		"iscollapsible": false
 	},
 	{
+		"id": 14,
+		"categoryname": "Transportasi",
+		"label": "Ahli Perencana Transportasi",
+		"value": "ahli_perencana_transportasi",
+		"subcategoryname": "Ahli Perencana Transportasi",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
+		"id": 15,
+		"categoryname": "Transportasi",
+		"label": "Ahli Rekayasa Transportasi",
+		"value": "ahli_rekayasa_transportasi",
+		"subcategoryname": "Ahli Rekayasa Transportasi",
+		"description": "-",
+		"iscollapsible": false
+	},
+	{
 		"id": 99,
 		"categoryname": "Pendukung",
 		"label": "Pendukung",

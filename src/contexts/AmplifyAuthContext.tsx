@@ -96,12 +96,10 @@ export default function AuthContext(
   useEffect(() => {
     checkUser();
     checkRole();
-  }, []);
+  });
 
   useEffect(() => {
-    console.log("isTa update: ", isTa);
     localStorage.setItem("isTa", JSON.stringify(isTa));
-    console.log("routernya: ", router.query);
   }, [isTa]);
 
   useEffect(() => {
@@ -119,7 +117,7 @@ export default function AuthContext(
     };
 
     Hub.listen("auth", listener);
-  }, []);
+  });
 
   return (
     <UserContext.Provider

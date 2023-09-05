@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "seajobs",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authkonsultankudc6f81cfdc6f81cf",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2022-11-25T12:31:43.246Z"
+}
