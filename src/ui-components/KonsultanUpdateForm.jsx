@@ -8,9 +8,10 @@
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Konsultan } from "../models";
 import { fetchByPath, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { API } from "aws-amplify";
+import { getKonsultan } from "../graphql/queries";
+import { updateKonsultan } from "../graphql/mutations";
 export default function KonsultanUpdateForm(props) {
   const {
     konsultanId: konsultanIdProp,
@@ -87,7 +88,12 @@ export default function KonsultanUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = konsultanIdProp
-        ? await DataStore.query(Konsultan, konsultanIdProp)
+        ? (
+            await API.graphql({
+              query: getKonsultan,
+              variables: { konsultanId: konsultanIdProp },
+            })
+          )?.data?.getKonsultan
         : konsultanModelProp;
       setKonsultanRecord(record);
     };
@@ -152,7 +158,7 @@ export default function KonsultanUpdateForm(props) {
         let modelFields = {
           konsultanId,
           konsultanName,
-          konsultanLocation,
+          konsultanLocation: konsultanLocation ?? null,
           konsultanAddress,
           konsultanEmail,
           konsultanPhoneNumber,
@@ -186,21 +192,26 @@ export default function KonsultanUpdateForm(props) {
         }
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
+            if (typeof value === "string" && value === "") {
+              modelFields[key] = null;
             }
           });
-          await DataStore.save(
-            Konsultan.copyOf(konsultanRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await API.graphql({
+            query: updateKonsultan,
+            variables: {
+              input: {
+                konsultanId: konsultanRecord.konsultanId,
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}

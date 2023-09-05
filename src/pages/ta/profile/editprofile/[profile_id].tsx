@@ -1,4 +1,3 @@
-import { Button, Label, Modal, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 
 import { FormProvider, useForm } from "react-hook-form";
@@ -38,10 +37,11 @@ import {
 } from "../../../../API";
 import v4 from "uuid-browser/v4";
 import { DateTime } from "luxon";
-import { API, Auth, graphqlOperation } from "aws-amplify";
+import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import * as mutations from "../../../../graphql/mutations";
 import * as queries from "../../../../graphql/queries";
+import UploadSka from "../../../../page_components/profile/sections/uploadska/UploadSka";
 
 export default function EditProfile() {
   // const parentScrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -55,6 +55,7 @@ export default function EditProfile() {
     setLoading,
   } = useUser();
   const parentScrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [doneUpload, setDoneUpload] = useState<boolean | null>(null);
 
   const push = usePush();
   const router = useRouter();
@@ -263,6 +264,30 @@ export default function EditProfile() {
   const submitListPengalaman = async (data: any) => {
     setLoading(true);
     console.log("wubbalubbasubmitlistpengalaman", data);
+    let filename = null;
+
+    if (data.ska?.length) {
+      setDoneUpload(false);
+      data.ska.map(async (file: File) => {
+        filename = `${profile_id}/${file.name}`;
+        try {
+          console.log("uploading...");
+          await Storage.put(filename, file, {
+            contentType: "application/pdf", // contentType is optional
+            progressCallback(progress) {
+              console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+              if (progress.loaded === progress.total) {
+                setDoneUpload(true);
+              }
+            },
+          });
+        } catch (error) {
+          console.log("Error uploading file: ", error);
+        }
+      });
+    } else {
+      setDoneUpload(true);
+    }
 
     const newTenagaAhli = {
       taId: profile_id as string,
@@ -281,6 +306,7 @@ export default function EditProfile() {
         ? data.portfolio_link.split(", ")
         : null,
       taSelfDescription: data.deskripsi_diri,
+      taSkaFilename: filename,
     };
 
     try {
@@ -306,13 +332,18 @@ export default function EditProfile() {
       setSubmitStatus(true);
       console.log("success submit");
       setLoading(false);
-      push(`/ta/profile/${profile_id}`);
     } catch (error) {
       setSubmitStatus(false);
       setLoading(false);
       console.log("error submit: ", error);
     }
   };
+
+  useEffect(() => {
+    if (!loading && doneUpload) {
+      push(`/ta/profile/${profile_id}`);
+    }
+  }, [doneUpload, loading, profile_id, push]);
 
   const onSubmit = async (data: any) => {
     // logger({ data }, 'rhf.tsx line 33');
@@ -444,6 +475,7 @@ export default function EditProfile() {
                   setListPendidikanFieldsState={setListPendidikanState}
                   taId={profile_id as string}
                 />
+                <UploadSka disabled={false} />
               </form>
             </FormProvider>
           </ScrollSpy>

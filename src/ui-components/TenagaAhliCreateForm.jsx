@@ -19,9 +19,9 @@ import {
   useTheme,
 } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { TenagaAhli } from "../models";
 import { fetchByPath, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { API } from "aws-amplify";
+import { createTenagaAhli } from "../graphql/mutations";
 function ArrayField({
   items = [],
   onChange,
@@ -34,6 +34,7 @@ function ArrayField({
   defaultFieldValue,
   lengthLimit,
   getBadgeText,
+  runValidationTasks,
   errorMessage,
 }) {
   const labelElement = <Text>{label}</Text>;
@@ -57,6 +58,7 @@ function ArrayField({
     setSelectedBadgeIndex(undefined);
   };
   const addItem = async () => {
+    const { hasError } = runValidationTasks();
     if (
       currentFieldValue !== undefined &&
       currentFieldValue !== null &&
@@ -166,12 +168,7 @@ function ArrayField({
               }}
             ></Button>
           )}
-          <Button
-            size="small"
-            variation="link"
-            isDisabled={hasError}
-            onClick={addItem}
-          >
+          <Button size="small" variation="link" onClick={addItem}>
             {selectedBadgeIndex !== undefined ? "Save" : "Add"}
           </Button>
         </Flex>
@@ -204,6 +201,7 @@ export default function TenagaAhliCreateForm(props) {
     taPhoneNumber: "",
     taPortfolioLink: [],
     taSelfDescription: "",
+    taSkaFilename: "",
     createdOn: "",
     updatedOn: "",
   };
@@ -233,6 +231,9 @@ export default function TenagaAhliCreateForm(props) {
   const [taSelfDescription, setTaSelfDescription] = React.useState(
     initialValues.taSelfDescription
   );
+  const [taSkaFilename, setTaSkaFilename] = React.useState(
+    initialValues.taSkaFilename
+  );
   const [createdOn, setCreatedOn] = React.useState(initialValues.createdOn);
   const [updatedOn, setUpdatedOn] = React.useState(initialValues.updatedOn);
   const [errors, setErrors] = React.useState({});
@@ -250,6 +251,7 @@ export default function TenagaAhliCreateForm(props) {
     setTaPortfolioLink(initialValues.taPortfolioLink);
     setCurrentTaPortfolioLinkValue("");
     setTaSelfDescription(initialValues.taSelfDescription);
+    setTaSkaFilename(initialValues.taSkaFilename);
     setCreatedOn(initialValues.createdOn);
     setUpdatedOn(initialValues.updatedOn);
     setErrors({});
@@ -270,6 +272,7 @@ export default function TenagaAhliCreateForm(props) {
     taPhoneNumber: [{ type: "Required" }],
     taPortfolioLink: [{ type: "Required" }],
     taSelfDescription: [],
+    taSkaFilename: [],
     createdOn: [{ type: "Required" }],
     updatedOn: [{ type: "Required" }],
   };
@@ -328,6 +331,7 @@ export default function TenagaAhliCreateForm(props) {
           taPhoneNumber,
           taPortfolioLink,
           taSelfDescription,
+          taSkaFilename,
           createdOn,
           updatedOn,
         };
@@ -355,11 +359,18 @@ export default function TenagaAhliCreateForm(props) {
         }
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
+            if (typeof value === "string" && value === "") {
+              modelFields[key] = null;
             }
           });
-          await DataStore.save(new TenagaAhli(modelFields));
+          await API.graphql({
+            query: createTenagaAhli,
+            variables: {
+              input: {
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -368,7 +379,8 @@ export default function TenagaAhliCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
@@ -396,6 +408,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -433,6 +446,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -470,6 +484,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -508,6 +523,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -545,6 +561,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -582,6 +599,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -619,6 +637,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -656,6 +675,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -693,6 +713,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -730,6 +751,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber: value,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -763,6 +785,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink: values,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -776,6 +799,12 @@ export default function TenagaAhliCreateForm(props) {
         label={"Ta portfolio link"}
         items={taPortfolioLink}
         hasError={errors?.taPortfolioLink?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks(
+            "taPortfolioLink",
+            currentTaPortfolioLinkValue
+          )
+        }
         errorMessage={errors?.taPortfolioLink?.errorMessage}
         setFieldValue={setCurrentTaPortfolioLinkValue}
         inputFieldRef={taPortfolioLinkRef}
@@ -824,6 +853,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription: value,
+              taSkaFilename,
               createdOn,
               updatedOn,
             };
@@ -841,6 +871,44 @@ export default function TenagaAhliCreateForm(props) {
         errorMessage={errors.taSelfDescription?.errorMessage}
         hasError={errors.taSelfDescription?.hasError}
         {...getOverrideProps(overrides, "taSelfDescription")}
+      ></TextField>
+      <TextField
+        label="Ta ska filename"
+        isRequired={false}
+        isReadOnly={false}
+        value={taSkaFilename}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              taId,
+              taFullName,
+              taNikPassport,
+              taDob,
+              taCitizenship,
+              taResidentStatus,
+              taExpertise,
+              taAddress,
+              taEmail,
+              taPhoneNumber,
+              taPortfolioLink,
+              taSelfDescription,
+              taSkaFilename: value,
+              createdOn,
+              updatedOn,
+            };
+            const result = onChange(modelFields);
+            value = result?.taSkaFilename ?? value;
+          }
+          if (errors.taSkaFilename?.hasError) {
+            runValidationTasks("taSkaFilename", value);
+          }
+          setTaSkaFilename(value);
+        }}
+        onBlur={() => runValidationTasks("taSkaFilename", taSkaFilename)}
+        errorMessage={errors.taSkaFilename?.errorMessage}
+        hasError={errors.taSkaFilename?.hasError}
+        {...getOverrideProps(overrides, "taSkaFilename")}
       ></TextField>
       <TextField
         label="Created on"
@@ -865,6 +933,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn: value,
               updatedOn,
             };
@@ -904,6 +973,7 @@ export default function TenagaAhliCreateForm(props) {
               taPhoneNumber,
               taPortfolioLink,
               taSelfDescription,
+              taSkaFilename,
               createdOn,
               updatedOn: value,
             };

@@ -27,7 +27,7 @@ export const ProtectedRoute = ({
       ) : (
         <div>
           <h4>
-            You are not Authorized.{" "}
+            You are not Authorized{" "}
             <Link href="/login">
               <a>Please log in</a>
             </Link>

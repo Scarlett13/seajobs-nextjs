@@ -1,5 +1,5 @@
 import usePush from "@utils/UsePush";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, Storage } from "aws-amplify";
 import { DateTime } from "luxon";
 import PageLoader from "next/dist/client/page-loader";
 import { useRouter } from "next/router";
@@ -45,6 +45,10 @@ import TimelinePengalaman from "../../../page_components/profile/sections/timeli
 import * as queries from "../../../graphql/queries";
 import { GraphQLQuery } from "@aws-amplify/api";
 import ScrollSpy from "react-ui-scrollspy";
+import UploadSka from "../../../page_components/profile/sections/uploadska/UploadSka";
+import FilePreview from "../../../components/forms/FilePreview";
+import { FileWithPreview } from "@utils/types/dropzone";
+import PdfPreview from "../../../components/forms/PdfPreview";
 
 export default function Profile() {
   // const parentScrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -62,6 +66,8 @@ export default function Profile() {
   const push = usePush();
   const router = useRouter();
   const { profile_id } = router.query;
+
+  const [file, setFile] = useState<FileWithPreview | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -201,6 +207,37 @@ export default function Profile() {
           "keahlian_id",
           getTa.data.getTenagaAhli.taExpertise.split(",")
         );
+
+        try {
+          const fileska = await Storage.get(
+            getTa.data.getTenagaAhli.taSkaFilename || "-",
+            {
+              download: true,
+            }
+          );
+
+          let downloadedska = null;
+
+          if (fileska.Body) {
+            const prefixToRemove = `${profile_id}/`;
+            const filedata = new File(
+              [fileska.Body as Blob],
+              getTa.data.getTenagaAhli.taSkaFilename
+                ? getTa.data.getTenagaAhli.taSkaFilename.slice(
+                    prefixToRemove.length
+                  )
+                : "nofile"
+            );
+            downloadedska = Object.assign(filedata, {
+              preview: URL.createObjectURL(filedata),
+            });
+          }
+
+          setFile(downloadedska);
+        } catch (error) {
+          console.log("fileska", error);
+          setFile(null);
+        }
       }
 
       const getPend = await API.graphql<
@@ -320,7 +357,7 @@ export default function Profile() {
         >
           <ScrollSpy offsetBottom={100} scrollThrottle={80} useBoxMethod>
             <FormProvider {...methods}>
-              <form className="max-w space-y-3 pb-4">
+              <form className="max-w space-y-3 pb-4 text-white">
                 <IdentitasDiri
                   disabled={true}
                   identitasDiriFields={identitasDiriFieldsComp}
@@ -356,6 +393,11 @@ export default function Profile() {
                   setListPendidikanFieldsState={setListPendidikanState}
                   taId={profile_id as string}
                 />
+                {file && (
+                  <div className="border border-gray-200 text-left">
+                    <PdfPreview file={file} />
+                  </div>
+                )}
               </form>
             </FormProvider>
           </ScrollSpy>
